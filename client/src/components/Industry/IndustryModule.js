@@ -47,7 +47,7 @@ function IndustryModule()
                                                         Sub Sector
                                                     </th>
                                                     <th scope="col" class="px-6 py-3">
-                                                        Price
+                                                         
                                                     </th>
                                                     <th scope="col" class="px-6 py-3">
                                                         Action
