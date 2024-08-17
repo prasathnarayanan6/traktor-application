@@ -1,0 +1,6 @@
+node_modules
+*.rest
+*.lock
+.env.example
+.env
+./utils/.env

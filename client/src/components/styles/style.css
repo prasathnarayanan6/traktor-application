@@ -1,0 +1,25 @@
+.animate-show {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+.animate-hide {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.shadow-md::before, .shadow-md::after {
+    content: none;
+  }
+  
+  .shadow-md {
+    background-image: none !important;
+  }

@@ -1,0 +1,43 @@
+{
+  "files": {
+    "main.css": "/static/css/main.7a56fc42.css",
+    "main.js": "/static/js/main.8faf80cf.js",
+    "static/js/453.419a5d54.chunk.js": "/static/js/453.419a5d54.chunk.js",
+    "static/media/296fe121-5dfa-43f4-98b5-db50019738a7.jpg": "/static/media/296fe121-5dfa-43f4-98b5-db50019738a7.3e047acc1c6157ba4da8.jpg",
+    "static/media/nirmaan-iitm.14fdf833.svg": "/static/media/nirmaan-iitm.14fdf833.b7ff24357d4993cfb99820184d141066.svg",
+    "static/media/open-sans-latin-400-normal.woff2": "/static/media/open-sans-latin-400-normal.feb0d8644aca3df9fabf.woff2",
+    "static/media/open-sans-cyrillic-ext-400-normal.woff2": "/static/media/open-sans-cyrillic-ext-400-normal.36a8d1fd05dda56813b9.woff2",
+    "static/media/open-sans-math-400-normal.woff2": "/static/media/open-sans-math-400-normal.1313f53c6063cdaee5ae.woff2",
+    "static/media/open-sans-latin-400-normal.woff": "/static/media/open-sans-latin-400-normal.8f0d1651a7a23fedd1e2.woff",
+    "static/media/josefin-sans-latin-400-normal.woff": "/static/media/josefin-sans-latin-400-normal.8df978cec4cb954d6e06.woff",
+    "static/media/open-sans-cyrillic-ext-400-normal.woff": "/static/media/open-sans-cyrillic-ext-400-normal.5f820b0853dc15cb196d.woff",
+    "static/media/open-sans-math-400-normal.woff": "/static/media/open-sans-math-400-normal.c8ccf5d77ef29f79516a.woff",
+    "static/media/open-sans-latin-ext-400-normal.woff2": "/static/media/open-sans-latin-ext-400-normal.9aa550d775c13a65310a.woff2",
+    "static/media/josefin-sans-latin-ext-400-normal.woff": "/static/media/josefin-sans-latin-ext-400-normal.eece8b9f17a0371dc87d.woff",
+    "static/media/open-sans-latin-ext-400-normal.woff": "/static/media/open-sans-latin-ext-400-normal.0d1bee9909098bf3c1fe.woff",
+    "static/media/josefin-sans-latin-400-normal.woff2": "/static/media/josefin-sans-latin-400-normal.761b272ec66a5f5bda94.woff2",
+    "static/media/open-sans-cyrillic-400-normal.woff2": "/static/media/open-sans-cyrillic-400-normal.01a8fce6bb81dce58431.woff2",
+    "static/media/open-sans-symbols-400-normal.woff2": "/static/media/open-sans-symbols-400-normal.9b4f2daf3fa17a8dfb8d.woff2",
+    "static/media/josefin-sans-latin-ext-400-normal.woff2": "/static/media/josefin-sans-latin-ext-400-normal.0f09987515ffb170376e.woff2",
+    "static/media/open-sans-greek-400-normal.woff2": "/static/media/open-sans-greek-400-normal.d61d10fb4bef2049668f.woff2",
+    "static/media/open-sans-cyrillic-400-normal.woff": "/static/media/open-sans-cyrillic-400-normal.a8e0ec81de20d8ed95d4.woff",
+    "static/media/open-sans-vietnamese-400-normal.woff2": "/static/media/open-sans-vietnamese-400-normal.b7e168b0175544ef658f.woff2",
+    "static/media/open-sans-symbols-400-normal.woff": "/static/media/open-sans-symbols-400-normal.36d41872a4e588387fa7.woff",
+    "static/media/open-sans-hebrew-400-normal.woff2": "/static/media/open-sans-hebrew-400-normal.f65fca7e733e2a6990fb.woff2",
+    "static/media/open-sans-greek-400-normal.woff": "/static/media/open-sans-greek-400-normal.0b60c51d0a360f6f1df5.woff",
+    "static/media/open-sans-vietnamese-400-normal.woff": "/static/media/open-sans-vietnamese-400-normal.908d7e7e2917dfba627f.woff",
+    "static/media/josefin-sans-vietnamese-400-normal.woff": "/static/media/josefin-sans-vietnamese-400-normal.f15be9b55ba603244156.woff",
+    "static/media/open-sans-hebrew-400-normal.woff": "/static/media/open-sans-hebrew-400-normal.aedbe9d8cabdc177367b.woff",
+    "static/media/josefin-sans-vietnamese-400-normal.woff2": "/static/media/josefin-sans-vietnamese-400-normal.6d112623e8b032f69473.woff2",
+    "static/media/open-sans-greek-ext-400-normal.woff2": "/static/media/open-sans-greek-ext-400-normal.d4de70500674183ec495.woff2",
+    "static/media/open-sans-greek-ext-400-normal.woff": "/static/media/open-sans-greek-ext-400-normal.cf5beb1860c305814dc2.woff",
+    "index.html": "/index.html",
+    "main.7a56fc42.css.map": "/static/css/main.7a56fc42.css.map",
+    "main.8faf80cf.js.map": "/static/js/main.8faf80cf.js.map",
+    "453.419a5d54.chunk.js.map": "/static/js/453.419a5d54.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7a56fc42.css",
+    "static/js/main.8faf80cf.js"
+  ]
+}
