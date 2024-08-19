@@ -1,11 +1,15 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PieChart from "../../../components/Graph";
 import DonutChart from "../../../components/DonutChart";
 import '../../../components/styles/style.css'
 import LineChart from "../../../components/LineChart";
 function Mentor(){
+    const [show, setShow] = useState(false);
+    useEffect(() => {
+        setShow(true);
+    }, [])
     return (
-        <div className="grid md:grid-cols-4 gap-4 mt-2 grid-cols-1">
+        <div className={`grid md:grid-cols-4 gap-4 mt-2 grid-cols-1 content ${show ? "visible": ""}`}>
                     <div className="col-span-3 gap-3">
                             <div className="grid md:grid-cols-4 gap-2">
                                 <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#afdade'}}>

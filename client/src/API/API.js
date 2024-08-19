@@ -1,11 +1,12 @@
 import axios from "axios";
-function Home(){
-    axios.get('http://localhost:3003/').then(function(response){
-         
-    })
-}
-async function AddTeams()
+ function AddTeams(getData)
 {
-    axios()
+
 }
-export default Function;
+
+function AddConnections(AddConnection)
+{
+    const result = axios.post('http://localhost:3001/api/v1/addconnection', AddConnection);
+    
+}
+export {AddTeams, AddConnections};

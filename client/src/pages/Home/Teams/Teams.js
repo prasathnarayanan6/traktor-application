@@ -1,11 +1,16 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PieChart from "../../../components/Graph";
 import DonutChart from "../../../components/DonutChart";
 import '../../../components/styles/style.css'
 import LineChart from "../../../components/LineChart";
+import '../../../components/styles/style.css';
 function Teams(){
+    const [show, setShow] = useState(false);
+    useEffect(() => {
+        setShow(true);
+    }, [])
     return (
-        <div className="grid md:grid-cols-4 gap-4 mt-2 grid-cols-1">
+        <div className={`grid md:grid-cols-4 gap-4 mt-2 grid-cols-1 content ${show ? "visible": ""}`}>
             <div className="col-span-3 gap-3">
                     <div className="grid md:grid-cols-3 gap-2">
                         <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#afdade'}}>
@@ -16,10 +21,6 @@ function Teams(){
                             <div className="p-3 text-sm font-semibold text-gray-600">Akshar Teams (in Total)</div>
                             <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">50</div>
                         </div>
-                        {/* <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#afcdde'}}>
-                                <div className="p-3 text-sm font-semibold text-gray-600">External funding raised</div>
-                                <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">30</div>
-                        </div> */}
                         <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#7da1ad'}}>
                                 <div className="p-3 text-sm font-semibold text-gray-600">Total Graduated</div>
                                 <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-600">50</div>

@@ -23,3 +23,25 @@
   .shadow-md {
     background-image: none !important;
   }
+
+  .content {
+    /* transform: scale(0.8);
+    opacity: 0.2;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    z-index: auto; */
+    animation: fade-in 0.7s;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 100;
+    }
+  }
+  /* .content.visible {
+    transform: scale(1); 
+    opacity: 1;  
+  } */

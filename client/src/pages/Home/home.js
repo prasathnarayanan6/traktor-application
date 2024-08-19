@@ -36,6 +36,10 @@ function Home() {
     };
     const [userList, setUserList] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [show, setShow] = useState(false);
+    useEffect(() => {
+        setShow(true);
+    }, [])
     useEffect(() => {
         const loaded = () => {
             setTimeout(()=>{
@@ -48,7 +52,6 @@ function Home() {
         }
         loaded()
     })
-    // console.log(userList[0]);
     return (
             <div className="h-screen flex">
                  {isSidebarOpen && (
@@ -77,7 +80,8 @@ function Home() {
                                 </div>
                                 <h1 className="text-3xl font-semibold text-gray-500 mb-7 mt- justify-content-center items-center">Welcome Manager</h1>
                                     { analysis === 'home' && (
-                                        <div className="grid md:grid-cols-4 gap-4 mt-2 grid-cols-1">
+                                        // {`grid grid-cols-2 mt-7 gap-10 content ${show ? "visible": ""}` }
+                                        <div className={`grid md:grid-cols-4 gap-4 mt-2 grid-cols-1 content ${show ? "visible": ""}`}> 
                                         <div className="col-span-3 gap-3 overflow-hidden">
                                                 <div className="grid md:grid-cols-4 gap-2">
                                                         {!isLoaded ? (

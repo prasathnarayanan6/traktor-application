@@ -1,8 +1,12 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import SideBar from '../../components/sidebar';
 import NavBar from '../../components/NavBar'
 import DonutChart from '../../components/DonutChart';
 function MentorShip() {
+    const [show, setShow] = useState(false);
+    useEffect(() => {
+        setShow(true);
+    }, [])
   return (
       <div className="flex h-screen">
                 <section id="SideBar" className="fixed h-full">
@@ -18,7 +22,7 @@ function MentorShip() {
                                       <a href={'/addmentor'} className="text-gray-500 text-sm font-semibold mt-1 p-1 px-3 rounded-xl shadow-md text-white" style={{backgroundColor: '#0b5f66'}}>Schedule</a>
                               </div>
                               {/**Panel */}
-                              <div className="grid grid-cols-4 gap-4 mt-5">
+                              <div className={`grid grid-cols-4 gap-4 mt-5 content ${show ? "visible": ""}`}>
                                   <div className="shadow-sm rounded-lg flex justify-between text-gray-500 font-semibold pt-3 pb-3" style={{backgroundColor : '#97bfcc'}}>
                                         <div className="p-1 ps-5 text-lg text-black">Total Session</div>
                                         <div className="px-[20px] text-4xl text-black">45</div>
@@ -37,7 +41,7 @@ function MentorShip() {
                                   </div>
                               </div>
 
-                              <div className="grid grid-cols-2 mt-5 gap-4 flex justify-center items-center">
+                              <div className={`grid grid-cols-2 mt-5 gap-4 flex justify-center items-center content ${show ? "visible": ""}`}>
                                     <div className="shadow-md font-semibold rounded-lg w-full md:h-[340px;] border">
                                         <div className="p-2 pt-1 text-sm text-gray-600 font-semibold">Pratham mentorship hours</div>
                                         <div className="flex justify-center items-center mb-1">

@@ -11,6 +11,9 @@ function Events() {
                 <div className="fixed w-full">
                         <NavBar />
                 </div>
+                <div>
+                                zx
+                </div>
         </section>
     </div>
   )
