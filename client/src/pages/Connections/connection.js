@@ -3,9 +3,12 @@ import SideBar from "../../components/sidebar";
 import NavBar from "../../components/NavBar";
 import AddConnections from "../../components/AddConnections";
 import { CSSTransition } from "react-transition-group";
-import { FaCross, FaExclamation, FaExclamationTriangle, FaFile, FaFileAlt, FaPagelines, FaPlusCircle, FaQuestion, FaSearch, FaTag, FaTrash } from "react-icons/fa";
+import {FaExclamationTriangle, FaFileAlt, FaPlusCircle, FaSearch, FaTag} from "react-icons/fa";
 import { FaGear, FaPage4, FaTrashCan } from "react-icons/fa6";
+import { ApiAddConnections } from "../../API/API";
 import '../../components/styles/style.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function Connection(){
     const [openPopUp, setOpenpopup] = useState(false);
     const handleShow = () => setOpenpopup(true);
@@ -17,7 +20,7 @@ function Connection(){
         contact_number: '',
         email_address: ''
     })
-
+console.log(AddConnection);
       const handleChange = (e) => {
         const {name, value} = e.target;
         setAddConnection((prevData)=>({  
@@ -25,18 +28,38 @@ function Connection(){
             [name]: value,
         })) 
       }
-    //   const handleClick = async (e) =>{
-    //       e.preventDefault();
-    //       try
-    //       {
-    //         const API = await AddTeams(getData);
-    //         console.log(API);
-    //       }
-    //       catch(err)
-    //       {
-    //         console.error("An error occurred:", err);
-    //       }
-      //}
+      const handleClick = async (e) =>{
+          e.preventDefault();
+          try
+          {
+            const API = await ApiAddConnections(AddConnection);
+            if(API)
+            {
+                toast.success('Connection Added');
+            }
+          }
+          catch(err)
+          {
+            if(err.response)
+            {
+                if(err.response.status==400)
+                {
+                    toast.error("All Fields are required");
+                }
+                else if(err.response.status==422)
+                {
+                    toast.error('Please provide a valid email')
+                }
+                else if(err.response.status=403)
+                {
+                    toast.error('Please provide a valid contact number')
+                }
+            }
+            else {
+                console.log(err.message);
+            }
+          }
+      }
     const [show, setShow] = useState(false);
     useEffect(() => {
         setShow(true);
@@ -106,6 +129,7 @@ function Connection(){
             </section>
             <AddConnections isVisible={openPopUp} onClose={()=>setOpenpopup(false)}>
                     <h1 className="text-xl p-3 pb-3 text-gray-500">Register for new connection</h1>
+                    <form onSubmit={handleClick}>
                     <div className="grid grid-cols-2 p-3 gap-4">
                             <div class="relative">
                                 <input type="text" id="floating_outlined" class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " name="name" onChange={handleChange}/>
@@ -133,6 +157,7 @@ function Connection(){
                             </div>
                     </div>
                     <div className="flex justify-center items-center"><button className="text-gray-500 text-sm font-semibold mt-1 p-1 px-3 rounded-xl shadow-md active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{backgroundColor : '#afdade'}}>Register</button></div>
+                    </form>
             </AddConnections>
         </div>
     )

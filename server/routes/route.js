@@ -41,7 +41,7 @@ router.post('/mentor/add', AddMentor);
 router.get('/profile-data/:mail', Authenticate, Profile);
 router.post('/add-sector', Settings)
 router.get('/view-message', ViewMessage);
-router.post('/add-connections',Authenticate, AddConnections);
+router.post('/add-connections', AddConnections);
 router.post('/add-startup', AddStartup);
 router.get('/viewconnections', ViewConnections);
 router.post('/post-job', Authenticate, Job);

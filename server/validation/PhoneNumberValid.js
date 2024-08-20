@@ -6,3 +6,4 @@ var PhoneNumberValid = (phoneNumber) => {
     return false;
   }
 }
+module.exports = PhoneNumberValid;

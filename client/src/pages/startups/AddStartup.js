@@ -28,8 +28,8 @@ function AddStartup() {
       e.preventDefault();
       try
       {
-        const API = await AddTeams(getData);
-        console.log(API);
+        // const API = await AddTeams(getData);
+        console.log("Hello");
       }
       catch(err)
       {

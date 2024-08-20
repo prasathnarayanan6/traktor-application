@@ -1,21 +1,39 @@
 const { escape } = require('validator');
+const EmailValid = require('../../../validation/EmailValid');
+const PhoneNumberValid = require('../../../validation/PhoneNumberValid')
 const {AddConnectionModel, ViewConnectionModel, EstablishConnectionModel}  = require('../../../model/ConnectionModel');
 const AddConnections = async(req, res) => {
-    const{add_connection_name, add_connection_organization, add_connection_connect_for, add_connection_contact_number, add_connection_email_address, add_connection_designation} = req.body;
-    if(!add_connection_name || !add_connection_organization || !add_connection_connect_for || !add_connection_contact_number || !add_connection_email_address || !add_connection_designation)
+    const{name, designation, organisation, connect_for, contact_number, email_address} = req.body;
+    if(!name || !designation || !organisation || !connect_for || !contact_number || !email_address)
     {
-        res.status(400).json({Request: "Bad request"});
+        res.status(400).json({Request: "Input data cannot be empty"});
+    }
+    else if(!EmailValid(email_address))
+    {
+        res.status(422).json({Request: "Not a valid email"})
+    }
+    else if(!PhoneNumberValid(contact_number))
+    {
+        res.status(403).json({Request: "Not a valid Phone number"})
     }
     else
     {
         try
         { 
-            const result = await AddConnectionModel(add_connection_name, add_connection_organization, add_connection_connect_for, add_connection_contact_number, add_connection_email_address, add_connection_designation);
+            const result = await AddConnectionModel(name, organisation, connect_for, contact_number, email_address, designation);
             res.status(200).json(result);
         }
         catch(err)
         {
-            console.log(err);
+            // console.log(err);
+            if(err.code='23505')
+            {
+                res.status(409).json({Error: "Contact number already exists" })
+            }
+            else {
+                console.log(err);
+                res.status(500).json({Error: "Internal Server Error"});
+            }
         }
     }
 }

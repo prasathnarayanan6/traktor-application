@@ -1,7 +1,7 @@
 const client = require("../utils/conn");
-const AddConnectionModel = async(add_connection_name, add_connection_organization, add_connection_connect_for, add_connection_contact_number, add_connection_email_address,  add_connection_designation) => {
+const AddConnectionModel = async(name, organisation, connect_for, contact_number, email_address,  designation) => {
     return new Promise((resolve, reject) => {
-        client.query("INSERT INTO establish_connections(connection_name, organization, connect_for, contact_number, email_address, connection_desig) VALUES($1, $2, $3, $4, $5, $6)", [add_connection_name, add_connection_organization, add_connection_connect_for, add_connection_contact_number, add_connection_email_address, add_connection_designation],
+        client.query("INSERT INTO establish_connections(connection_name, organization, connect_for, contact_number, email_address, connection_desig) VALUES($1, $2, $3, $4, $5, $6)", [name, organisation, connect_for, contact_number, email_address, designation],
         (err, result)=>{
             if(err)
             {

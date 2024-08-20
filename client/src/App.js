@@ -45,6 +45,7 @@ import Industry from './pages/startups/Industry/Industry.js';
 import Sustainability from './pages/startups/Sustainability/Sustainability.js';
 import Healthcare from './pages/startups/Healthcare/Healthcare.js';
 import Mobility from './pages/startups/Mobility/Mobility.js';
+import { ToastContainer } from 'react-toastify';
 function App() {
   const [LoggedIn, setLoggedIn] = useState(false);
   const authenticate = async() => {
@@ -75,6 +76,7 @@ function App() {
   }
   return (
     <div>
+      <ToastContainer />
       <BrowserRouter>
         <Routes>
            <Route path="/" element={<Login />} /> 

@@ -1,12 +1,14 @@
 import axios from "axios";
- function AddTeams(getData)
+async function ApiAddConnections(AddConnection)
 {
-
+    try{
+        const result = await axios.post('http://localhost:3003/api/v1/add-connections', AddConnection);
+        return result.data;
+    }
+    catch (error)
+    {
+        console.error("Error in API", error);
+        throw error;
+    }
 }
-
-function AddConnections(AddConnection)
-{
-    const result = axios.post('http://localhost:3001/api/v1/addconnection', AddConnection);
-    
-}
-export {AddTeams, AddConnections};
+export {ApiAddConnections};
