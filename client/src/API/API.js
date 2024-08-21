@@ -11,4 +11,16 @@ async function ApiAddConnections(AddConnection)
         throw error;
     }
 }
-export {ApiAddConnections};
+async function ApiViewConnections()
+{
+    try{
+        const result = await axios.get('http://localhost:3003/api/v1/viewconnections');
+        return result.data;
+    }
+    catch(error)
+    {
+        console.error("Error in APi", error);
+        throw error;
+    }
+}
+export {ApiAddConnections, ApiViewConnections};

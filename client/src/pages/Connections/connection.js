@@ -5,7 +5,7 @@ import AddConnections from "../../components/AddConnections";
 import { CSSTransition } from "react-transition-group";
 import {FaExclamationTriangle, FaFileAlt, FaPlusCircle, FaSearch, FaTag} from "react-icons/fa";
 import { FaGear, FaPage4, FaTrashCan } from "react-icons/fa6";
-import { ApiAddConnections } from "../../API/API";
+import { ApiAddConnections, ApiViewConnections } from "../../API/API";
 import '../../components/styles/style.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -36,6 +36,7 @@ console.log(AddConnection);
             if(API)
             {
                 toast.success('Connection Added');
+                setOpenpopup(false);
             }
           }
           catch(err)
@@ -59,10 +60,24 @@ console.log(AddConnection);
                 console.log(err.message);
             }
           }
-      }
+        }
+        const [data, setData] = useState([]);
+        const ViewConnection = async() => {
+                try {
+                    const API = await ApiViewConnections();
+                    //console.log(API.rows);
+                    setData(API.rows);
+                }
+                catch(err)
+                {
+                    console.log(err);
+                }
+        }
+    console.log(data);
     const [show, setShow] = useState(false);
     useEffect(() => {
         setShow(true);
+        ViewConnection();
     }, [])
     return (
         <div className="flex h-screen">
@@ -124,6 +139,22 @@ console.log(AddConnection);
                                                     <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaFileAlt size={28}/></div>
                                             </div>
                                 </div>
+                                {data.map((dataObj, index) => {
+                                        return <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#afdade'}}> 
+                                                        <div className="flex justify-between p-3 text-xs border-b">
+                                                            <div className="text-sm">ID: {dataObj.email_address} - <span>{dataObj.connection_name}</span></div>
+                                                            <div className="pt-1"><FaTrashCan size={14}/></div>
+                                                            <div className="pt-1"><FaTag size={14}/></div>
+                                                            <div className="pt-1 text-yellow-100"><FaExclamationTriangle size={14}/></div>
+                                                            {/* <div className="pt-1"><div className={`absolute inline-flex items-center justify-center w-[12px] h-[12px] text-xs font-bold text-white bg-red-500 border-0 border-white rounded-full top-[171px] end-[105px;] dark:border-gray-900 animate-pulse`}><span className="text-xs"></span></div></div> */}
+                                                        </div>
+                                                        <div className="grid grid-cols-3 gap-5 md:p-5">
+                                                                <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaGear size={28}/></div>
+                                                                <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaSearch size={28}/></div>
+                                                                <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaFileAlt size={28}/></div>
+                                                        </div>
+                                                </div>;
+                                })} 
                             </div>
                     </div>
             </section>
