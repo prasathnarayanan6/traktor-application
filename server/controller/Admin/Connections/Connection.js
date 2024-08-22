@@ -16,6 +16,10 @@ const AddConnections = async(req, res) => {
     {
         res.status(403).json({Request: "Not a valid Phone number"})
     }
+    else if(!EmailValid(email_address) && !PhoneNumberValid(contact_number))
+    {
+            res.status(402).json({Request: 'Check email and phone number'})
+    }
     else
     {
         try
@@ -55,7 +59,7 @@ const EstablishConnection = async(req, res) => {
         const{startup, connection, email_content} = req.body;
         if(!startup || !connection || !email_content)
         {
-            res.send('data');
+            res.status(400).json({Request: "Input data cannot be empty"});
         }
         else
         {

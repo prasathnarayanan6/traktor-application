@@ -2,16 +2,19 @@ import React, { useState, useEffect } from "react";
 import SideBar from "../../components/sidebar";
 import NavBar from "../../components/NavBar";
 import AddConnections from "../../components/AddConnections";
+import EstablishConnections from "../../components/EstablishConnections";
 import { CSSTransition } from "react-transition-group";
 import {FaExclamationTriangle, FaFileAlt, FaPlusCircle, FaSearch, FaTag} from "react-icons/fa";
-import { FaGear, FaPage4, FaTrashCan } from "react-icons/fa6";
-import { ApiAddConnections, ApiViewConnections } from "../../API/API";
+import { FaGear, FaPage4, FaPencil, FaTrashCan } from "react-icons/fa6";
+import { ApiAddConnections, ApiViewConnections, ApiEstablishConnections } from "../../API/API";
 import '../../components/styles/style.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 function Connection(){
     const [openPopUp, setOpenpopup] = useState(false);
     const handleShow = () => setOpenpopup(true);
+    const [openEstablishPopUp, setOpenEstablishPopUp] = useState(false);
+    const handleEstablish = () => setOpenEstablishPopUp(true);
     const [AddConnection, setAddConnection] = useState({
         name: '',
         designation: '',
@@ -20,13 +23,24 @@ function Connection(){
         contact_number: '',
         email_address: ''
     })
-console.log(AddConnection);
+    const [EstablishConnection, setEstablishConnection] = useState({
+        startup: '',
+        connection: '',
+        email_content: ''
+    })
       const handleChange = (e) => {
         const {name, value} = e.target;
         setAddConnection((prevData)=>({  
             ...prevData,
             [name]: value,
         })) 
+      }
+      const handleChangeEst = (e) => {
+        const {name, value} = e.target;
+        setEstablishConnection((prevData)=>({
+            ...prevData,
+            [name]: value,
+        }))
       }
       const handleClick = async (e) =>{
           e.preventDefault();
@@ -47,6 +61,10 @@ console.log(AddConnection);
                 {
                     toast.error("All Fields are required");
                 }
+                else if(err.response.status=402)
+                    {
+                        toast.error('Email and Phone Invalid')
+                    }
                 else if(err.response.status==422)
                 {
                     toast.error('Please provide a valid email')
@@ -60,6 +78,18 @@ console.log(AddConnection);
                 console.log(err.message);
             }
           }
+        }
+        const EstablishButton = async(e) => {
+            e.preventDefault();
+            try
+            {
+                const API = await ApiEstablishConnections(EstablishConnection);
+                console.log(API)
+            }
+            catch(err)
+            {
+                console.log(err);
+            }
         }
         const [data, setData] = useState([]);
         const ViewConnection = async() => {
@@ -95,57 +125,13 @@ console.log(AddConnection);
                                             <div className="flex justify-center items-center"><button className="px-3 py-3 active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}} onClick={handleShow}><FaPlusCircle size={55  }/></button></div>
                                             <div className="text-center pb-3 text-gray-500">ADD CONNECTION</div>
                                 </div>
-
-                                <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#afdade'}}> 
-                                            <div className="flex justify-between p-3 text-xs border-b">
-                                                <div className="text-sm">ID: cm.ie@imail.iitm.ac.in - Content</div>
-                                                <div className="pt-1"><FaTrashCan size={14}/></div>
-                                                <div className="pt-1"><FaTag size={14}/></div>
-                                                <div className="pt-1 text-yellow-100"><FaExclamationTriangle size={14}/></div>
-                                            </div>
-                                            <div className="grid grid-cols-3 gap-5 md:p-5">
-                                                    <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaGear size={28}/></div>
-                                                    <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaSearch size={28}/></div>
-                                                    <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaFileAlt size={28}/></div>
-                                            </div>
-                                </div>
-
-                                <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#afdade'}}> 
-                                            <div className="flex justify-between p-3 text-xs border-b">
-                                                <div className="text-sm">ID: pm.ie@imail.iitm.ac.in - Sundar</div>
-                                                <div className="pt-1"><FaTrashCan size={14}/></div>
-                                                <div className="pt-1"><FaTag size={14}/></div>
-                                                <div className="pt-1 text-yellow-100"><FaExclamationTriangle size={14}/></div>
-                                                {/* <div className="pt-1"><div className={`absolute inline-flex items-center justify-center w-[12px] h-[12px] text-xs font-bold text-white bg-red-500 border-0 border-white rounded-full top-[171px] end-[105px;] dark:border-gray-900 animate-pulse`}><span className="text-xs"></span></div></div> */}
-                                            </div>
-                                            <div className="grid grid-cols-3 gap-5 md:p-5">
-                                                    <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaGear size={28}/></div>
-                                                    <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaSearch size={28}/></div>
-                                                    <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaFileAlt size={28}/></div>
-                                            </div>
-                                </div>
-
-                                <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#afdade'}}> 
-                                            <div className="flex justify-between p-3 text-xs border-b">
-                                                <div className="text-sm">ID: tech_support.ie@imail.iitm.ac.in - Sath</div>
-                                                <div className="pt-1"><FaTrashCan size={14}/></div>
-                                                <div className="pt-1"><FaTag size={14}/></div>
-                                                <div className="pt-1 text-yellow-100"><FaExclamationTriangle size={14}/></div>
-                                                {/* <div className="pt-1"><div className={`absolute inline-flex items-center justify-center w-[12px] h-[12px] text-xs font-bold text-white bg-red-500 border-0 border-white rounded-full top-[171px] end-[105px;] dark:border-gray-900 animate-pulse`}><span className="text-xs"></span></div></div> */}
-                                            </div>
-                                            <div className="grid grid-cols-3 gap-5 md:p-5">
-                                                    <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaGear size={28}/></div>
-                                                    <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaSearch size={28}/></div>
-                                                    <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaFileAlt size={28}/></div>
-                                            </div>
-                                </div>
                                 {data.map((dataObj, index) => {
                                         return <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#afdade'}}> 
                                                         <div className="flex justify-between p-3 text-xs border-b">
-                                                            <div className="text-sm">ID: {dataObj.email_address} - <span>{dataObj.connection_name}</span></div>
-                                                            <div className="pt-1"><FaTrashCan size={14}/></div>
-                                                            <div className="pt-1"><FaTag size={14}/></div>
-                                                            <div className="pt-1 text-yellow-100"><FaExclamationTriangle size={14}/></div>
+                                                            <div className="text-sm">ID: {dataObj.email_address} - <span>{dataObj.connect_for}</span></div>
+                                                            <div className="pt-1"><button><FaTrashCan size={14}/></button></div>
+                                                            <div className="pt-1"><button onClick={handleEstablish}><FaTag size={14}/></button></div>
+                                                            <div className="pt-1"><button><FaPencil size={14}/></button></div>
                                                             {/* <div className="pt-1"><div className={`absolute inline-flex items-center justify-center w-[12px] h-[12px] text-xs font-bold text-white bg-red-500 border-0 border-white rounded-full top-[171px] end-[105px;] dark:border-gray-900 animate-pulse`}><span className="text-xs"></span></div></div> */}
                                                         </div>
                                                         <div className="grid grid-cols-3 gap-5 md:p-5">
@@ -190,6 +176,30 @@ console.log(AddConnection);
                     <div className="flex justify-center items-center"><button className="text-gray-500 text-sm font-semibold mt-1 p-1 px-3 rounded-xl shadow-md active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{backgroundColor : '#afdade'}}>Register</button></div>
                     </form>
             </AddConnections>
+            <EstablishConnections isVisible={openEstablishPopUp} onClose={()=>setOpenEstablishPopUp(false)}>
+                <form onSubmit={EstablishButton}>
+                        <h1 className="text-gray-500 text-xl">Tag Connection</h1>
+                        <div className="grid grid-cols-2 p-3 gap-4 mt-3">
+                                    <div>
+                                        <select id="small" name="startup" onChange={handleChangeEst} className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <option selected>Select Startup</option>
+                                            <option value="OG">OG Startup</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <select id="small" name="connection" onChange={handleChangeEst} className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <option selected>Select Contact</option>
+                                            <option value="OG">Contact</option>
+                                        </select>
+                                    </div>
+                        </div>
+                        <div className="p-3">
+                            <textarea name="email_content" onChange={handleChangeEst} className="w-full resize-none rounded-md md:h-[100px]" placeholder="Email Content">
+                            </textarea>
+                        </div>
+                        <div className="flex justify-center items-center"><button className="text-gray-500 text-sm font-semibold mt-1 p-1 px-3 rounded-xl shadow-md active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{backgroundColor : '#afdade'}}>Tag Connection</button></div>
+                </form>
+            </EstablishConnections>
         </div>
     )
 }

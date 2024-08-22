@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import './styles/style.css';
 function AddConnections({isVisible, onClose, children}) {
-    // if(!isVisible) return null;
     const handleClose = (e) => {
         if(e.target.id === 'wrapper') onClose();
     }

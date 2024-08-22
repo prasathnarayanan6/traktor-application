@@ -23,4 +23,18 @@ async function ApiViewConnections()
         throw error;
     }
 }
-export {ApiAddConnections, ApiViewConnections};
+
+async function ApiEstablishConnections(EstablishConnection)
+{
+    try
+    {
+        const result = await axios.post('http://localhost:3003/api/v1/establish-connection', );
+        return result.data;
+    }
+    catch(error)
+    {
+        console.error("Error",error);
+        throw error
+    }
+}
+export {ApiAddConnections, ApiViewConnections, ApiEstablishConnections};
