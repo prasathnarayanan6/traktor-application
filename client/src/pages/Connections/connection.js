@@ -6,10 +6,11 @@ import EstablishConnections from "../../components/EstablishConnections";
 import { CSSTransition } from "react-transition-group";
 import {FaExclamationTriangle, FaFileAlt, FaPlusCircle, FaSearch, FaTag} from "react-icons/fa";
 import { FaGear, FaPage4, FaPencil, FaTrashCan } from "react-icons/fa6";
-import { ApiAddConnections, ApiViewConnections, ApiEstablishConnections } from "../../API/API";
+import { ApiAddConnections, ApiViewConnections, ApiEstablishConnections, ApiDeleteConnections } from "../../API/API";
 import '../../components/styles/style.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Encryption } from "../../utils/Enc";
 function Connection(){
     const [openPopUp, setOpenpopup] = useState(false);
     const handleShow = () => setOpenpopup(true);
@@ -23,11 +24,16 @@ function Connection(){
         contact_number: '',
         email_address: ''
     })
+    let sessionData = sessionStorage.getItem('role');
+    let sessionDataTypeCast = Number(sessionData);
+    console.log(sessionDataTypeCast);
     const [EstablishConnection, setEstablishConnection] = useState({
         startup: '',
         connection: '',
-        email_content: ''
+        email_content: '',
+        user_role: sessionDataTypeCast
     })
+    console.log(EstablishConnection);
       const handleChange = (e) => {
         const {name, value} = e.target;
         setAddConnection((prevData)=>({  
@@ -37,7 +43,7 @@ function Connection(){
       }
       const handleChangeEst = (e) => {
         const {name, value} = e.target;
-        setEstablishConnection((prevData)=>({
+        setEstablishConnection((prevData)=>({ 
             ...prevData,
             [name]: value,
         }))
@@ -61,10 +67,6 @@ function Connection(){
                 {
                     toast.error("All Fields are required");
                 }
-                else if(err.response.status=402)
-                    {
-                        toast.error('Email and Phone Invalid')
-                    }
                 else if(err.response.status==422)
                 {
                     toast.error('Please provide a valid email')
@@ -84,11 +86,34 @@ function Connection(){
             try
             {
                 const API = await ApiEstablishConnections(EstablishConnection);
-                console.log(API)
+                if(API)
+                {
+                    toast.success('Request Sent');
+                    setOpenEstablishPopUp(false);
+                }
             }
             catch(err)
             {
-                console.log(err);
+                if (err.response.status==400)
+                {
+                    toast.error('ALL fields are required');
+                }
+            }
+        }
+        // let email_address = 'hello';
+        const deleteConnection = async(email_address) => {
+            try
+            {
+                // console.log(email_address);
+                const API = await ApiDeleteConnections(email_address);
+                if(API)
+                {
+                    toast.success('Delete Successfull');
+                }
+            }
+            catch(err)
+            {
+                console.error(err);
             }
         }
         const [data, setData] = useState([]);
@@ -103,7 +128,7 @@ function Connection(){
                     console.log(err);
                 }
         }
-    console.log(data);
+    // console.log(data);
     const [show, setShow] = useState(false);
     useEffect(() => {
         setShow(true);
@@ -120,24 +145,25 @@ function Connection(){
                     </div>
                     <div className={`p-[90px;] h-full`}>
                             <h1 className="text-3xl font-semibold text-gray-500">Connections</h1>
-                            <div className={`grid grid-cols-2 mt-7 gap-10 content ${show ? "visible": ""}` }>
+                            <div className={`grid grid-cols-3 mt-7 gap-10 content ${show ? "visible": ""}` }>
                                 <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#afdade'}}> 
-                                            <div className="flex justify-center items-center"><button className="px-3 py-3 active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}} onClick={handleShow}><FaPlusCircle size={55  }/></button></div>
-                                            <div className="text-center pb-3 text-gray-500">ADD CONNECTION</div>
+                                            <div className="flex justify-center items-center "><button className="px-3 py-4 active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}} onClick={handleShow}><FaPlusCircle size={55  }/></button></div>
+                                            <div className="text-center text-gray-500">ADD CONNECTION</div>
                                 </div>
                                 {data.map((dataObj, index) => {
+                                        let email_address = dataObj.email_address;
                                         return <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#afdade'}}> 
                                                         <div className="flex justify-between p-3 text-xs border-b">
-                                                            <div className="text-sm">ID: {dataObj.email_address} - <span>{dataObj.connect_for}</span></div>
-                                                            <div className="pt-1"><button><FaTrashCan size={14}/></button></div>
-                                                            <div className="pt-1"><button onClick={handleEstablish}><FaTag size={14}/></button></div>
-                                                            <div className="pt-1"><button><FaPencil size={14}/></button></div>
+                                                            <div className="text-sm">ID: {dataObj.email_address}</div>
+                                                            <div className="pt-1"><button className="text-gray-500" onClick={() => deleteConnection(email_address)}><FaTrashCan size={14}/></button></div>
+                                                            <div className="pt-1"><button className="text-gray-500" onClick={handleEstablish}><FaTag size={14}/></button></div>
+                                                            <div className="pt-1"><button className="text-gray-500"><FaPencil size={14}/></button></div>
                                                             {/* <div className="pt-1"><div className={`absolute inline-flex items-center justify-center w-[12px] h-[12px] text-xs font-bold text-white bg-red-500 border-0 border-white rounded-full top-[171px] end-[105px;] dark:border-gray-900 animate-pulse`}><span className="text-xs"></span></div></div> */}
                                                         </div>
-                                                        <div className="grid grid-cols-3 gap-5 md:p-5">
-                                                                <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaGear size={28}/></div>
-                                                                <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaSearch size={28}/></div>
-                                                                <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaFileAlt size={28}/></div>
+                                                        <div className="grid grid-cols-2 md:p-5 mb-3">
+                                                                <div className="flex justify-start items-start scale-[1.08] text-lg"><span className="" style={{color: '#0b5f66'}}>{dataObj.connect_for}</span></div>
+                                                                <div className="active:scale-[.98] active:duration-75 hover:scale-[1.02] ease-in-out transition-all flex justify-end items-end" style={{color: '#0b5f66'}}><button><FaSearch size={28}/></button></div>
+                                                                {/* <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaFileAlt size={28}/></div> */}
                                                         </div>
                                                 </div>;
                                 })} 
@@ -183,13 +209,17 @@ function Connection(){
                                     <div>
                                         <select id="small" name="startup" onChange={handleChangeEst} className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             <option selected>Select Startup</option>
-                                            <option value="OG">OG Startup</option>
+                                            {data.map((dataObj, Index) => {
+                                                return <option value={dataObj.email_address}>{dataObj.email_address}</option>
+                                            })}
                                         </select>
                                     </div>
                                     <div>
                                         <select id="small" name="connection" onChange={handleChangeEst} className="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             <option selected>Select Contact</option>
-                                            <option value="OG">Contact</option>
+                                            {data.map((dataObj, Index) => {
+                                                return <option value={dataObj.email_address}>{dataObj.connection_name}</option>
+                                            })}
                                         </select>
                                     </div>
                         </div>

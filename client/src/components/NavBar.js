@@ -116,7 +116,7 @@ function NavBar({toggleSideBar}) {
   }
   return (
     <div className="navbar">
-          <nav className="dark:bg-gray-900 shadow-sm border border-black border-10" style={{ backgroundColor: '#0b5f66' }}>
+          <nav className="dark:bg-gray-900 shadow-sm border-10" style={{ backgroundColor: '#0b5f66' }}>
             <div className="max-w-screen-3xl flex flex-wrap items-center justify-between mx-auto p-2">
               <button className="text-white text-xl" onClick={openSideBar}><FaBars /></button>
               <a href="https://github.com/prasathnarayanan6/nirmaan-vc-app" className="flex space-x-3 rtl:space-x-reverse">

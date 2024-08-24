@@ -1,7 +1,8 @@
 const { escape } = require('validator');
 const EmailValid = require('../../../validation/EmailValid');
+const {Decrypted} = require('../../../helpers/Encryption');
 const PhoneNumberValid = require('../../../validation/PhoneNumberValid')
-const {AddConnectionModel, ViewConnectionModel, EstablishConnectionModel}  = require('../../../model/ConnectionModel');
+const {AddConnectionModel, ViewConnectionModel, EstablishConnectionModel, DeleteConnectionModel}  = require('../../../model/ConnectionModel');
 const AddConnections = async(req, res) => {
     const{name, designation, organisation, connect_for, contact_number, email_address} = req.body;
     if(!name || !designation || !organisation || !connect_for || !contact_number || !email_address)
@@ -16,10 +17,6 @@ const AddConnections = async(req, res) => {
     {
         res.status(403).json({Request: "Not a valid Phone number"})
     }
-    else if(!EmailValid(email_address) && !PhoneNumberValid(contact_number))
-    {
-            res.status(402).json({Request: 'Check email and phone number'})
-    }
     else
     {
         try
@@ -29,7 +26,6 @@ const AddConnections = async(req, res) => {
         }
         catch(err)
         {
-            // console.log(err);
             if(err.code='23505')
             {
                 res.status(409).json({Error: "Contact number already exists" })
@@ -56,14 +52,14 @@ const ViewConnections = async(req, res) => {
 const EstablishConnection = async(req, res) => {
     try
     {
-        const{startup, connection, email_content} = req.body;
-        if(!startup || !connection || !email_content)
+        const{startup, connection, email_content, user_role} = req.body;
+        if(!startup || !connection || !email_content || !user_role)
         {
             res.status(400).json({Request: "Input data cannot be empty"});
         }
         else
         {
-            const result = EstablishConnectionModel(startup, connection, email_content);
+            const result = await EstablishConnectionModel(startup, connection, email_content, user_role);
             res.status(200).json(result);
         }
     }
@@ -72,4 +68,20 @@ const EstablishConnection = async(req, res) => {
         res.send(err);
     }
 }
-module.exports = {AddConnections, ViewConnections, EstablishConnection};
+
+const DeleteConnection = async(req,res) => {
+    try {
+        let email_address = req.query.element_data;
+        if(email_address)
+        {
+            const result = await DeleteConnectionModel(email_address);
+            res.status(200).json(result);
+        } else {
+            res.status(400).send('Email address parameter is missing.');
+        }
+    }
+    catch(err){
+        console.error(err);
+    }
+}
+module.exports = {AddConnections, ViewConnections, EstablishConnection, DeleteConnection};

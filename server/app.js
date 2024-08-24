@@ -32,6 +32,7 @@ const cors = require('cors');
 const AddMentorHour = require('./routes/route');
 const AddJob = require('./routes/route');
 const ViewNotification = require('./routes/route');
+const  DeleteConnection = require('./routes/route');
 const app = express();
 app.use(cors());
 app.use(cookieParser());
@@ -73,6 +74,7 @@ app.use('api/v1/', RaiseRequest);
 app.use('api/v1/', AddMentorHour)
 app.use('api/v1/', FetchDataMentor);
 app.use('api/v1/', ViewNotification);
+app.use('api/v1/', DeleteConnection);
 module.exports = app;
 
 

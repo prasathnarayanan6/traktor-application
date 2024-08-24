@@ -22,11 +22,11 @@ function IndustryModule()
                                         <div className="p-4 text-md text-gray-600">Mentors Associated</div>
                                         <div className="p-3 pt-3 text-3xl font-semibold pb-4 justify-end items-end flex text-gray-500">200</div>
                                     </div>
-                                    <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#7da1ad'}}>
+                                    <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#99d1c7'}}>
                                         <div className="p-4 text-md text-gray-600">Total Funds</div>
                                         <div className="p-3 pt-3 text-3xl font-semibold pb-4 justify-end items-end flex text-gray-500">3500000</div>
                                     </div>
-                                    <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#7d97ad'}}>
+                                    <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#afcce3'}}>
                                         <div className="p-4 text-md text-gray-600">Graduated startups</div>
                                         <div className="p-3 pt-3 text-3xl font-semibold pb-4 justify-end items-end flex text-gray-500">20</div>
                                     </div>

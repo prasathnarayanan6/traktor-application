@@ -24,6 +24,7 @@ const TeamMember = require('../controller/Team/TeamMember.js');
 const AwsCredits = require('../controller/Team/AwsCredits.js');
 const RaiseRequest = require('../controller/Team/RaiseRequest.js');
 const {AddMentorHour} = require('../controller/Team/Mentor.js');
+const {DeleteConnection} = require('../controller/Admin/Connections/Connection.js')
 const {ViewNotification} = require('../controller/Admin/Notification/Notification.js');
 const AddJob = require('../controller/Team/AddJob.js');
 router.post('/login', LoginController);
@@ -55,4 +56,5 @@ router.post('/customer/apply-mentor', AddMentorHour);
 router.get('/customer/fetch-mentor', FetchDataMentor);
 router.post('/customer/add-job', AddJob);
 router.get('/notification', ViewNotification);
+router.delete('/delete-connection', DeleteConnection);
 module.exports = router;
