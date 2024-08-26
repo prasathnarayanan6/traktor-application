@@ -1,21 +1,34 @@
-import React from "react";
-import NavBar from "../../components/NavBar";
-import SideBar from "../../components/sidebar";
-function CreateNewEvent()
+import React, {useEffect, useState} from "react";
+function CreateNewEvent({isVisible, onClose, children})
 {
-    return(
-        <div className="h-screen flex">
-            <section id="SideBar" className="fixed h-full">
-                    <SideBar />               
-            </section>
-            <section className="flex-grow">
-                    <div className="fixed w-full">
-                            <NavBar />
+        const handleClose = (e) => {
+                if(e.target.id === 'wrapper') onClose();
+            }
+            const [isAnimating, setIsAnimating] = useState(false);
+        
+            useEffect(()=>{
+                if(isVisible)
+                {
+                        setIsAnimating(true);
+                }
+                else{
+                    const timer = setTimeout(()=> setIsAnimating(false), 200);
+                    return () => clearTimeout(timer);
+                }
+            }, [isVisible])
+        
+            if (!isAnimating && !isVisible) {
+                return null;
+            }
+            return(
+                <div className={`fixed inset-0 bg-black bg-opacity-25 backdrop-blur-xs flex justify-center items-center border-md ${isVisible ? 'animate-show' : 'animate-hide'}`}  id="wrapper" onClick={handleClose}>
+                    <div className="w-[700px]">
+                        {/* <button className="text-white text-xl place-self-end justify-end" onClick={()=>onClose()}>X</button> */}
+                        <div className="bg-white p-4 rounded">
+                              {children}
+                        </div>
                     </div>
-                    <div className={`p-[90px;] h-full`}>
-                    </div>
-            </section>
-    </div>
-    )
+                </div>
+            )
 }
 export default CreateNewEvent;
