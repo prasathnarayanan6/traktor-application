@@ -36,27 +36,27 @@ function SideBar({children}) {
     //       <SideBarIcon icon={<FaPencilAlt size="16" />} tooltipText="Content Management System" />
     //   </SideBarLink>
     // </div>
-<div className="fixed top-0 left-0 mt-14 h-screen md:w-9 sm:w-9 w-9 m-0 flex flex-col text-black border border-r-1 border-gray-500 shadow-md">
+<div className="fixed top-0 left-0 mt-14 h-screen md:w-11 sm:w-9 w-9 m-0 flex flex-col text-black border border-r-1 border-gray-500 shadow-md">
       <SideBarLink href="/home">
-          <SideBarIcon icon={<FaHome size="23" />} tooltipText="Home" />
+          <SideBarIcon icon={<FaHome size="24" />} tooltipText="Home" />
       </SideBarLink>
       <SideBarLink href="/startups">
-          <SideBarIcon icon={<FaGraduationCap size="23" />} tooltipText="Startups" />
+          <SideBarIcon icon={<FaGraduationCap size="24" />} tooltipText="Startups" />
       </SideBarLink>
       <SideBarLink href="/mentors">
-          <SideBarIcon icon={<FaChalkboardTeacher size="23" />} tooltipText="Mentor" />
+          <SideBarIcon icon={<FaChalkboardTeacher size="24" />} tooltipText="Mentor" />
       </SideBarLink>
       <SideBarLink href="/mentorship">
-          <SideBarIcon icon={<FaPersonChalkboard size="23" />} tooltipText="Mentorship" />
+          <SideBarIcon icon={<FaPersonChalkboard size="24" />} tooltipText="Mentorship" />
       </SideBarLink>
       <SideBarLink href="/events">
-              <SideBarIcon icon={<FaCalendar size="23" />} tooltipText="Events" />
+              <SideBarIcon icon={<FaCalendar size="24" />} tooltipText="Events" />
       </SideBarLink>  
       <SideBarLink href="/connections">
-        <SideBarIcon icon={<FaPeopleArrows size="23" />} tooltipText="Connections" />
+        <SideBarIcon icon={<FaPeopleArrows size="24" />} tooltipText="Connections" />
       </SideBarLink>
       <SideBarLink href="/reports">
-          <SideBarIcon icon={<FaFilePdf size="23" />} tooltipText="Reports" />
+          <SideBarIcon icon={<FaFilePdf size="24" />} tooltipText="Reports" />
       </SideBarLink>
       {/* <SideBarLink href="/uploads">
           <SideBarIcon icon={<FaFileUpload size="20" />} tooltipText="Uploads" />
