@@ -3,23 +3,24 @@ import Step1 from './step/Step1';
 import Step2 from './step/Step2';
 import Step3 from './step/Step3';
 import Step4 from './step/Step4';
+import { FaInfo, FaInfoCircle, FaSearch } from 'react-icons/fa';
+import { FaGear, FaMessage } from 'react-icons/fa6';
 
 const AddStartupMultiForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
-
   const steps = [
     'Basic',
     'Official',
     'Founder',
     'Description'
   ];
+  const icons = [<FaInfo size={20}/>, <FaGear size={20}/>, <FaSearch size={20}/> , <FaMessage size={20}/>]
   const nextPrev = (n) => {
     setCurrentStep((prevStep) => prevStep + n);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
   };
-
   return (
     <div className="container mx-auto mt-3 mb-8 p-12">
       <form
@@ -30,15 +31,15 @@ const AddStartupMultiForm = () => {
         <div className="flex justify-between items-center mb-6">
           {steps.map((step, index) => (
             <div key={index} className="flex-1 text-center relative">
-              <div
-                className={`stepper-circle w-16 h-16 mx-auto rounded-full border-2 flex items-center justify-center ${currentStep >= index ? 'text-white' : 'border-gray-300 bg-white text-gray-600'}`}
-                style={{
-                  backgroundColor: currentStep >= index ? '#0b5f66' : 'white',
-                  borderColor: currentStep >= index ? '#0b5f66' : '#0b5f66',
-                }}
-              >
-                {index + 1}
-              </div>
+                  <div
+                    className={`stepper-circle w-16 h-16 mx-auto rounded-full border-2 flex items-center justify-center ${currentStep >= index ? 'text-white' : 'border-gray-300 bg-white text-gray-600'}`}
+                    style={{
+                      backgroundColor: currentStep >= index ? '#0b5f66' : 'white',
+                      borderColor: currentStep >= index ? '#0b5f66' : '#0b5f66',
+                    }}
+                  >
+                     {icons[index % icons.length]}
+                  </div>
               <div
                 className={`text-lg mt-2 ${currentStep >= index ? 'font-semibold' : ''}`}
                 style={{

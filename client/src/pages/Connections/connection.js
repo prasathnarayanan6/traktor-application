@@ -160,10 +160,9 @@ function Connection(){
                                                             <div className="pt-1"><button className="text-gray-500"><FaPencil size={14}/></button></div>
                                                             {/* <div className="pt-1"><div className={`absolute inline-flex items-center justify-center w-[12px] h-[12px] text-xs font-bold text-white bg-red-500 border-0 border-white rounded-full top-[171px] end-[105px;] dark:border-gray-900 animate-pulse`}><span className="text-xs"></span></div></div> */}
                                                         </div>
-                                                        <div className="grid grid-cols-2 md:p-5 mb-3">
-                                                                <div className="flex justify-start items-start scale-[1.08] text-lg"><span className="" style={{color: '#0b5f66'}}>{dataObj.connect_for}</span></div>
+                                                        <div className="grid grid-cols-2 md:p-6 mb-1">
+                                                                <div className="flex justify-start items-start scale-[1.08] text-md"><span className="" style={{color: '#0b5f66'}}>{dataObj.connect_for}</span></div>
                                                                 <div className="active:scale-[.98] active:duration-75 hover:scale-[1.02] ease-in-out transition-all flex justify-end items-end" style={{color: '#0b5f66'}}><button><FaSearch size={28}/></button></div>
-                                                                {/* <div className="flex justify-center items-center active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{color: '#0b5f66'}}><FaFileAlt size={28}/></div> */}
                                                         </div>
                                                 </div>;
                                 })} 
