@@ -81,13 +81,15 @@ function App() {
       <BrowserRouter>
         <Routes>
            <Route path="/" element={<Login />} /> 
-           <Route path="/home" element={<Home />} />
-           <Route path="/profile" element={<Profile/>} />
-           <Route path="/" element={<AddStartup/>} />
-           <Route path="/home-finance" element={<HomeFinance/>} />
-           <Route path="/addstartup" element={<AddStartup/>} />
             <Route element={<ProtectedRoutes requiredRoles={[localStorage.getItem('token'), '2']} />}>
                   {/* <Route path="/home" element={<Home />} /> */}
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/profile" element={<Profile/>} />
+                  <Route path="/" element={<AddStartup/>} />
+                  <Route path="/home-finance" element={<HomeFinance/>} />
+                  <Route path="/connections" element={<Connections />} />
+                  <Route path="/addstartup" element={<AddStartup/>} />
+                  <Route path="/startups" element={<Startups />} />
                   <Route path="/connections" element={<Connections />} />
                   {/* <Route path="/profile" element={<Profile/>} /> */}
                   <Route path="/addconnections" element={<Forms />} />
