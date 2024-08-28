@@ -6,6 +6,7 @@ import { FaInfo } from "react-icons/fa";
 import Step1 from "./Step/Step1";
 import Step2 from "./Step/Step2";
 import Step3 from "./Step/Step3";
+import axios from "axios";
 
 function AddNewMentor() {
     const [currentStep, setCurrentStep] = useState(0);
@@ -22,11 +23,6 @@ function AddNewMentor() {
 
     const nextPrev = (n) => {
         setCurrentStep((prevStep) => prevStep + n);
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(formData);
     };
 
     const [formData, setFormData] = useState({
@@ -61,7 +57,17 @@ function AddNewMentor() {
             },
         }));
     };
-    console.log(formData);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const result = await axios.post('http://localhost:3003/api/v1/mentor/add', formData);
+            console.log("Form submitted successfully:", result);
+        } catch (err) {
+            console.error("Error submitting form:", err);
+        }
+    };
+
     return (
         <div className="h-screen flex">
             <section id="SideBar" className="fixed h-full">
@@ -75,7 +81,7 @@ function AddNewMentor() {
                     <div className="flex justify-between">
                         <h1 className="p-0 text-3xl font-semibold text-gray-500">Add new mentor</h1>
                     </div>
-                    <div className="mt-6 shadow-md rounded-md border py-2 mb-10">
+                    <form onSubmit={handleSubmit} className="mt-6 shadow-md rounded-md border py-2 mb-10">
                         <div className="m-3 text-center">
                             Add new mentor
                         </div>
@@ -115,26 +121,24 @@ function AddNewMentor() {
                         {currentStep === 2 && <Step3 formData={formData.contact} handleChange={(e) => handleChange(e, 'contact')} />}
                         <div className="form-footer gap-2 px-10 flex justify-center">
                             {currentStep > 0 && (
-                                <button
-                                    type="button"
+                                <a
                                     className="w-24 focus:outline-none border border-gray-300 py-1 px-2 rounded-lg shadow-sm text-center text-gray-700 bg-white hover:bg-gray-100 text-sm"
                                     onClick={() => nextPrev(-1)}
                                 >
                                     Previous
-                                </button>
+                                </a>
                             )}
                             {currentStep < steps.length - 1 ? (
-                                <button
-                                    type="button"
+                                <a
                                     className="border border-transparent focus:outline-none py-2 px-5 rounded-md text-center text-white text-sm"
                                     style={{ backgroundColor: '#0b5f66' }}
                                     onClick={() => nextPrev(1)}
                                 >
                                     Next
-                                </button>
+                                </a>
                             ) : (
                                 <button
-                                    type="button"
+                                    type="submit"  // Ensure this is type="submit"
                                     className="border border-transparent focus:outline-none py-2 px-5 rounded-md text-center text-white text-sm"
                                     style={{ backgroundColor: '#0b5f66' }}
                                 >
@@ -142,7 +146,7 @@ function AddNewMentor() {
                                 </button>
                             )}
                         </div>
-                    </div>
+                    </form>
                 </div>
             </section>
         </div>
