@@ -8,8 +8,9 @@ import {FaExclamationTriangle, FaFileAlt, FaPlusCircle, FaSearch, FaTag} from "r
 import { FaGear, FaPage4, FaPencil, FaTrashCan } from "react-icons/fa6";
 import { ApiAddConnections, ApiViewConnections, ApiEstablishConnections, ApiDeleteConnections } from "../../API/API";
 import '../../components/styles/style.css';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import toast from 'react-hot-toast';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 import { Encryption } from "../../utils/Enc";
 function Connection(){
     const [openPopUp, setOpenpopup] = useState(false);

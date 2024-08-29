@@ -7,9 +7,14 @@ import Step1 from "./Step/Step1";
 import Step2 from "./Step/Step2";
 import Step3 from "./Step/Step3";
 import axios from "axios";
-
+// import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { ApiAddNewMentor } from "../../API/API";
+// import toast from "react-hot-toast/headless";
+import toast from 'react-hot-toast';
 function AddNewMentor() {
     const [currentStep, setCurrentStep] = useState(0);
+    const navigate = useNavigate();
     const steps = [
         'Description',
         'Professional',
@@ -31,12 +36,12 @@ function AddNewMentor() {
             mentor_description: ''
         },
         professional: {
-            years_of_experience: '',
+            years_of_experience: null,
             area_of_expertise: '',
             current_designation: '',
             institution: '',
             qualification: '',
-            year_of_passing_out: '',
+            year_of_passing_out: null,
             startup_associated: ''
         },
         contact: {
@@ -46,7 +51,7 @@ function AddNewMentor() {
             password: ''
         }
     });
-
+    console.log(formData);
     const handleChange = (e, section) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -61,10 +66,36 @@ function AddNewMentor() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const result = await axios.post('http://localhost:3003/api/v1/mentor/add', formData);
-            console.log("Form submitted successfully:", result);
+            const result = await ApiAddNewMentor(formData);
+            if(result)
+            {
+                toast.success("Mentor Created");
+                navigate('/addmentor');
+            }
         } catch (err) {
-            console.error("Error submitting form:", err);
+            if(err.response)
+            {
+                    if(err.response.status=400)
+                    {
+                        toast.error('Please fill necessary data')
+                    }
+                    else if(err.response.status==401)
+                    {
+                        toast.error("Please Provide Valid Email");
+                    }
+                    else if(err.response.status==402)
+                    {
+                        toast.error('Phone number is not valid')
+                    }
+                    else if(err.response.status=409)
+                    {
+                        toast.error('Already exists')
+                    }
+            }
+            else {
+                console.log(err);
+            }
+                  
         }
     };
 

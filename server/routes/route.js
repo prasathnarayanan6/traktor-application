@@ -26,6 +26,7 @@ const RaiseRequest = require('../controller/Team/RaiseRequest.js');
 const {AddMentorHour} = require('../controller/Team/Mentor.js');
 const {DeleteConnection} = require('../controller/Admin/Connections/Connection.js')
 const {ViewNotification} = require('../controller/Admin/Notification/Notification.js');
+const FetchMentorData = require('../controller/Admin/Mentors/MentorData.js')
 const AddJob = require('../controller/Team/AddJob.js');
 router.post('/login', LoginController);
 router.post('/send-message', AddMessage);
@@ -34,6 +35,7 @@ router.post('/work-request', WorkController);
 router.get('/download/:filename', ResumeController);
 router.get('/getdata', GetAllResumeController);
 router.post('/resumeupload', ResumeUpload);
+router.get('/get-mentor-details', FetchMentorData);
 router.get('/resume-fetch/:page_data/:page_number', Resumedata);
 router.post('/resume-send', ApprovalRequest);
 router.post('/profile', Profile);

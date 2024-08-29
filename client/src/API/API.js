@@ -52,6 +52,34 @@ async function ApiDeleteConnections(email_address)
     }
 }
 
+//mentor data
+async function ApiAddNewMentor(formData)
+{
+    try
+    {
+        const result = await axios.post('http://localhost:3003/api/v1/mentor/add', formData)
+        return result.data;
+    }
+    catch(err)
+    {
+        console.log(err);
+        throw err;
+    }
+}
+
+async function ApiFetchMentor() 
+{
+    try
+    {
+        const result = await axios.get('http://localhost:3003/api/v1/viewconnections');
+        return result.data;
+    }
+    catch(error)
+    {
+        console.error("Error in APi", error);
+        throw error;
+    } 
+}
 
 // Register for new startups
 
@@ -67,4 +95,4 @@ async function ApiResgisterStartUp()
         console.log("Error", err);
     }
 }
-export {ApiAddConnections, ApiViewConnections, ApiEstablishConnections, ApiDeleteConnections};
+export {ApiAddConnections, ApiViewConnections, ApiEstablishConnections, ApiDeleteConnections, ApiAddNewMentor};

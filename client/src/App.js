@@ -45,7 +45,8 @@ import Industry from './pages/startups/Industry/Industry.js';
 import Sustainability from './pages/startups/Sustainability/Sustainability.js';
 import Healthcare from './pages/startups/Healthcare/Healthcare.js';
 import Mobility from './pages/startups/Mobility/Mobility.js';
-import { ToastContainer } from 'react-toastify';
+// import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'react-hot-toast';
 import AddStartupMultiForm from './pages/startups/AddStartupMultiForm.js';
 function App() {
   const [LoggedIn, setLoggedIn] = useState(false);
@@ -77,7 +78,10 @@ function App() {
   }
   return (
     <div>
-      <ToastContainer />
+      <Toaster 
+        position="top-right"
+        reverseOrder={false}
+      />
       <BrowserRouter>
         <Routes>
            <Route path="/" element={<Login />} /> 
