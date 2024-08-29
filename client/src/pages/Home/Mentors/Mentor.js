@@ -13,7 +13,7 @@ function Mentor(){
                     <div className="col-span-3 gap-3">
                             <div className="grid md:grid-cols-4 gap-2">
                                 <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#afdade'}}>
-                                        <div className="p-4 text-sm text-gray-600">Investors in total</div>
+                                        <div className="p-4 text-sm text-gray-600">Mentors in total</div>
                                         <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">200</div>
                                 </div>
                                 <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#afd5de'}}>

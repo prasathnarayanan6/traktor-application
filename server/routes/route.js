@@ -26,7 +26,7 @@ const RaiseRequest = require('../controller/Team/RaiseRequest.js');
 const {AddMentorHour} = require('../controller/Team/Mentor.js');
 const {DeleteConnection} = require('../controller/Admin/Connections/Connection.js')
 const {ViewNotification} = require('../controller/Admin/Notification/Notification.js');
-const FetchMentorData = require('../controller/Admin/Mentors/MentorData.js')
+const {FetchMentorData, MentorCount} = require('../controller/Admin/Mentors/MentorData.js')
 const AddJob = require('../controller/Team/AddJob.js');
 router.post('/login', LoginController);
 router.post('/send-message', AddMessage);

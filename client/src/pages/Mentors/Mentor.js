@@ -1,9 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/sidebar";
-import { FaEllipsisV } from "react-icons/fa";
+import { FaEllipsisV, FaUserCircle } from "react-icons/fa";
 import { FaPerson } from "react-icons/fa6";
+import { ApiFetchMentor } from "../../API/API";
+import toast from "react-hot-toast";
 function Mentor() {
+  const [data, setData] = useState([]);
+  const FetchData = async() => {
+        try {
+            const API = await ApiFetchMentor();
+            setData(API.STATUS.rows);
+            console.log(API.STATUS.rows);
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+  }
+  useEffect(() =>{
+      FetchData();
+      setData()
+  },[])
   return (
     <div className="flex h-screen">
       <section id="SideBar" className="fixed h-full">
@@ -43,33 +61,30 @@ function Mentor() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-t border-gray-300 hover:bg-gray-100">
-                  <td className="px-5 py-2"><FaPerson size={35}/></td>
-                  <td className="px-5 py-2">IIT-M</td>
-                  <td className="px-5 py-2">Not associated</td>
-                  <td className="px-5 py-2">
-                    Hello
-                  </td>
-                  <td className="px-5 py-2">
-                    <button className="px-2 rounded text-gray-400">
-                      <FaEllipsisV />
-                    </button>
-                  </td>
-                </tr>
-                <tr className="border-t border-gray-300 hover:bg-gray-100">
-                  <td className="px-5 py-2">Workshop</td>
-                  <td className="px-5 py-2">DE Cohort 2</td>
-                  <td className="px-5 py-2">John Doe</td>
-                  <td className="px-5 py-2">
-                    Hello
-                  </td>
-                  <td className="px-5 py-2">
-                    <button className="px-2 rounded text-gray-400">
-                      <FaEllipsisV />
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
+                  {Array.isArray(data) && data.length > 0 ? (
+                  data.map((dataObj, index) => (
+                        <tr key={index} className="border-t border-gray-300 hover:bg-gray-100">
+                        <td className="px-5 py-2"><FaUserCircle size={35}/></td>
+                        <td className="px-5 py-2">{dataObj.mentor_name}</td>
+                        <td className="px-5 py-2">{dataObj.institution}</td>
+                        <td className="px-5 py-2">
+                              {dataObj.startup_assoc}
+                        </td>
+                        <td className="px-5 py-2">
+                        <button className="px-2 rounded text-gray-400">
+                              <FaEllipsisV />
+                        </button>
+                        </td>
+                        </tr>
+                  ))
+                  ) : (
+                  <tr>
+                        <td colSpan="5" className="px-5 py-2 text-center">No data available</td>
+                  </tr>
+                  )}
+            </tbody>
+
+
             </table>
             <div class="flex justify-end mt-5">
               <div className="p-3">

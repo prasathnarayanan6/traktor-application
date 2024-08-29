@@ -29,7 +29,6 @@ const AddMentor = async(req, res) => {
         }
         catch(err)
         {
-            //res.send(err);
                 if(err.code='23505')
                 {
                     res.status(409).json({Error: "Contact number already exists" })

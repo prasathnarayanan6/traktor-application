@@ -121,7 +121,6 @@ function Connection(){
         const ViewConnection = async() => {
                 try {
                     const API = await ApiViewConnections();
-                    //console.log(API.rows);
                     setData(API.rows);
                 }
                 catch(err)

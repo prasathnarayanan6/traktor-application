@@ -31,4 +31,18 @@ const FetchMentorDataModel = () =>{
             })
         })
 }
-module.exports = {AddMentorModel, FetchMentorDataModel};
+const MentorCountData = () => {
+    return new Promise((resolve, reject) => {
+        client.query("SELECT COUNT(email_address) AS count FROM add_mentor", (err, result) => {
+            if(err)
+            {
+                reject(err); 
+            }
+            else
+            {
+                resolve(result);
+            }
+        })
+    })
+}
+module.exports = {AddMentorModel, FetchMentorDataModel, MentorCountData};

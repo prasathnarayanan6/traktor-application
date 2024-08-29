@@ -71,7 +71,7 @@ async function ApiFetchMentor()
 {
     try
     {
-        const result = await axios.get('http://localhost:3003/api/v1/viewconnections');
+        const result = await axios.get('http://localhost:3003/api/v1/get-mentor-details');
         return result.data;
     }
     catch(error)
@@ -82,17 +82,4 @@ async function ApiFetchMentor()
 }
 
 // Register for new startups
-
-async function ApiResgisterStartUp()
-{
-    try
-    {
-        const result = await axios.post('http://localhost:3003/api/v1/register-startup');
-        return result.data;
-    }
-    catch(err)
-    {
-        console.log("Error", err);
-    }
-}
-export {ApiAddConnections, ApiViewConnections, ApiEstablishConnections, ApiDeleteConnections, ApiAddNewMentor};
+export {ApiAddConnections, ApiViewConnections, ApiEstablishConnections, ApiDeleteConnections, ApiAddNewMentor, ApiFetchMentor};
