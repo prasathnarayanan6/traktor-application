@@ -25,16 +25,22 @@ const AddMentor = async(req, res) => {
         try
         {
             const result = await AddMentorModel(mentor_name, mentor_description, years_of_experience, area_of_expertise, current_designation, institution, qualification, year_of_passing_out, startup_associated, contact_number, email_address, linkedIn_ID, password);
-            res.send(result);
+            res.status(200).send(result);
         }
         catch(err)
         {
-                if(err.code='23505')
+                //res.send(err);
+                //console.log(err.code)
+                if(err.code==='23505')
                 {
                     res.status(409).json({Error: "Contact number already exists" })
                 }
+                else if(err.code==='23505')
+                {
+                    console.log("ok");
+                }
                 else {
-                    console.log(err);
+                    //console.log(err);
                     res.status(500).json({Error: "Internal Server Error"});
                 }
         }

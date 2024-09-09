@@ -45,4 +45,19 @@ const MentorCountData = () => {
         })
     })
 }
-module.exports = {AddMentorModel, FetchMentorDataModel, MentorCountData};
+
+const MentorDeleteData = (email_address) => {
+    return new Promise((resolve, reject) => {
+        client.query(`DELETE FROM add_mentor WHERE email_address=$1`, [email_address], (err, result) => {
+            if(err)
+            {
+                reject(err);
+            }
+            else
+            {
+                resolve(result);
+            }
+        })
+    })
+}   
+module.exports = {AddMentorModel, FetchMentorDataModel, MentorCountData, MentorDeleteData};

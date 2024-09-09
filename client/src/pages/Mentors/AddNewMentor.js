@@ -75,7 +75,9 @@ function AddNewMentor() {
         } catch (err) {
             if(err.response)
             {
-                    if(err.response.status=400)
+                console.log(err.response.status);
+                    
+                    if(err.response.status==400)
                     {
                         toast.error('Please fill necessary data')
                     }
@@ -87,7 +89,7 @@ function AddNewMentor() {
                     {
                         toast.error('Phone number is not valid')
                     }
-                    else if(err.response.status=409)
+                    else if(err.response.status==409)
                     {
                         toast.error('Already exists')
                     }

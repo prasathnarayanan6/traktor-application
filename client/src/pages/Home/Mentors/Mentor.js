@@ -3,30 +3,54 @@ import PieChart from "../../../components/Graph";
 import DonutChart from "../../../components/DonutChart";
 import '../../../components/styles/style.css'
 import LineChart from "../../../components/LineChart";
+import axios from "axios";
+import { ApiFetchMentorCount } from "../../../API/API";
 function Mentor(){
     const [show, setShow] = useState(false);
+    const [data, setData] = useState([]); 
+    const getData = async() => {
+        try
+        {
+            const result = await ApiFetchMentorCount();
+            // console.log(result.rows[0].count);
+            setData(result.rows);
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+    }
     useEffect(() => {
+        getData();
         setShow(true);
     }, [])
+    console.log(data.rows);
     return (
         <div className={`grid md:grid-cols-4 gap-4 mt-2 grid-cols-1 content ${show ? "visible": ""}`}>
                     <div className="col-span-3 gap-3">
-                            <div className="grid md:grid-cols-4 gap-2">
+                            <div className="grid md:grid-cols-3 gap-2">
                                 <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#afdade'}}>
+                                {Array.isArray(data) && data.length > 0 ? (
+                                    data.map((dataObj, index) => (
+                                        <div key={index}>
+                                                <div className="p-4 text-sm text-gray-600">Mentors in total</div>
+                                                <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">{dataObj.count}</div>  
+                                        </div>
+                                    ))
+                                    ) : (
+                                    <>
                                         <div className="p-4 text-sm text-gray-600">Mentors in total</div>
-                                        <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">200</div>
+                                        <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">NA</div>
+                                    </>
+                                    )}   
                                 </div>
                                 <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#afd5de'}}>
-                                    <div className="p-3 text-sm font-semibold text-gray-600">Internal funding utilized</div>
+                                    <div className="p-3 text-sm font-semibold text-gray-600">MentoringSessions</div>
                                     <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">50</div>
                                 </div>
                                 <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#afcdde'}}>
-                                        <div className="p-3 text-sm font-semibold text-gray-600">External funding raised</div>
+                                        <div className="p-3 text-sm font-semibold text-gray-600">Total Mentoring Hours</div>
                                         <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">30</div>
-                                </div>
-                                <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#7da1ad'}}>
-                                        <div className="p-3 text-sm font-semibold text-gray-600">Total fund remaining</div>
-                                        <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-600">50</div>
                                 </div>
                             </div>
                             <div className="grid md:grid-cols-2 gap-6 mt-10 mb-2">

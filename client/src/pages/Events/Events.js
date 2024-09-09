@@ -1,10 +1,14 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import SideBar from "../../components/sidebar";
 import NavBar from '../../components/NavBar';
 import { FaBars, FaEllipsisV } from 'react-icons/fa';
 import AddPastEvents from './AddPastEvents';
 import CreateNewEvent from './CreateNewEvent';
 import RequestSpeaker from './RequestSpeaker';
+import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { ApiFetchEvents } from '../../API/API';
 function Events() {
     const [openPopUp, setOpenpopup] = useState(false);
     const handleShow = (e) => setOpenpopup(true);
@@ -13,7 +17,92 @@ function Events() {
     const handleShow2 = (e) => setCreateNewEvent(true);
 
     const [reqSpeaker, setRequestSpeaker] = useState(false);
+    const [eventData, setEventData] = useState([]);
     const handleShow3 = (e) => setRequestSpeaker(true);
+
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const recordsPerPage = 5;
+    const lastIndex = currentPage * recordsPerPage;
+    const firstIndex = lastIndex - recordsPerPage;
+    const records = eventData.slice(firstIndex, lastIndex);
+    const npage = Math.ceil(eventData.length / recordsPerPage);
+    const numbers = [...Array(npage + 1).keys()].slice(1)
+
+    let localStoragee = localStorage.getItem('token');
+    let decodedStorage = jwtDecode(localStoragee);
+//     console.log(decodedStorage.user_mail);
+    const[formData, setFormData] = useState({
+        event_type: 'Webinar',
+        event_title: '',
+        event_privacy: 'Public',
+        event_description: '',
+        event_date: '',
+        event_time: '',
+        created_by: decodedStorage.user_mail
+    });
+//     console.log(formData);
+    const handleChangeEve = (e) => {
+        const {name, value} = e.target;
+        setFormData((prevData)=>({ 
+            ...prevData,
+            [name]: value,
+        }))
+     }
+    const CreateEveData = async(e) => {
+        e.preventDefault();
+        try{
+            const result = await axios.post('http://localhost:3003/api/v1/create-events', formData);
+            console.log(result.data);
+            if(result)
+            {
+                toast.success("Event Created");
+                setCreateNewEvent(false);
+            }
+        }
+        catch (err)
+        {
+                console.log(err)
+        }
+    }
+    const Events = async() => {
+        try 
+        {
+                const result = await ApiFetchEvents();
+                //console.log(result.rows);
+                setEventData(result.rows);
+                console.log(eventData);
+        }
+        catch(err)
+        {
+                console.log(err);
+        }
+    }
+    
+    useEffect(() => {
+                Events()
+    },[])
+
+
+
+    //request speaker
+    const [requestSpeakerData, setRequestSpeakerData] = useState({
+        select_speaker: '',
+        event_description: '',
+        created_by: ''
+    });
+
+    const AddRequestSpeaker = async(e) => {
+                e.preventDefault();
+                try
+                {
+                        console.log("hello");
+                }
+                catch(err)
+                {
+                        console.log(err); 
+                }
+    }
   return (
     <div className="h-screen flex">
         <section id="SideBar" className="fixed h-full">
@@ -38,7 +127,7 @@ function Events() {
                                                 </div>
                                         </div>
                                         <div className="m-12 bg-white border border-gray-100 shadow-md rounded-md overflow-x-auto">
-                                                <table class="table-fixed">
+                                                <table class="table-fixed w-full">
                                                         <thead>
                                                                 <tr>
                                                                         <th className="px-5 py-2 text-left text-green-600">Event type</th>
@@ -52,38 +141,31 @@ function Events() {
                                                                 </tr>
                                                         </thead>
                                                         <tbody>
-                                                                <tr className="border-t border-gray-300 hover:bg-gray-100">
-                                                                        <td className="px-5 py-2">Workshop</td>
-                                                                        <td className="px-5 py-2">DE Cohort 2 | Session 1</td>
-                                                                        <td className="px-5 py-2">John Doe</td>
-                                                                        <td className="px-5 py-2">Sun Oct 31 2021</td>
-                                                                        <td className="px-5 py-2">6:00:00 pm</td>
-                                                                        <td className="px-5 py-2">
-                                                                                <button class="text-gray-500 text-sm font-semibold mt-1 p-1 px-3 rounded-xl shadow-md" style={{backgroundColor: '#afcdde'}}>View</button>
-                                                                        </td>
-                                                                        <td className="px-5 py-2">
-                                                                                <button className="text-gray-500 text-sm font-semibold mt-1 p-1 px-3 rounded-xl shadow-md" style={{backgroundColor: '#afcdde'}}>Initiate</button>
-                                                                        </td>
-                                                                        <td className="px-5 py-2">
-                                                                                <button className="px-2 rounded text-gray-400"><FaEllipsisV /></button>
-                                                                        </td>
+                                                        {Array.isArray(eventData) && eventData.length > 0 ? (
+                                                                eventData.map((dataObj, index) => (
+                                                                        <tr key={index} className="border-t border-gray-300 hover:bg-gray-100">
+                                                                                <td className="px-5 py-2">{dataObj.event_type}</td>
+                                                                                <td className="px-5 py-2">{dataObj.event_title}</td>
+                                                                                <td className="px-5 py-2">test</td>
+                                                                                <td className="px-5 py-2">{dataObj.event_date}</td>
+                                                                                <td className="px-5 py-2">{dataObj.event_time}</td>
+                                                                                <td className="px-5 py-2">
+                                                                                        <button className="text-gray-500 text-sm font-semibold mt-1 p-1 px-3 rounded-xl shadow-md" style={{ backgroundColor: '#afcdde' }}>View</button>
+                                                                                </td>
+                                                                                <td className="px-5 py-2">
+                                                                                        <button className="text-gray-500 text-sm font-semibold mt-1 p-1 px-3 rounded-xl shadow-md" style={{ backgroundColor: '#afcdde' }}>Initiate</button>
+                                                                                </td>
+                                                                                <td className="px-5 py-2">
+                                                                                        <button className="px-2 rounded text-gray-400"><FaEllipsisV /></button>
+                                                                                </td>
+                                                                        </tr>
+                                                                ))
+                                                                ) : (
+                                                                <tr>
+                                                                        <td colSpan="8" className="text-center px-5 py-2">No events found</td>
                                                                 </tr>
-                                                                <tr className="border-t border-gray-300 hover:bg-gray-100">
-                                                                        <td className="px-5 py-2">Workshop</td>
-                                                                        <td className="px-5 py-2">DE Cohort 2 | Session 1</td>
-                                                                        <td className="px-5 py-2">John Doe</td>
-                                                                        <td className="px-5 py-2">Sun Oct 31 2021</td>
-                                                                        <td className="px-5 py-2">6:00:00 pm</td>
-                                                                        <td className="px-5 py-2">
-                                                                                <button class="text-gray-500 text-sm font-semibold mt-1 p-1 px-3 rounded-xl shadow-md" style={{backgroundColor: '#afcdde'}}>View</button>
-                                                                        </td>
-                                                                        <td className="px-5 py-2">
-                                                                                <button className="text-gray-500 text-sm font-semibold mt-1 p-1 px-3 rounded-xl shadow-md" style={{backgroundColor: '#afcdde'}}>Initiate</button>
-                                                                        </td>
-                                                                        <td className="px-5 py-2">
-                                                                                <button className="px-2 rounded text-gray-400"><FaEllipsisV /></button>
-                                                                        </td>
-                                                                </tr>
+                                                                )}
+
                                                         </tbody>
                                                 </table>
                                                 <div class="flex justify-end mt-5">
@@ -95,11 +177,16 @@ function Events() {
                                                                                 <option value="15">15</option>
                                                                         </select>
                                                                 </div>
-                                                                {/* <div>
+                                                                <div>
                                                                         <span>1-5 of 7</span>
                                                                         <button class="ml-2 text-gray-500">Prev</button>
+                                                                        {/* {
+                                                                                numbers.map((n, i) => (
+                                                                                        <button key={i} onClick={changeCPage} className={` ${currentPage === n ? 'active': ''}`}></button>
+                                                                                ))
+                                                                        } */}
                                                                         <button class="ml-2 text-gray-500">Next</button>
-                                                                </div> */}
+                                                                </div> 
                                                 </div>       
                                                                 
                                         </div>
@@ -147,57 +234,56 @@ function Events() {
                 </div>
         </AddPastEvents>
         <CreateNewEvent isVisible={openCreateNewEvent} onClose={()=>setCreateNewEvent(false)}>
+                <form onSubmit={CreateEveData}>
                 <h1 className="text-gray-500 font-semibold">Create Event</h1>
                 <div className="grid grid-cols-3 gap-4 mt-10">
                         <div class="relative">
-                                <select id="countries" className="peer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 appearance-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option value="US">Webinar</option>
-                                        <option value="CA">Conference</option>
-                                        <option value="se">Seminar</option>
-                                        <option value="DE">Workshop</option>
-                                        <option value="DE">Masterclass</option>
+                                <select id="countries" className="peer border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 appearance-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={handleChangeEve} name="event_type">
+                                        <option value="Webinar">Webinar</option>
+                                        <option value="Conference">Conference</option>
+                                        <option value="Seminar">Seminar</option>
+                                        <option value="Workshop">Workshop</option>
+                                        <option value="Masterclass">Masterclass</option>
                                 </select>
                                 <label for="countries" id="floatig_outlined" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-700 px-2 peer-focus:px-2 peer-focus:text-blue-500 peer-focus:dark:text-blue-500 peer-focus:dark:bg-gray-700 peer-focus:bg-white peer-focus:scale-75 peer-focus:-translate-y-6 left-2.5">Event type</label>
                         </div>
                         <div className="relative">
-                                <input type="text" id="floating_outlined" className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " name="email_address"/>
-                                <label for="floating_outlined" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Event privacy</label>
+                                <input type="text" id="floating_outlined" onChange={handleChangeEve} name="event_title" className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
+                                <label for="floating_outlined" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Event Title</label>
                         </div> 
                         <div class="relative">
-                                <select id="countries" className="peer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 appearance-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option value="US">Webinar</option>
-                                        <option value="CA">Conference</option>
-                                        <option value="se">Seminar</option>
-                                        <option value="DE">Workshop</option>
-                                        <option value="DE">Masterclass</option>
+                                <select id="countries" name="event_privacy" onChange={handleChangeEve} className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 appearance-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option value="Public">Public</option>
+                                        <option value="Private">Private</option>
                                 </select>
                                 <label for="countries" id="floatig_outlined" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-700 px-2 peer-focus:px-2 peer-focus:text-blue-500 peer-focus:dark:text-blue-500 peer-focus:dark:bg-gray-700 peer-focus:bg-white peer-focus:scale-75 peer-focus:-translate-y-6 left-2.5">Event Privacy</label>
                         </div>                                              
                 </div>
                 <div className="grid grid-cols-1 mt-5">
                         <div className="relative">
-                                <textarea className="resize-none rounded-md w-full" placeholder=""></textarea>
+                                <textarea name="event_description" onChange={handleChangeEve} className="resize-none rounded-md w-full" placeholder=""></textarea>
                                 <label for="floating_outlined" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Event description</label>
                         </div>
                 </div>
                 <div className="grid grid-cols-2 mt-3 gap-4">
                         <div className="relative">
-                                <input type="date" id="floating_outlined" className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " name="email_address"/>
+                                <input type="date" onChange={handleChangeEve} name="event_date" id="floating_outlined" className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
                                 <label for="floating_outlined" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Event date</label>
                         </div> 
                         <div className="relative">
-                                <input type="time" id="floating_outlined" className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " name="email_address"/>
+                                <input type="time" name="event_time" onChange={handleChangeEve} id="floating_outlined" className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
                                 <label for="floating_outlined" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Event time</label>
                         </div>
                 </div>
                 <div className="flex justify-center mt-3">
                     <button className="text-gray-500 text-sm font-semibold mt-1 p-1 px-3 rounded-xl shadow-md" style={{backgroundColor: '#afdade'}}>Create Event</button>                                                    
                 </div>
+                </form>
         </CreateNewEvent>
         <RequestSpeaker isVisible={reqSpeaker} onClose={()=>setRequestSpeaker(false)}>
                    <div className="font-semibold">Request Speaker</div> 
                    <div class="relative mt-5">
-                                <select id="countries" className="peer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 appearance-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <select id="countries" className="peer border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 appearance-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option value="US">Webinar</option>
                                         <option value="CA">Conference</option>
                                         <option value="se">Seminar</option>

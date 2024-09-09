@@ -34,6 +34,10 @@ const AddJob = require('./routes/route');
 const ViewNotification = require('./routes/route');
 const  DeleteConnection = require('./routes/route');
 const FetchMentorData = require('./routes/route');
+const MentorCount = require('./routes/route');
+const DeleteMentorData = require('./routes/route');
+const CreateEvents = require('./routes/route');
+const FetchEvents = require('./routes/route');
 const app = express();
 app.use(cors());
 app.use(cookieParser());
@@ -49,8 +53,11 @@ app.use('api/v1/', ForgotRequest)
 app.get('/profile', (req, res) => {
     res.status(200).json("hello");
 })
+app.use('api/v1/', FetchEvents);
+app.use('api/v1/', MentorCount);
 app.use('api/v1/', Profile);
 app.use('api/v1/', AddJob);
+app.use('api/v1/', CreateEvents);
 app.use('/api/v1/work', WorkRequestController);
 app.use('/api/v1/resume', ResumeController);
 app.use('api/v1/resume',GetAllResumeController);
@@ -77,6 +84,7 @@ app.use('api/v1/', AddMentorHour)
 app.use('api/v1/', FetchDataMentor);
 app.use('api/v1/', ViewNotification);
 app.use('api/v1/', DeleteConnection);
+app.use('api/v1/', DeleteMentorData)
 module.exports = app;
 
 

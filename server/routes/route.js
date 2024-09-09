@@ -26,8 +26,11 @@ const RaiseRequest = require('../controller/Team/RaiseRequest.js');
 const {AddMentorHour} = require('../controller/Team/Mentor.js');
 const {DeleteConnection} = require('../controller/Admin/Connections/Connection.js')
 const {ViewNotification} = require('../controller/Admin/Notification/Notification.js');
-const {FetchMentorData, MentorCount} = require('../controller/Admin/Mentors/MentorData.js')
+const {CreateEvents, FetchEvents} = require('../controller/Admin/Events/Events.js');
+const {FetchMentorData, MentorCount, DeleteMentorData} = require('../controller/Admin/Mentors/MentorData.js')
 const AddJob = require('../controller/Team/AddJob.js');
+router.get('/fetchevents', FetchEvents);
+router.get('/mentor/count',MentorCount);
 router.post('/login', LoginController);
 router.post('/send-message', AddMessage);
 router.post('/forgot-password', ForgotRequest);
@@ -41,6 +44,7 @@ router.post('/resume-send', ApprovalRequest);
 router.post('/profile', Profile);
 router.delete('/delete-resume/:id', DeleteResume);
 router.post('/mentor/add', AddMentor);
+router.post('/create-events',CreateEvents);
 router.get('/profile-data/:mail', Authenticate, Profile);
 router.post('/add-sector', Settings)
 router.get('/view-message', ViewMessage);
@@ -58,5 +62,6 @@ router.post('/customer/apply-mentor', AddMentorHour);
 router.get('/customer/fetch-mentor', FetchDataMentor);
 router.post('/customer/add-job', AddJob);
 router.get('/notification', ViewNotification);
+router.delete('/delete-mentor/:id', DeleteMentorData)
 router.delete('/delete-connection', DeleteConnection);
 module.exports = router;
