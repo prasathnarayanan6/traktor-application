@@ -38,6 +38,7 @@ const MentorCount = require('./routes/route');
 const DeleteMentorData = require('./routes/route');
 const CreateEvents = require('./routes/route');
 const FetchEvents = require('./routes/route');
+const RequestSpeaker = require('./routes/route');
 const app = express();
 app.use(cors());
 app.use(cookieParser());
@@ -55,6 +56,7 @@ app.get('/profile', (req, res) => {
 })
 app.use('api/v1/', FetchEvents);
 app.use('api/v1/', MentorCount);
+app.use('api/v1/', RequestSpeaker);
 app.use('api/v1/', Profile);
 app.use('api/v1/', AddJob);
 app.use('api/v1/', CreateEvents);

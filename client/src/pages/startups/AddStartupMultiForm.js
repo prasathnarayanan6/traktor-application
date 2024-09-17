@@ -18,9 +18,89 @@ const AddStartupMultiForm = () => {
   const nextPrev = (n) => {
     setCurrentStep((prevStep) => prevStep + n);
   };
-  const handleSubmit = (event) => {
+  const [formData, setFormData] = useState({
+   basic: {
+    startup_name: '',
+    startup_program: '',
+    startup_type: '',
+    startup_industry: '',
+    startup_tech: '',
+    program: '',
+    cohort: ''
+  },
+  official: {
+    official_contact_number: '',
+    official_email_address: '',
+    website_link: '',
+    linkedin_id: '',
+    mentor_associated: '',
+    registration_number: '',
+    password: ''
+  },
+  founder: {
+    founder_name: '',
+    founder_email: '',
+    founder_number: '',
+    founder_gender: '',
+    founder_student_id: '',
+    linkedInid: ''
+  },
+  description: {
+    logo_image: '',
+    startup_description: ''
+  }
+});
+console.log(formData);
+const handleChange = (e, section) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+        ...prevData,
+        [section]: {
+            ...prevData[section],
+            [name]: value,
+        },
+    }));
+};
+
+const handleSubmit = async (event) => {
     event.preventDefault();
-  };
+    try {
+        // const result = await ApiAddNewMentor(formData);
+        console.log('hello')
+        const result = 'Hello'
+        if(result)
+        {
+            toast.success("Mentor Created");
+            navigate('/addmentor');
+        }
+    } catch (err) {
+        if(err.response)
+        {
+            console.log(err.response.status);
+                
+                if(err.response.status==400)
+                {
+                    toast.error('Please fill necessary data')
+                }
+                else if(err.response.status==401)
+                {
+                    toast.error("Please Provide Valid Email");
+                }
+                else if(err.response.status==402)
+                {
+                    toast.error('Phone number is not valid')
+                }
+                else if(err.response.status==409)
+                {
+                    toast.error('Already exists')
+                }
+        }
+        else {
+            console.log(err);
+        }
+              
+    }
+};
   return (
     <div className="container mx-auto mt-3 mb-8 p-12">
       <form
@@ -61,7 +141,7 @@ const AddStartupMultiForm = () => {
         </div>
 
         {/* Form Steps */}
-        {currentStep === 0 && <Step1 />}
+        {currentStep === 0 && <Step1 formData={formData.basic} handleChange={(e) => handleChange(e, 'basic')}/>}
         {currentStep === 1 && <Step2 />}
         {currentStep === 2 && <Step3 />}
         {currentStep === 3 && <Step4 />}

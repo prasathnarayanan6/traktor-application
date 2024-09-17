@@ -1,28 +1,34 @@
 // var EmailValid = require('../../../validation/EmailValid');
+
+const {AddStartupModel} = require('../../../model/StartupModel');
 const AddStartup = async(req, res) => {
-    const {startup_name, email, domain, sector, academic_background, Program, founder_name, contact_number, roll_number, female_cofounder, pia, fund_allocated, linkedIn, description, password} = req.body
-    // const {startup_name, sector, startup_type, startup_industry, startup_technology, program, cohort, official_contact_number, official_email_address, website_link, linkedIn, mentor_associated, cin, password, founder_name, founder_email, founder_number, founder_gender, student_id, founder_linkedIn, choose_logo, description} = req.body;
-    try
+    const {basic, official, founder, description} = req.body;
+
+    const{startup_name, startup_program, startup_type, startup_industry, startup_tech, program, cohort} = basic;
+
+    const{official_contact_number, official_email_address, website_link, linkedin_id, mentor_associated, registration_number, password} = official;
+
+    const{founder_name, founder_email, founder_number, founder_gender, founder_student_id, linkedInid} = founder;
+
+    const{logo_image, startup_description} = description;
+
+    if(!startup_name || !official_email_address || !program || !official_contact_number || !description)
     {
-        if(!official_email_address || !program || !official_contact_number || !description)
-        {
-            res.json("Please fill necessary fields");
-        }
-        // else if(official_email_address)
-        // {
-        //     res.json(EmailValid(official_email_address));
-        // }
-        else
-        {
-            
-        }
-         
+        res.json("Please fill necessary fields");
     }
-    catch(err)
+    else
     {
-        res.send(err);
+        try
+        {
+            const result = await AddStartupModel(basic, official, founder, description, official_email_address);
+            res.status(200).send(result);
+        }
+        catch(err)
+        {
+            res.send(err);
+        }
     }
 }
 
 
-module.exports = AddStartup;
+module.exports = {AddStartup};
