@@ -1,5 +1,3 @@
-// var EmailValid = require('../../../validation/EmailValid');
-
 const {AddStartupModel} = require('../../../model/StartupModel');
 const AddStartup = async(req, res) => {
     const {basic, official, founder, description} = req.body;
@@ -25,10 +23,23 @@ const AddStartup = async(req, res) => {
         }
         catch(err)
         {
-            res.send(err);
+                if(err.code==='23505')
+                {
+                    res.status(409).json({Error: "Startup already exists" })
+                }
         }
     }
 }
 
+const FetchStartupDatainNumbers = async() => {
+    try
+    {
+        const result = 
+    }
+    catch(err)
+    {
+        console.log(err)
+    }
+}
 
 module.exports = {AddStartup};

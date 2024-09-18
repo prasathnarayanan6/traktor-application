@@ -1,6 +1,6 @@
 import React from "react";
 
-const Step1 = ({ formData, handleChange }) => {
+const Step1 = ({formData, handleChange}) => {
   return (
     <div className="grid grid-cols-1 gap-4 items-center px-10 mb-5">
       <div className="relative">

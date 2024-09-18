@@ -22,4 +22,23 @@ const AddStartupModel = async(basic, official, founder, description, official_em
         )
     })
 }
+
+const StartupData = async() => {
+
+    return new Promise((resolve, reject) => {
+
+            const TotalCountStartups = new Promise((resolveQuery1, rejectQuery1) => {
+
+            })
+
+            const ActiveStartups = new Promise((resolveQuery2, rejectQuery2) => {
+
+            })
+
+
+            Promise.all([TotalCountStartups, ActiveStartups])
+            .then([])
+    })
+
+}
 module.exports = {AddStartupModel};

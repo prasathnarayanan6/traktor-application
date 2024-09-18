@@ -1,28 +1,34 @@
 import React from "react";
 
-const Step1 = () => {
+const Step1 = ({formData, handleChange}) => {
   return (
     <div className="grid grid-cols-2 gap-4 items-center ">
       <div class="relative">
         <input
           type="text"
+          name="startup_name"
           id="floating_outlined"
-          class="block px-2.5 pb-2.5 pt-4 w-full  md:h-[45px] text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=" "
+          className="block px-2.5 pb-2.5 pt-4 w-full  md:h-[45px] text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          placeholder=""
+          onChange={handleChange}
+          value={formData.start_name}
         />
+        
         <label
           for="floating_outlined"
           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
         >
-          Floating outlined
+          Startup Name
         </label>
       </div>
 
       <select
         id="options"
         className=" block w-full pl-3 pr-10 py-2 md:h-[45px] mt-4 text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md mb-4"
-        name="Sector"
+        name="startup_program"
         placeholder="Sector"
+        onChange={handleChange}
+        value={formData.start_program}
       >
         <option value="" disabled selected>
           Program
@@ -71,7 +77,9 @@ const Step1 = () => {
       <select
         id="options"
         className="mt-1 block w-full pl-3 pr-10 py-2 md:h-[45px] text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md mb-4"
-        name="Startup Type"
+        name="startup_type"
+        value={formData.start_type}
+        onChange={handleChange}
       >
         <option value="" disabled selected>
           Startup Type
@@ -85,7 +93,9 @@ const Step1 = () => {
       <select
         id="options"
         className="mt-1 block w-full pl-3 pr-10 py-2 md:h-[45px] text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md mb-4"
-        name="Startup Industry"
+        name="startup_industry"
+        value={formData.start_industry}
+        onChange={handleChange}
       >
         <option value="" disabled selected>
           Startup Industry
@@ -140,7 +150,9 @@ const Step1 = () => {
       <select
         id="options"
         className="mt-1 block w-full pl-3 pr-10 py-2 md:h-[45px] text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md mb-4"
-        name="Startup Technology"
+        name="startup_tech"
+        value={formData.start_tech}
+        onChange={handleChange}
       >
         <option value="" disabled selected>
           Startup Technology
@@ -167,7 +179,9 @@ const Step1 = () => {
       <select
         id="options"
         className="mt-1 block w-full pl-3 pr-10 py-2 md:h-[45px] text-base border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md mb-4"
-        name="Program"
+        name="program"
+        onChange={handleChange}
+        value={formData.program}
       >
         <option value="" disabled selected>
           Program
@@ -183,12 +197,15 @@ const Step1 = () => {
         <input
           type="date"
           id="Date"
-          class="block px-2.5 pb-2.5 pt-4 w-full mb-4 md:h-[45px] text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          className="block px-2.5 pb-2.5 pt-4 w-full mb-4 md:h-[45px] text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
+          name="cohort"
+          onChange={handleChange}
+          value={formData.cohort}
         />
         <label
           for="Cohort"
-          class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
+          className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
         >
           Cohort
         </label>

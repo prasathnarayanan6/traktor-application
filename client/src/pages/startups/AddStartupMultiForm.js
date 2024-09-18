@@ -5,14 +5,15 @@ import Step3 from './step/Step3';
 import Step4 from './step/Step4';
 import { FaInfo, FaInfoCircle, FaSearch } from 'react-icons/fa';
 import { FaGear, FaMessage } from 'react-icons/fa6';
-
+import toast from 'react-hot-toast';
+import axios from 'axios';
 const AddStartupMultiForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const steps = [
-    'Basic',
-    'Official',
-    'Founder',
-    'Description'
+    'basic',
+    'official',
+    'founder',
+    'description'
   ];
   const icons = [<FaInfo size={20}/>, <FaGear size={20}/>, <FaSearch size={20}/> , <FaMessage size={20}/>]
   const nextPrev = (n) => {
@@ -66,12 +67,12 @@ const handleSubmit = async (event) => {
     event.preventDefault();
     try {
         // const result = await ApiAddNewMentor(formData);
-        console.log('hello')
-        const result = 'Hello'
+        //console.log('hello')
+        const result = await axios.post('http://localhost:3003/api/v1/add-startup', formData)
         if(result)
         {
-            toast.success("Mentor Created");
-            navigate('/addmentor');
+            toast.success("Startup Created");
+            // navigate('/addmentor');
         }
     } catch (err) {
         if(err.response)
@@ -142,9 +143,9 @@ const handleSubmit = async (event) => {
 
         {/* Form Steps */}
         {currentStep === 0 && <Step1 formData={formData.basic} handleChange={(e) => handleChange(e, 'basic')}/>}
-        {currentStep === 1 && <Step2 />}
-        {currentStep === 2 && <Step3 />}
-        {currentStep === 3 && <Step4 />}
+        {currentStep === 1 && <Step2 formData={formData.official} handleChange={(e) => handleChange(e, 'official')}/>}
+        {currentStep === 2 && <Step3 formData={formData.founder} handleChange={(e) => handleChange(e, 'founder')}/>}
+        {currentStep === 3 && <Step4 formData={formData.description} handleChange={(e) => handleChange(e, 'description')}/>}
 
         <div className="form-footer flex justify-between gap-2">
           {currentStep > 0 && (
