@@ -37,7 +37,7 @@ const StartupData = async() => {
 
 
             Promise.all([TotalCountStartups, ActiveStartups])
-            .then([])
+            .then([result1, result2])
     })
 
 }
