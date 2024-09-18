@@ -39,6 +39,7 @@ const DeleteMentorData = require('./routes/route');
 const CreateEvents = require('./routes/route');
 const FetchEvents = require('./routes/route');
 const RequestSpeaker = require('./routes/route');
+const FetchStartupDatainNumbers = require('./routes/route');
 const app = express();
 app.use(cors());
 app.use(cookieParser());
@@ -51,6 +52,7 @@ app.listen('3003', (err)=> {
 })
 app.use('/api/v1/', LoginController);
 app.use('api/v1/', ForgotRequest)
+app.use('api/v1/', FetchStartupDatainNumbers)
 app.get('/profile', (req, res) => {
     res.status(200).json("hello");
 })

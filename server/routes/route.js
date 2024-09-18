@@ -13,7 +13,7 @@ const Profile = require('../controller/Admin/Profile/Profile.js');
 const DeleteResume = require('../controller/Admin/Resume/DeleteResume.js');
 const AddMentor = require('../controller/Admin/Mentors/AddMentor.js');
 const Settings = require('../controller/Admin/Settings/Settings.js');
-const {AddStartup} = require('../controller/Admin/startups/AddStartup.js');
+const {AddStartup, FetchStartupDatainNumbers} = require('../controller/Admin/startups/AddStartup.js');
 const {AddMessage, ViewMessage} = require('../controller/Admin/Messages/Messages.js');
 const {AddConnections, ViewConnections, EstablishConnection} = require("../controller/Admin/Connections/Connection.js");
 const Report = require('../controller/Admin/Reports/Report.js');
@@ -30,6 +30,7 @@ const {CreateEvents, FetchEvents, RequestSpeaker} = require('../controller/Admin
 const {FetchMentorData, MentorCount, DeleteMentorData} = require('../controller/Admin/Mentors/MentorData.js')
 const AddJob = require('../controller/Team/AddJob.js');
 router.get('/fetchevents', FetchEvents);
+router.get('/count-startupdata', FetchStartupDatainNumbers);
 router.get('/mentor/count',MentorCount);
 router.post('/mentor/request-speaker', RequestSpeaker);
 router.post('/login', LoginController);

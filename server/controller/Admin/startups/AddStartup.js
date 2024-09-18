@@ -1,4 +1,4 @@
-const {AddStartupModel} = require('../../../model/StartupModel');
+const {AddStartupModel, StartupDataModel} = require('../../../model/StartupModel');
 const AddStartup = async(req, res) => {
     const {basic, official, founder, description} = req.body;
 
@@ -31,15 +31,16 @@ const AddStartup = async(req, res) => {
     }
 }
 
-const FetchStartupDatainNumbers = async() => {
+const FetchStartupDatainNumbers = async(req, res) => {
     try
     {
-        const result = 
+        const result = await StartupDataModel();
+        res.status(200).json(result);
     }
     catch(err)
     {
-        console.log(err)
+        res.status(500).json({ message: 'Error fetching startup data', error: err }); // Send error with status 500
     }
 }
 
-module.exports = {AddStartup};
+module.exports = {AddStartup, FetchStartupDatainNumbers};
