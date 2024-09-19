@@ -23,10 +23,11 @@ const AddStartup = async(req, res) => {
         }
         catch(err)
         {
-                if(err.code==='23505')
-                {
-                    res.status(409).json({Error: "Startup already exists" })
-                }
+                // if(err.code==='23505')
+                // {
+                //     res.status(409).json({Error: "Startup already exists" })
+                // }
+                res.send(err);
         }
     }
 }
@@ -35,7 +36,13 @@ const FetchStartupDatainNumbers = async(req, res) => {
     try
     {
         const result = await StartupDataModel();
-        res.status(200).json(result);
+        const startupData = {
+            startup_total: result.TotalCountStartups.rows[0].startup_total,
+            active_startups: result.ActiveStartups.rows[0].active,
+            dropped_startups: result.DroppedStartups.rows[0].dropped_status,
+            graduated_startups: result.GraduatedStartups.rows[0].graduated_status
+        }
+        res.status(200).json(startupData);
     }
     catch(err)
     {

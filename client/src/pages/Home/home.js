@@ -40,18 +40,38 @@ function Home() {
     useEffect(() => {
         setShow(true);
     }, [])
-    useEffect(() => {
-        const loaded = () => {
-            setTimeout(()=>{
-                axios.get('https://randomapi.com/api/6de6abfedb24f889e0b5f675edc50deb?fmt=raw&sole')
-                .then(res => {
-                    setUserList(res.data);
-                    setIsLoaded(true)
-                })
-            }, 2000)
+    // useEffect(() => {
+    //     const loaded = () => {
+    //         setTimeout(()=>{
+    //             axios.get('https://randomapi.com/api/6de6abfedb24f889e0b5f675edc50deb?fmt=raw&sole')
+    //             .then(res => {
+    //                 setUserList(res.data);
+    //                 setIsLoaded(true)
+    //             })
+    //         }, 2000)
+    //     }
+    //     loaded()
+    // })
+    const[analysedData, setAnalysedData]= useState([])
+    const AnalysisData = async() => {
+        try
+        {
+            const result = await axios.get('http://localhost:3003/api/v1/count-startupdata');
+            console.log(result)
+            setAnalysedData(result);
+            setIsLoaded(true)
         }
-        loaded()
-    })
+        catch(err)
+        {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        setTimeout(() => {
+            AnalysisData();
+        }, 2000)
+        console.log(analysedData);
+    }, [])
     return (
             <div className="h-screen flex">
                  {isSidebarOpen && (
@@ -89,7 +109,7 @@ function Home() {
                                                             ) : (
                                                                 <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#afdade'}}>
                                                                     <div className="p-4 text-md text-gray-600">Total Startups</div>
-                                                                    <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">200</div>
+                                                                    <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">{analysedData?.data?.startup_total || 'N/A'}</div>
                                                                 </div>
                                                             )
                                                         }
@@ -98,7 +118,7 @@ function Home() {
                                                                 ) : (
                                                                     <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#afd5de'}}>
                                                                             <div className="p-3 text-md font-semibold text-gray-600">Active Startups</div>
-                                                                            <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">50</div>
+                                                                            <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">{analysedData?.data?.active_startups || 'N/A'}</div>
                                                                     </div>
                                                                 )
                                                         }
@@ -107,7 +127,7 @@ function Home() {
                                                             ) : (
                                                                 <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#afcdde'}}>
                                                                     <div className="p-3 text-md font-semibold text-gray-600">Graduated</div>
-                                                                    <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">30</div>
+                                                                    <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">{analysedData?.data?.graduated_startups || 'N/A'}</div>
                                                                 </div>
                                                             )
 
@@ -117,10 +137,11 @@ function Home() {
                                                         ) : (
                                                                 <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#7da1ad'}}>
                                                                     <div className="p-3 text-md font-semibold text-gray-600">Dropped</div>
-                                                                    <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-600">69</div>
+                                                                    <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-600">{analysedData?.data?.dropped_startups || 'N/A'}</div>
                                                                 </div>
                                                         )}
                                                 </div>
+
                                                 <div className="grid md:grid-cols-2 gap-6 mt-10 mb-2">
                                                         {!isLoaded ? (
                                                             <SkeletonChartLoader2 />
