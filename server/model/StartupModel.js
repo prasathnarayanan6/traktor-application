@@ -67,13 +67,416 @@ const StartupDataModel = async() => {
                     }
                 })
             })
-            Promise.all([TotalCountStartups, ActiveStartups, DroppedStartups, GraduatedStartups])
-            .then(([TotalCountStartups, ActiveStartups, DroppedStartups, GraduatedStartups]) => {
+
+            const Manufacturing = new Promise((resolveQuery4, rejectQuery4) => {
+                client.query("SELECT COUNT(basic::json->'startup_program') AS startup_manufacturing FROM test_startup WHERE (basic->>'startup_program')='Manufacturing & Industry'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery4(err);
+                    }
+                    else
+                    {
+                        resolveQuery4(result);
+                    }
+                })
+            })
+
+            const Services = new Promise((resolveQuery4, rejectQuery4) => {
+                client.query("SELECT COUNT(basic::json->'startup_program') AS startup_services FROM test_startup WHERE (basic->>'startup_program')='Services'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery4(err);
+                    }
+                    else
+                    {
+                        resolveQuery4(result);
+                    }
+                })
+            })
+
+            const Edtech = new Promise((resolveQuery4, rejectQuery4) => {
+                client.query("SELECT COUNT(basic::json->'startup_program') AS startup_edtech FROM test_startup WHERE (basic->>'startup_program')='Edtech'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery4(err);
+                    }
+                    else
+                    {
+                        resolveQuery4(result);
+                    }
+                })
+            })
+
+            const Agriculture = new Promise((resolveQuery4, rejectQuery4) => {
+                client.query("SELECT COUNT(basic::json->'startup_program') AS startup_agriculture FROM test_startup WHERE (basic->>'startup_program')='Agriculture & Food'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery4(err);
+                    }
+                    else
+                    {
+                        resolveQuery4(result);
+                    }
+                })
+            })
+
+            const Hardware = new Promise((resolveQuery4, rejectQuery4) => {
+                client.query("SELECT COUNT(basic::json->'startup_program') AS startup_hardware FROM test_startup WHERE (basic->>'startup_program')='Hardware & IOT'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery4(err);
+                    }
+                    else
+                    {
+                        resolveQuery4(result);
+                    }
+                })
+            })
+            const Energy = new Promise((resolveQuery4, rejectQuery4) => {
+                client.query("SELECT COUNT(basic::json->'startup_program') AS startup_energy FROM test_startup WHERE (basic->>'startup_program')='Energy & Environment'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery4(err);
+                    }
+                    else
+                    {
+                        resolveQuery4(result);
+                    }
+                })
+            })
+
+            const Ecommerce = new Promise((resolveQuery4, rejectQuery4) => {
+                client.query("SELECT COUNT(basic::json->'startup_program') AS startup_ecommerce FROM test_startup WHERE (basic->>'startup_program')='Ecommerce & Retail'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery4(err);
+                    }
+                    else
+                    {
+                        resolveQuery4(result);
+                    }
+                })
+            })
+
+            const Social = new Promise((resolveQuery4, rejectQuery4) => {
+                client.query("SELECT COUNT(basic::json->'startup_program') AS startup_social FROM test_startup WHERE (basic->>'startup_program')='Social & Leisure'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery4(err);
+                    }
+                    else
+                    {
+                        resolveQuery4(result);
+                    }
+                })
+            })
+
+            const SoftwareData = new Promise((resolveQuery4, rejectQuery4) => {
+                client.query("SELECT COUNT(basic::json->'startup_program') AS startup_software FROM test_startup WHERE (basic->>'startup_program')='Software & Data'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery4(err);
+                    }
+                    else
+                    {
+                        resolveQuery4(result);
+                    }
+                })
+            })
+
+
+            // const EnergyPratham = new Promise((resolveQuery5, rejectQuery5) => {
+            //     client.query("SELECT COUNT()")
+            // })
+
+//////PRATHAM DATA STARTS
+            const EnergyPratham = new Promise((resolveQuery5, rejectQuery5) => {
+                client.query("SELECT COUNT(basic::json->'program') AS energy_program_count FROM test_startup WHERE (basic->>'program')='Pratham' AND (basic->>'startup_program')='Energy & Environment'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery5(err);
+                    }
+                    else
+                    {
+                        resolveQuery5(result);
+                    }
+                })
+            })
+
+            const HardwarePratham = new Promise((resolveQuery7, rejectQuery7) => {
+                client.query("SELECT COUNT(basic::json->'program') AS hardware_program_count FROM test_startup WHERE (basic->>'program')='Pratham' AND (basic->>'startup_program')='Hardware & IOT'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery7(err);
+                    }
+                    else
+                    {
+                        resolveQuery7(result);
+                    }
+                })
+            })
+            
+            const SoftwareDataPratham = new Promise((resolveQuery8, rejectQuery8) => {
+                client.query("SELECT COUNT(basic::json->'program') AS software_program_count FROM test_startup WHERE (basic->>'program')='Pratham' AND (basic->>'startup_program')='Software & Data'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery8(err);
+                    }
+                    else
+                    {
+                        resolveQuery8(result);
+                    }
+                })
+            })
+
+            const EdtechPratham = new Promise((resolveQuery9, rejectQuery9) => {
+                client.query("SELECT COUNT(basic::json->'program') AS edtech_program_count FROM test_startup WHERE (basic->>'program')='Pratham' AND (basic->>'startup_program')='Edtech'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery9(err);
+                    }
+                    else
+                    {
+                        resolveQuery9(result);
+                    }
+                })
+            })
+            const ServicesPratham = new Promise((resolveQuery10, rejectQuery10) => {
+                client.query("SELECT COUNT(basic::json->'program') AS services_program_count FROM test_startup WHERE (basic->>'program')='Pratham' AND (basic->>'startup_program')='Services'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery10(err);
+                    }
+                    else
+                    {
+                        resolveQuery10(result);
+                    }
+                })
+            })    
+
+            const AgriculturePratham = new Promise((resolveQuery10, rejectQuery10) => {
+                client.query("SELECT COUNT(basic::json->'program') AS agriculture_program_count FROM test_startup WHERE (basic->>'program')='Pratham' AND (basic->>'startup_program')='Agriculture & Food'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery10(err);
+                    }
+                    else
+                    {
+                        resolveQuery10(result);
+                    }
+                })
+            })  
+
+            const EcommercePratham = new Promise((resolveQuery11, rejectQuery11) => {
+                client.query("SELECT COUNT(basic::json->'program') AS ecommerce_program_count FROM test_startup WHERE (basic->>'program')='Pratham' AND (basic->>'startup_program')='Ecommerce & Retail'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery11(err);
+                    }
+                    else
+                    {
+                        resolveQuery11(result);
+                    }
+                })
+            })  
+
+            const SocialPratham = new Promise((resolveQuery12, rejectQuery12) => {
+                client.query("SELECT COUNT(basic::json->'program') AS social_program_count FROM test_startup WHERE (basic->>'program')='Pratham' AND (basic->>'startup_program')='Social & Leisure'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery12(err);
+                    }
+                    else
+                    {
+                        resolveQuery12(result);
+                    }
+                })
+            })
+            const ManufacturingPratham = new Promise((resolveQuery6, rejectQuery6) => {
+                client.query("SELECT COUNT(basic::json->'program') AS manufacturing_program_count FROM test_startup WHERE (basic->>'program')='Pratham' AND (basic->>'startup_program')='Manufacturing & Industry'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery6(err);
+                    }
+                    else
+                    {
+                        resolveQuery6(result);
+                    }
+                })
+            })
+/////PRATHAM DATA ENDS (FINACNE)
+            ///AkSHAR DATA starts
+
+            const EnergyAkshar = new Promise((resolveQuery13, rejectQuery13) => {
+                client.query("SELECT COUNT(basic::json->'program') AS energy_program_count_akshar FROM test_startup WHERE (basic->>'program')='Akshar' AND (basic->>'startup_program')='Energy & Environment'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery13(err);
+                    }
+                    else
+                    {
+                        resolveQuery13(result);
+                    }
+                })
+            })
+
+            const HardwareAkshar = new Promise((resolveQuery14, rejectQuery14) => {
+                client.query("SELECT COUNT(basic::json->'program') AS hardware_program_count_akshar FROM test_startup WHERE (basic->>'program')='Akshar' AND (basic->>'startup_program')='Hardware & IOT'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery14(err);
+                    }
+                    else
+                    {
+                        resolveQuery14(result);
+                    }
+                })
+            })
+            
+            const SoftwareDataAkshar = new Promise((resolveQuery15, rejectQuery15) => {
+                client.query("SELECT COUNT(basic::json->'program') AS software_program_count_akshar FROM test_startup WHERE (basic->>'program')='Akshar' AND (basic->>'startup_program')='Software & Data'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery15(err);
+                    }
+                    else
+                    {
+                        resolveQuery15(result);
+                    }
+                })
+            })
+
+            const EdtechAkshar = new Promise((resolveQuery16, rejectQuery16) => {
+                client.query("SELECT COUNT(basic::json->'program') AS edtech_program_count_akshar FROM test_startup WHERE (basic->>'program')='Akshar' AND (basic->>'startup_program')='Edtech'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery16(err);
+                    }
+                    else
+                    {
+                        resolveQuery16(result);
+                    }
+                })
+            })
+            const ServicesAkshar = new Promise((resolveQuery17, rejectQuery17) => {
+                client.query("SELECT COUNT(basic::json->'program') AS services_program_count_akshar FROM test_startup WHERE (basic->>'program')='Akshar' AND (basic->>'startup_program')='Services'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery17(err);
+                    }
+                    else
+                    {
+                        resolveQuery17(result);
+                    }
+                })
+            })    
+
+            const AgricultureAkshar = new Promise((resolveQuery18, rejectQuery18) => {
+                client.query("SELECT COUNT(basic::json->'program') AS agriculture_program_count_akshar FROM test_startup WHERE (basic->>'program')='Akshar' AND (basic->>'startup_program')='Agriculture & Food'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery18(err);
+                    }
+                    else
+                    {
+                        resolveQuery18(result);
+                    }
+                })
+            })  
+
+            const EcommerceAkshar = new Promise((resolveQuery19, rejectQuery19) => {
+                client.query("SELECT COUNT(basic::json->'program') AS ecommerce_program_count_akshar FROM test_startup WHERE (basic->>'program')='Akshar' AND (basic->>'startup_program')='Ecommerce & Retail'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery19(err);
+                    }
+                    else
+                    {
+                        resolveQuery19(result);
+                    }
+                })
+            })  
+
+            const SocialAkshar = new Promise((resolveQuery20, rejectQuery20) => {
+                client.query("SELECT COUNT(basic::json->'program') AS social_program_count_akshar FROM test_startup WHERE (basic->>'program')='Akshar' AND (basic->>'startup_program')='Social & Leisure'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery20(err);
+                    }
+                    else
+                    {
+                        resolveQuery20(result);
+                    }
+                })
+            })
+
+            const ManufacturingAkshar = new Promise((resolveQuery21, rejectQuery21) => {
+                client.query("SELECT COUNT(basic::json->'program') AS manufacturing_program_count_akshar FROM test_startup WHERE (basic->>'program')='Akshar' AND (basic->>'startup_program')='Manufacturing & Industry'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery21(err);
+                    }
+                    else
+                    {
+                        resolveQuery21(result);
+                    }
+                })
+            })
+
+            ///Askshar Data ENds
+            Promise.all([TotalCountStartups, ActiveStartups, DroppedStartups, GraduatedStartups, Manufacturing, Services, Edtech, Agriculture, Hardware, Energy, Ecommerce, Social, SoftwareData, EnergyPratham, ManufacturingPratham, HardwarePratham, SoftwareDataPratham, EdtechPratham, ServicesPratham, AgriculturePratham, EcommercePratham, SocialPratham, 
+                ManufacturingAkshar,
+                ServicesAkshar,
+                EdtechAkshar,
+                AgricultureAkshar,
+                HardwareAkshar,
+                EnergyAkshar,
+                EcommerceAkshar,
+                SocialAkshar,
+                SoftwareDataAkshar])
+            .then(([TotalCountStartups, ActiveStartups, DroppedStartups, GraduatedStartups, Manufacturing, Services, Edtech, Agriculture, Hardware, Energy, Ecommerce, Social, SoftwareData, EnergyPratham, ManufacturingPratham, HardwarePratham, SoftwareDataPratham, EdtechPratham, ServicesPratham, AgriculturePratham, EcommercePratham, SocialPratham,
+                ManufacturingAkshar,
+                ServicesAkshar,
+                EdtechAkshar,
+                AgricultureAkshar,
+                HardwareAkshar,
+                EnergyAkshar,
+                EcommerceAkshar,
+                SocialAkshar,
+                SoftwareDataAkshar
+            ]) => {
                 resolve({
                     TotalCountStartups,
                     ActiveStartups,
                     DroppedStartups,
-                    GraduatedStartups
+                    GraduatedStartups,
+                    Manufacturing,
+                    Services,
+                    Edtech,
+                    Agriculture,
+                    Hardware,
+                    Energy,
+                    Ecommerce,
+                    Social,
+                    SoftwareData,
+                    EnergyPratham,
+                    ManufacturingPratham,
+                    HardwarePratham,
+                    SoftwareDataPratham,
+                    EdtechPratham,
+                    ServicesPratham,
+                    AgriculturePratham,
+                    EcommercePratham,
+                    SocialPratham,
+                    ManufacturingAkshar,
+                    ServicesAkshar,
+                    EdtechAkshar,
+                    AgricultureAkshar,
+                    HardwareAkshar,
+                    EnergyAkshar,
+                    EcommerceAkshar,
+                    SocialAkshar,
+                    SoftwareDataAkshar,
                 });
             })
             .catch((err) => {

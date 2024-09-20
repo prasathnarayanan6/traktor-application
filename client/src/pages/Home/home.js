@@ -12,6 +12,7 @@ import Teams from "./Teams/Teams";
 import {SkeletonLoader, SkeletonChartLoader, SkeletonChartLoader2} from "../../components/SkeletonLoader";
 import axios from "axios";
 import Mentor from "./Mentors/Mentor";
+import FundingAksharPieChart from "../../components/FundingAkshar";
 function Home() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [color, setColor] = useState(['#afdade', '#afd5de', '#afcdde', '#99b6bf', '#afd5de']);
@@ -40,24 +41,12 @@ function Home() {
     useEffect(() => {
         setShow(true);
     }, [])
-    // useEffect(() => {
-    //     const loaded = () => {
-    //         setTimeout(()=>{
-    //             axios.get('https://randomapi.com/api/6de6abfedb24f889e0b5f675edc50deb?fmt=raw&sole')
-    //             .then(res => {
-    //                 setUserList(res.data);
-    //                 setIsLoaded(true)
-    //             })
-    //         }, 2000)
-    //     }
-    //     loaded()
-    // })
     const[analysedData, setAnalysedData]= useState([])
     const AnalysisData = async() => {
         try
         {
             const result = await axios.get('http://localhost:3003/api/v1/count-startupdata');
-            console.log(result)
+            // console.log(result)
             setAnalysedData(result);
             setIsLoaded(true)
         }
@@ -70,7 +59,6 @@ function Home() {
         setTimeout(() => {
             AnalysisData();
         }, 2000)
-        console.log(analysedData);
     }, [])
     return (
             <div className="h-screen flex">
@@ -148,7 +136,7 @@ function Home() {
                                                         ) : (
                                                             <div className="shadow-md rounded-lg w-[100%;] border md:h-[435px;]">
                                                                      <div className="p-2 md:text-lg text-gray-600 font-semibold">Sectors Available</div>
-                                                                    <div className="justify-center items-center"><PieChart /></div>
+                                                                    <div className="justify-center items-center"><PieChart props={analysedData?.data} /></div>
                                                             </div>
                                                         )}
                                                         {!isLoaded ? (
@@ -156,7 +144,7 @@ function Home() {
                                                         ) : (
                                                             <div className="shadow-md rounded-lg w-[100%;] border md:h-[435px;]">
                                                                 <div className="p-3 pt-2 md:text-lg text-gray-600 font-semibold">Funding Distributed across Sectors</div>
-                                                                <div className="justify-center items-center"><PieChart /></div>
+                                                                <div className="justify-center items-center"><PieChart props={analysedData?.data} /></div>
                                                             </div>
                                                         )}
                                                 </div>
@@ -170,6 +158,7 @@ function Home() {
                                                                 <div className="p-2 pt-1 text-xs text-gray-600 font-semibold">Women across industry</div>
                                                                 <div className="flex justify-center items-center mb-1">
                                                                     <div className="w-50 h-50 overflow-hidden">
+                                                                        {/* {console.log(analysedData.data)} */}
                                                                         <DonutChart/>
                                                                     </div>
                                                                 </div>
@@ -200,7 +189,7 @@ function Home() {
                                         <Investor />
                                     )}
                                     {analysis === 'finance' && (
-                                        <HomeFinance />
+                                        <HomeFinance props={analysedData?.data} />
                                     )}
                                     {analysis === 'mentors' && (
                                         <Mentor />

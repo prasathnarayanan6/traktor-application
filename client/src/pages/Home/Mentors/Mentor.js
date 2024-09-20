@@ -45,7 +45,7 @@ function Mentor(){
                                     )}   
                                 </div>
                                 <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#afd5de'}}>
-                                    <div className="p-3 text-sm font-semibold text-gray-600">MentoringSessions</div>
+                                    <div className="p-3 text-sm font-semibold text-gray-600">Mentoring Sessions</div>
                                     <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">50</div>
                                 </div>
                                 <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#afcdde'}}>

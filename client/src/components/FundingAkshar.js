@@ -12,23 +12,24 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-const PieChart = (props) => {
-  //console.log(props?.props?.startup_total)
+const FundingAksharPieChart = (props) => {
+    //console.log(props.props.props.Funding_Distrubuted_data.Akshar);
   const data = {
     labels: ['Energy & Environment', 'Software & Data', 'Manufacturing & Industry', 'Agriculture & Food', 'Hardware & IoT', 'Edtech', 'Services', 'Ecommerce & Retail', 'Social & Leisure'],
     datasets: [
       {
         labels: ' of Votes',
         data: [
-            parseInt(props?.props?.Funding_Distrubuted_data?.Total_funding_across_sector?.Energy_startup_funds) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Total_funding_across_sector?.Software_startup_funds) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Total_funding_across_sector?.Manufacturing_startup_funds) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Total_funding_across_sector?.Agriculture_startup_funds) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Total_funding_across_sector?.Hardware_startup_funds) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Total_funding_across_sector?.Edtech_startup_funds) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Total_funding_across_sector?.Services_startup_funds) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Total_funding_across_sector?.Ecommerce_startup_funds) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Total_funding_across_sector?.Social_startup_funds) || 0
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Energy_Akshar) || 0,
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Software_Akshar) || 0,
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Manufacturing_Akshar) || 0,
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Agriculture_Akshar) || 0,
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Hardware_Akshar) || 0,
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Edtech_Akshar) || 0,
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Services_Akshar) || 0,
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Ecommerce_Akshar) || 0,
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Social_Akshar) || 0,
+          
         ],
         backgroundColor: [
           'rgba(141, 182, 196)',
@@ -67,4 +68,4 @@ const PieChart = (props) => {
   return <div style={{width : '90%', maxWidth: '400px;',  height: 'auto', margin: '0 auto', padding: '10px'}}><Pie data={data} options={options} /></div>;
 };
 
-export default PieChart;
+export default FundingAksharPieChart;

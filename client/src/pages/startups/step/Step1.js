@@ -31,48 +31,17 @@ const Step1 = ({formData, handleChange}) => {
         value={formData.start_program}
       >
         <option value="" disabled selected>
-          Program
+          Sector
         </option>
-        <option value="Advertising"> Advertising </option>
-        <option value="Aerospace">Aerospace</option>
-        <option value="Agritech"> Agritech </option>
-        <option value="Art">Art</option>
-        <option value="Automotive">Automotive</option>
-        <option value="AI/ML">AI/ML</option>
-        <option value="AR/VR">AR/VR</option>
-        <option value="Blockchain">Blockchain</option>
-        <option value="Big Data">Big Data</option>
-        <option value="Clean Technology">CleanTechnology</option>
-        <option value="Construction">Construction</option>
-        <option value="Cloud">Cloud</option>
-        <option value="Cyber Security">Cyber Security</option>
-        <option value="Consulting">Consulting</option>
-        <option value="Design">Design</option>
-        <option value="Digital Marketing">Digital Marketing</option>
-        <option value="Ecommerce">Ecommerce</option>
+        <option value="Agriculture & Food">Agriculture & Food</option>
+        <option value="Ecommerce & Retail">Ecommerce & Retail</option>
         <option value="Edtech">Edtech</option>
-        <option value="Energy">Energy</option>
-        <option value="Entertainment">Entertainment</option>
-        <option value="Fashion">Fashion</option>
-        <option value="Fitech">Fitech</option>
-        <option value="Health and Wellness">Health and Wellness</option>
-        <option value="Health Tech">Health Tech</option>
-        <option value="Hospitality">Hospitality</option>
-        <option value="Informaton Technology">Informaton Technology</option>
-        <option value="Hardware/Internet of Things(IOT)">
-          Internet of Things(IOT)
-        </option>
-        <option value="Life Sciences">Life Sciences</option>
-        <option value="Logistics">Logistics</option>
-        <option value="Manufacturing">Manufacturing</option>
-        <option value="Media">Media</option>
-        <option value="Mobile Application">Mobile Application</option>
-        <option value="Nonprofits">Nonprofits</option>
-        <option value="Platforms">Platforms</option>
-        <option value="Retail">Retail</option>
-        <option value="Sports">Sports</option>
-        <option value="Travel">Travel</option>
-        <option value="Waste Management">Waste Management</option>
+        <option value="Energy & Environment">Energy & Envirnoment</option>
+        <option value="Software & Data">Software & Data</option>
+        <option value="Hardware & IOT">Hardware & IoT</option>
+        <option value="Manufacturing & Industry">Manufacturing & Industry</option>
+        <option value="services">Services</option>
+        <option value="Social & Leisure">Social & Leisure</option>
       </select>
       <select
         id="options"
@@ -186,11 +155,8 @@ const Step1 = ({formData, handleChange}) => {
         <option value="" disabled selected>
           Program
         </option>
-        <option value="Nirmaan">Nirmaan</option>
-        <option value="UGFIR">UGFIR </option>
-        <option value="KGMG">KGMG</option>
-        <option value="SIP">SIP</option>
-        <option value="Disciplined Entrepreneurship"></option>
+        <option value="Pratham">Pratham</option>
+        <option value="Akshar">Akshar</option>
       </select>
 
       <div class="relative mt-4">
