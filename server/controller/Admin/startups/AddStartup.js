@@ -1,4 +1,4 @@
-const {AddStartupModel, StartupDataModel} = require('../../../model/StartupModel');
+const {AddStartupModel, StartupDataModel, FetchStartupsModel} = require('../../../model/StartupModel');
 const EmailValid = require('../../../validation/EmailValid');
 const PhoneNumberValid = require('../../../validation/PhoneNumberValid');
 const AddStartup = async(req, res) => {
@@ -67,6 +67,17 @@ const FetchStartupDatainNumbers = async(req, res) => {
                     Agriculture_Pratham: parseInt(result.AgriculturePratham.rows[0].agriculture_program_count)*200000,
                     Ecommerce_Pratham: parseInt(result.EcommercePratham.rows[0].ecommerce_program_count)*200000,
                     Social_Pratham: parseInt(result.SocialPratham.rows[0].social_program_count)*200000,
+                
+                    Energy_pratham_count: parseInt(result.EnergyPratham.rows[0].energy_program_count),
+                    Manufacturing_Pratham_count: parseInt(result.ManufacturingPratham.rows[0].manufacturing_program_count),
+                    Hardware_Pratham_count: parseInt(result.HardwarePratham.rows[0].hardware_program_count),
+                    Software_Pratham_count: parseInt(result.SoftwareDataPratham.rows[0].software_program_count),
+                    Edtech_Pratham_count : parseInt(result.EdtechPratham.rows[0].edtech_program_count),
+                    Services_Pratham_count: parseInt(result.ServicesPratham.rows[0].services_program_count),
+                    Agriculture_Pratham_count: parseInt(result.AgriculturePratham.rows[0].agriculture_program_count),
+                    Ecommerce_Pratham_count: parseInt(result.EcommercePratham.rows[0].ecommerce_program_count),
+                    Social_Pratham_count: parseInt(result.SocialPratham.rows[0].social_program_count),
+
                     Total_funding_pratham: 0
                 },
                 Akshar: {
@@ -91,10 +102,17 @@ const FetchStartupDatainNumbers = async(req, res) => {
                     Agriculture_startup_funds: 0,
                     Ecommerce_startup_funds: 0,
                     Social_startup_funds: 0
+                },
+                Total_teams_count_by_program: {
+                    Total_Pratham_count: parseInt(result.PrathamTeamsCount.rows[0].pratham_teams),
+                    Total_Akshar_count: parseInt(result.AksharTeamsCount.rows[0].akshar_teams)
+                },
+                Total_funding_used: {
+                   Total_funding_used: parseInt(result.UpdatedFunds.rows[0].funds_used),
+                   Total_funding_remaining: 0
                 }
             }
         }
-
         //sectorwise total funding utilized
         startupData.Funding_Distrubuted_data.Total_funding_across_sector.Energy_startup_funds = startupData.Funding_Distrubuted_data.Akshar.Energy_Akshar + startupData.Funding_Distrubuted_data.Pratham.Energy_pratham;
         startupData.Funding_Distrubuted_data.Total_funding_across_sector.Manufacturing_startup_funds = startupData.Funding_Distrubuted_data.Akshar.Manufacturing_Akshar + startupData.Funding_Distrubuted_data.Pratham.Manufacturing_Pratham;
@@ -129,6 +147,12 @@ const FetchStartupDatainNumbers = async(req, res) => {
             startupData.Funding_Distrubuted_data.Pratham.Agriculture_Pratham +
             startupData.Funding_Distrubuted_data.Pratham.Ecommerce_Pratham +
             startupData.Funding_Distrubuted_data.Pratham.Social_Pratham;
+
+
+             //Funds Remaining Calculation 
+        startupData.Funding_Distrubuted_data.Total_funding_used.Total_funding_remaining = 
+        (startupData.Funding_Distrubuted_data.Pratham.Total_funding_pratham + 
+        startupData.Funding_Distrubuted_data.Akshar.Total_funding_Akshar) - startupData.Funding_Distrubuted_data.Total_funding_used.Total_funding_used
         res.status(200).json(startupData);
     }
     catch(err)
@@ -136,5 +160,15 @@ const FetchStartupDatainNumbers = async(req, res) => {
         res.status(500).json({ message: 'Error fetching startup data', error: err }); // Send error with status 500
     }
 }
-
-module.exports = {AddStartup, FetchStartupDatainNumbers};
+const FetchStartupData = async(req,res) => {
+    try 
+    {
+        const result = await FetchStartupsModel();
+        res.status(200).json(result);
+    }
+    catch(err)
+    {
+        res.status(500).json(result);
+    }
+}
+module.exports = {AddStartup, FetchStartupDatainNumbers, FetchStartupData};

@@ -126,6 +126,10 @@ function Login() {
                             {
                                 navigate('/home');
                             }
+                            else if(response.data.result.role === 3)
+                            {
+                                navigate('/finance/home')
+                            }
                             else
                             {
                                navigate('/');

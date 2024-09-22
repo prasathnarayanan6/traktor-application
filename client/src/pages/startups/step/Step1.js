@@ -69,51 +69,17 @@ const Step1 = ({formData, handleChange}) => {
         <option value="" disabled selected>
           Startup Industry
         </option>
-        <option value="Aerospace & Drones Applications">
-          Aerospace & Drones Applications
+        <option value="Industry 4.0">
+            Industry 4.0
         </option>
-        <option value="Agriculture & Allied Industries">
-          Agriculture & Allied Industries{" "}
+        <option value="Healthcare">
+            Healthcare
         </option>
-        <option value="Apparels, Fashion & Personal Gadgets">
-          Apparels, Fashion & Personal Gadgets
+        <option value="Sustainability">
+              Sustainability
         </option>
-        <option value="Arts, Culture & Traditions">
-          Arts, Culture & Traditions
-        </option>
-        <option value="Automobiles & Self-Driving Assistances">
-          Automobiles & Self-Driving Assistances
-        </option>
-        <option value="Banking, Finance Services & Insurances(BFSI)">
-          Banking, Finance Services & Insurances(BFSI)
-        </option>
-        <option value="Central & State Government Agencies">
-          Central & State Govenment Agencies
-        </option>
-        <option value="Defense & Security Systems">
-          Defence & Security Systems
-        </option>
-        <option value="E-Commerce Platform">E-Commerce Platform</option>
-        <option value="Education & Research">Education & Research</option>
-        <option value="Health, Wellness & Allied Industries">
-          Health, Wellness & Allied Industries
-        </option>
-        <option value="Human Resources Management">
-          Human Resources Management
-        </option>
-        <option value="Logistics & Transportation">
-          Logistics & Transportation
-        </option>
-        <option value="Manufacturing & Processing">
-          Manufacturing & Processing
-        </option>
-        <option value="Marketing, Social Media & Sales">
-          Marketing, Social Media & Sales
-        </option>
-        <option value="Space Exploration Satellite">
-          Space Exploration Satellite
-        </option>
-        <option value="Others">Others</option>
+        <option value="Fintech">Fintech</option>
+        <option value="Mobility">Mobility</option>
       </select>
 
       <select
@@ -161,7 +127,7 @@ const Step1 = ({formData, handleChange}) => {
 
       <div class="relative mt-4">
         <input
-          type="date"
+          type="month"
           id="Date"
           className="block px-2.5 pb-2.5 pt-4 w-full mb-4 md:h-[45px] text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "

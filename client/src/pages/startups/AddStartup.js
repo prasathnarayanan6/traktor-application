@@ -43,8 +43,8 @@ function AddStartup() {
                 <SideBar />
           </section>
           <section className="flex-grow">
-                        <div className="fixed w-full">
-                            <NavBar  className="fixed top-0 left-0 w-full z-10"/>
+                        <div className="fixed top-0 left-0 w-full z-50">
+                            <NavBar />
                         </div>
                         <div className="p-[90px;] h-full">
                            <h1 className="text-xl font-semibold text-gray-500 mt-5">Add New Startup</h1>

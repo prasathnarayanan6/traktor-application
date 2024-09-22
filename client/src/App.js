@@ -47,6 +47,9 @@ import Healthcare from './pages/startups/Healthcare/Healthcare.js';
 import Mobility from './pages/startups/Mobility/Mobility.js';
 // import { ToastContainer } from 'react-toastify';
 import { Toaster } from 'react-hot-toast';
+import FinanceHome from './Finance/Pages/Startup/Finstartup.js';
+// import FinanceHome from './Finance/Pages/Home/Home.js'
+import FinanceUpdateFunding from './Finance/Pages/Startup/Updatefunding.js';
 import AddStartupMultiForm from './pages/startups/AddStartupMultiForm.js';
 function App() {
   const [LoggedIn, setLoggedIn] = useState(false);
@@ -132,6 +135,11 @@ function App() {
                   <Route path="/customer/home/request" element={<RaiseRequest />} />
                   <Route path="/customer/Startups" element={<CustomerStartup />} />
                   <Route path="/customer/contacts" element={<CustomerContacts />} />
+             </Route>
+
+             <Route  element={<ProtectedRoutes requiredRoles={[localStorage.getItem('token'), '3']} />} >
+                  <Route path="/finance/home" element={<FinanceHome/>} />
+                  <Route path="/fin-startups/updatefunding" element={<FinanceUpdateFunding/>} />
              </Route>
         </Routes>
       </BrowserRouter>

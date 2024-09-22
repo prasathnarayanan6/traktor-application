@@ -33,12 +33,12 @@ function HomeFinance(props){
                                         <div className="p-3 pt-3 text-3xl font-semibold pb-4 justify-end items-end flex text-gray-500"><span><FaIndianRupeeSign /></span>{props?.props?.Funding_Distrubuted_data?.Akshar?.Total_funding_Akshar || "0"}</div>
                                     </div>
                                     <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#afcdde'}}>
-                                            <div className="p-3 text-md font-semibold text-gray-600">External funding raised</div>
-                                            <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">NA</div>
+                                            <div className="p-3 text-md font-semibold text-gray-600">Total funding used</div>
+                                            <div className="p-3 pt-3 text-3xl font-semibold pb-4 justify-end items-end flex text-gray-500"><span><FaIndianRupeeSign /></span>{props?.props?.Funding_Distrubuted_data?.Total_funding_used?.Total_funding_used || "NA"}</div>
                                     </div>
                                     <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#7da1ad'}}>
                                             <div className="p-3 text-md font-semibold text-gray-600">Total fund remaining</div>
-                                            <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-600">NA</div>
+                                            <div className="p-3 pt-3 text-3xl font-semibold pb-4 justify-end items-end flex text-gray-600"><span><FaIndianRupeeSign /></span>{props?.props?.Funding_Distrubuted_data?.Total_funding_used?.Total_funding_remaining || "NA"}</div>
                                     </div>
                                 </div>
                                 <div className="grid md:grid-cols-2 gap-6 mt-10 mb-2">

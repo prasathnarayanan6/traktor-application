@@ -135,7 +135,7 @@ function Home() {
                                                             <SkeletonChartLoader2 />
                                                         ) : (
                                                             <div className="shadow-md rounded-lg w-[100%;] border md:h-[435px;]">
-                                                                     <div className="p-2 md:text-lg text-gray-600 font-semibold">Sectors Available</div>
+                                                                     <div className="p-2 md:text-lg text-gray-600 font-semibold">Startups across Industries</div>
                                                                     <div className="justify-center items-center"><PieChart props={analysedData?.data} /></div>
                                                             </div>
                                                         )}
@@ -183,7 +183,7 @@ function Home() {
                                     </div>
                                     )}
                                     {analysis === 'teams' && (
-                                        <Teams/>
+                                        <Teams props={analysedData?.data}/>
                                     )}
                                     {analysis === 'investor' &&(
                                         <Investor />

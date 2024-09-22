@@ -4,7 +4,8 @@ import DonutChart from "../../../components/DonutChart";
 import '../../../components/styles/style.css'
 import LineChart from "../../../components/LineChart";
 import '../../../components/styles/style.css';
-function Teams(){
+function Teams(props){
+    console.log(props?.props?.Funding_Distrubuted_data?.Total_teams_count_by_program)
     const [show, setShow] = useState(false);
     useEffect(() => {
         setShow(true);
@@ -15,11 +16,11 @@ function Teams(){
                     <div className="grid md:grid-cols-3 gap-2">
                         <div className="shadow-md font-semibold rounded-lg w-[100%;]" style={{backgroundColor: '#afdade'}}>
                                 <div className="p-4 text-sm text-gray-600">Pratham Teams (in Total)</div>
-                                <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">200</div>
+                                <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">{props?.props?.Funding_Distrubuted_data?.Total_teams_count_by_program?.Total_Pratham_count || "NA"}</div>
                         </div>
                         <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#afd5de'}}>
                             <div className="p-3 text-sm font-semibold text-gray-600">Akshar Teams (in Total)</div>
-                            <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">50</div>
+                            <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">{props?.props?.Funding_Distrubuted_data?.Total_teams_count_by_program?.Total_Akshar_count || "NA"}</div>
                         </div>
                         <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#7da1ad'}}>
                                 <div className="p-3 text-sm font-semibold text-gray-600">Total Graduated</div>

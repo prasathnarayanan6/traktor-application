@@ -422,7 +422,47 @@ const StartupDataModel = async() => {
                     }
                 })
             })
+            ///pratham 
+            const PrathamTeamsCount = new Promise((resolveQuery22, rejectQuery22) => {
+                client.query("SELECT COUNT(basic::json->'program') AS pratham_teams FROM test_startup WHERE (basic->>'program')='Pratham'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery22(err);
+                    }
+                    else
+                    {
+                        resolveQuery22(result);
+                    }
+                })
+            })
 
+            const AksharTeamsCount = new Promise((resolveQuery22, rejectQuery22) => {
+                client.query("SELECT COUNT(basic::json->'program') AS akshar_teams FROM test_startup WHERE (basic->>'program')='Akshar'", (err, result) => {
+                    if(err)
+                    {   
+                        rejectQuery22(err);
+                    }
+                    else
+                    {
+                        resolveQuery22(result);
+                    }
+                })
+            })
+
+
+            const UpdatedFunds = new Promise((resolveQuery23, rejectQuery23) => {
+                client.query("SELECT SUM(amount) AS funds_used FROM update_funding", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery23(err)
+                    }
+                    else
+                    {
+                        resolveQuery23(result);
+                    }
+                })
+            })
+            //startup count
             ///Askshar Data ENds
             Promise.all([TotalCountStartups, ActiveStartups, DroppedStartups, GraduatedStartups, Manufacturing, Services, Edtech, Agriculture, Hardware, Energy, Ecommerce, Social, SoftwareData, EnergyPratham, ManufacturingPratham, HardwarePratham, SoftwareDataPratham, EdtechPratham, ServicesPratham, AgriculturePratham, EcommercePratham, SocialPratham, 
                 ManufacturingAkshar,
@@ -433,7 +473,11 @@ const StartupDataModel = async() => {
                 EnergyAkshar,
                 EcommerceAkshar,
                 SocialAkshar,
-                SoftwareDataAkshar])
+                SoftwareDataAkshar,
+                PrathamTeamsCount,
+                AksharTeamsCount,
+                UpdatedFunds
+                ])
             .then(([TotalCountStartups, ActiveStartups, DroppedStartups, GraduatedStartups, Manufacturing, Services, Edtech, Agriculture, Hardware, Energy, Ecommerce, Social, SoftwareData, EnergyPratham, ManufacturingPratham, HardwarePratham, SoftwareDataPratham, EdtechPratham, ServicesPratham, AgriculturePratham, EcommercePratham, SocialPratham,
                 ManufacturingAkshar,
                 ServicesAkshar,
@@ -443,7 +487,10 @@ const StartupDataModel = async() => {
                 EnergyAkshar,
                 EcommerceAkshar,
                 SocialAkshar,
-                SoftwareDataAkshar
+                SoftwareDataAkshar,
+                PrathamTeamsCount,
+                AksharTeamsCount,
+                UpdatedFunds
             ]) => {
                 resolve({
                     TotalCountStartups,
@@ -477,11 +524,29 @@ const StartupDataModel = async() => {
                     EcommerceAkshar,
                     SocialAkshar,
                     SoftwareDataAkshar,
+                    PrathamTeamsCount,
+                    AksharTeamsCount,
+                    UpdatedFunds
                 });
             })
             .catch((err) => {
                 reject(err)
             });
-    })
+    })  
 }
-module.exports = {AddStartupModel, StartupDataModel};
+
+const FetchStartupsModel = async() => {
+    return new Promise((resolve, reject) => {
+        client.query("SELECT basic::json->'startup_name' AS startup_name, official::json->'official_email_address' AS email_address FROM test_startup;", (err, result) => {
+            if(err)
+            {   
+                reject(err);
+            }
+            else
+            {
+                resolve(result);
+            }
+        })
+    })
+} 
+module.exports = {AddStartupModel, StartupDataModel, FetchStartupsModel};

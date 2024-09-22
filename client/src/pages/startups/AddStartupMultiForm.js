@@ -109,7 +109,7 @@ const handleSubmit = async (event) => {
         className="p-12 shadow-md rounded-md bg-white mx-auto border-solid border-2 border-gray-100 mb-6"
         onSubmit={handleSubmit}
       >
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-6 ">
           {steps.map((step, index) => (
             <div key={index} className="flex-1 text-center relative">
                   <div
@@ -131,7 +131,7 @@ const handleSubmit = async (event) => {
               </div>
               {index < steps.length - 1 && (
                 <div
-                  className={`stepper-line absolute top-8 left-[64.4%] w-full h-1`}
+                  className={`stepper-line absolute top-8 md:left-[64.4%] w-full h-1`}
                   style={{
                     backgroundColor: currentStep > index ? '#0b5f66' : '#0b5f66',
                   }}
@@ -149,28 +149,27 @@ const handleSubmit = async (event) => {
 
         <div className="form-footer flex justify-between gap-2">
           {currentStep > 0 && (
-            <button
+            <a
               type="button"
-              className="w-24 focus:outline-none border border-gray-300 py-1 px-2 rounded-lg shadow-sm text-center text-gray-700 bg-white hover:bg-gray-100 text-sm"
+              className="text-gray-500 text-sm font-semibold mt-3 p-1 px-3 rounded-xl shadow-md active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{backgroundColor : '#afdade'}}
               onClick={() => nextPrev(-1)}
             >
               Previous
-            </button>
+            </a>
           )}
           {currentStep < steps.length - 1 ? (
-            <button
-              type="button"
-              className="border border-transparent focus:outline-none py-2 px-5 rounded-md text-center text-white text-sm"
-              style={{ backgroundColor: '#0b5f66' }}
+            <a
+              className="text-gray-500 text-sm font-semibold mt-3 p-1 px-7 rounded-xl shadow-md active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{backgroundColor : '#afdade'}}
+              // style={{ backgroundColor: '#0b5f66' }}
               onClick={() => nextPrev(1)}
             >
               Next
-            </button>
+            </a>
           ) : (
             <button
               type="submit"
-              className="w-24 border border-transparent focus:outline-none py-1 px-2 rounded-md text-center text-white hover:bg-indigo-700 text-sm"
-              style={{ backgroundColor: '#afcdde' }}
+              className="text-gray-500 text-sm font-semibold mt-3 p-1 px-7 rounded-xl shadow-md active:scale-[.98] active:duration-75 hover:scale-[1.08] ease-in-out transition-all" style={{backgroundColor : '#afdade'}}
+              // style={{ backgroundColor: '#afcdde' }}
             >
               Submit
             </button>
