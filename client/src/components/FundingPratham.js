@@ -13,22 +13,22 @@ ChartJS.register(
   Legend
 );
 const FundingPrathamPieChart = (props) => {
-    // console.log(props?.props?.props?.Funding_Distrubuted_data);
+   console.log(props?.props?.props?.Funding_Distrubuted_data);
   const data = {
     labels: ['Energy & Environment', 'Software & Data', 'Manufacturing & Industry', 'Agriculture & Food', 'Hardware & IoT', 'Edtech', 'Services', 'Ecommerce & Retail', 'Social & Leisure'],
     datasets: [
       {
         labels: ' of Votes',
         data: [
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Energy_pratham) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Software_Pratham) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Manufacturing_Pratham) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Agriculture_Pratham) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Hardware_Pratham) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Edtech_Pratham) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Services_Pratham) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Ecommerce_Pratham) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Social_Pratham) || 0,
+          parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Funds?.Energy_Sector_Pratham_Funds || 0),
+          parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Funds?.Software_Sector_Pratham_Funds || 0),
+          parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Funds?.Manufacturing_Sector_Pratham_Funds || 0),
+          parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Funds?.Agriculture_Sector_Pratham_Funds || 0),
+          parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Funds?.Hardware_Sector_Pratham_Funds || 0),
+          parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Funds?.Edtech_Sector_Pratham_Funds || 0),
+          parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Funds?.Services_Sector_Pratham_Funds || 0),
+          parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Funds?.Ecommerce_Sector_Pratham_Funds || 0),
+          parseInt(props?.props?.props?.Funding_Distrubuted_data?.Pratham?.Funds?.Social_Sector_Pratham_Funds || 0),
           
         ],
         backgroundColor: [

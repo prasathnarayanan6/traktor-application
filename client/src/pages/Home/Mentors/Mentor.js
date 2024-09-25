@@ -5,7 +5,8 @@ import '../../../components/styles/style.css'
 import LineChart from "../../../components/LineChart";
 import axios from "axios";
 import { ApiFetchMentorCount } from "../../../API/API";
-function Mentor(){
+function Mentor(props){
+    console.log(props)
     const [show, setShow] = useState(false);
     const [data, setData] = useState([]); 
     const getData = async() => {
@@ -24,7 +25,7 @@ function Mentor(){
         getData();
         setShow(true);
     }, [])
-    console.log(data.rows);
+    //console.log(data.rows);
     return (
         <div className={`grid md:grid-cols-4 gap-4 mt-2 grid-cols-1 content ${show ? "visible": ""}`}>
                     <div className="col-span-3 gap-3">
@@ -46,7 +47,7 @@ function Mentor(){
                                 </div>
                                 <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#afd5de'}}>
                                     <div className="p-3 text-sm font-semibold text-gray-600">Mentoring Sessions</div>
-                                    <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">50</div>
+                                    <div className="p-3 pt-3 text-5xl font-semibold pb-4 justify-end items-end flex text-gray-500">{props?.props?.Mentors?.Session_Total || "NA"}</div>
                                 </div>
                                 <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#afcdde'}}>
                                         <div className="p-3 text-sm font-semibold text-gray-600">Total Mentoring Hours</div>

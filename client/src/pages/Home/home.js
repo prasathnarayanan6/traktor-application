@@ -156,11 +156,11 @@ function Home() {
                                                             <SkeletonChartLoader />
                                                         ) : (
                                                             <div className="shadow-md font-semibold rounded-lg w-full md:h-[300px;] border">
-                                                                <div className="p-2 pt-1 text-xs text-gray-600 font-semibold">Women across industry</div>
+                                                                <div className="p-2 pt-1 text-xs text-gray-600 font-semibold">Startups across akshar</div>
                                                                 <div className="flex justify-center items-center mb-1">
                                                                     <div className="w-50 h-50 overflow-hidden">
                                                                         {/* {console.log(analysedData.data)} */}
-                                                                        <DonutChart/>
+                                                                        <DonutChart props={analysedData?.data}/>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -174,7 +174,7 @@ function Home() {
                                                                     <div className="p-2 pt-1 text-sm text-gray-600 font-semibold">Total Mentoring hours across sector</div>
                                                                     <div className="flex justify-center items-center mb-1">
                                                                         <div className="w-50 h-50 overflow-hidden">
-                                                                            <DonutChart/>
+                                                                            <DonutChart  props={analysedData?.data}/>
                                                                         </div>
                                                                     </div>
                                                                 </div>    
@@ -193,7 +193,7 @@ function Home() {
                                         <HomeFinance props={analysedData?.data} />
                                     )}
                                     {analysis === 'mentors' && (
-                                        <Mentor />
+                                        <Mentor props={analysedData?.data} />
                                     )}
                         </div>
                 </section>

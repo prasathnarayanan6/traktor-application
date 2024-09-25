@@ -53,6 +53,9 @@ const FetchStartupDatainNumbers = async(req, res) => {
             Ecommerce_sector_startups: result.Ecommerce.rows[0].startup_ecommerce,
             Social_sector_startups: result.Social.rows[0].startup_social,
             Software_sector_startups: result.SoftwareData.rows[0].startup_software,
+            Mentors:{
+                Session_Total: parseInt(result.TotalMentoringSessions.rows[0].session_total)
+            },
             Funding_Distrubuted_data: {
                 Pratham: {
                     Energy_pratham: parseInt(result.EnergyPratham.rows[0].energy_program_count),
@@ -75,6 +78,18 @@ const FetchStartupDatainNumbers = async(req, res) => {
                     // Ecommerce_Pratham_count: parseInt(result.EcommercePratham.rows[0].ecommerce_program_count),
                     // Social_Pratham_count: parseInt(result.SocialPratham.rows[0].social_program_count),
                     Total_funding_pratham: parseInt(result?.TotalPrathamTeamFundsDistributed?.rows[0]?.amount_total || 0),
+
+                    Funds: {
+                        Manufacturing_Sector_Pratham_Funds: parseInt(result?.PrathamManufacturingTotalFunds?.rows[0]?.manufacturing_pratham_funds || 0),
+                        Energy_Sector_Pratham_Funds: parseInt(result?.PrathamEnergyTotalFunds?.rows[0]?.energy_pratham_funds || 0),
+                        Hardware_Sector_Pratham_Funds: parseInt(result?.PrathamHardwareTotalFunds?.rows[0]?.hardware_pratham_funds || 0),
+                        Software_Sector_Pratham_Funds: parseInt(result?.PrathamSoftwareTotalFunds?.rows[0]?.software_pratham_funds || 0),
+                        Edtech_Sector_Pratham_Funds: parseInt(result?.PrathamEdtechTotalFunds?.rows[0]?.edtech_pratham_funds || 0),
+                        Services_Sector_Pratham_Funds: parseInt(result?.PrathamServicesTotalFunds?.rows[0]?.services_pratham_funds || 0),
+                        Agriculture_Sector_Pratham_Funds: parseInt(result?.PrathamAgricultureTotalFunds?.rows[0]?.agriculture_pratham_funds || 0),
+                        Ecommerce_Sector_Pratham_Funds: parseInt(result?.PrathamEcommerceTotalFunds?.rows[0]?.ecommerce_pratham_funds || 0),
+                        Social_Sector_Pratham_Funds: parseInt(result?.PrathamSocialTotalFunds?.rows[0]?.social_pratham_funds || 0),
+                     }
                 },
                 Akshar: {
                     Energy_Akshar: parseInt(result.EnergyAkshar.rows[0].energy_program_count_akshar),
@@ -86,7 +101,18 @@ const FetchStartupDatainNumbers = async(req, res) => {
                     Agriculture_Akshar: parseInt(result.AgricultureAkshar.rows[0].agriculture_program_count_akshar),
                     Ecommerce_Akshar: parseInt(result.EcommerceAkshar.rows[0].ecommerce_program_count_akshar),
                     Social_Akshar: parseInt(result.SocialAkshar.rows[0].social_program_count_akshar),
-                    Total_funding_Akshar: parseInt(result?.TotalAksharTeamFundsDistributed?.rows[0]?.amount_total_akshar || 0)
+                    Total_funding_Akshar: parseInt(result?.TotalAksharTeamFundsDistributed?.rows[0]?.amount_total),
+                    Funds: {
+                       Manufacturing_Sector_Akshar_Funds: parseInt(result?.AksharManufacturingTotalFunds?.rows[0]?.manufacturing_akshar_funds || 0),
+                       Energy_Sector_Akshar_Funds: parseInt(result?.AksharEnergyTotalFunds?.rows[0]?.energy_akshar_funds || 0),
+                       Hardware_Sector_Akshar_Funds: parseInt(result?.AksharHardwareTotalFunds?.rows[0]?.hardware_akshar_funds || 0),
+                       Software_Sector_Akshar_Funds: parseInt(result?.AksharSoftwareTotalFunds?.rows[0]?.software_akshar_funds || 0),
+                       Edtech_Sector_Akshar_Funds: parseInt(result?.AksharEdtechTotalFunds?.rows[0]?.edtech_akshar_funds || 0),
+                       Services_Sector_Akshar_Funds: parseInt(result?.AksharServicesTotalFunds?.rows[0]?.services_akshar_funds || 0),
+                       Agriculture_Sector_Akshar_Funds: parseInt(result?.AksharAgricultureTotalFunds?.rows[0]?.agriculture_akshar_funds || 0),
+                       Ecommerce_Sector_Akshar_Funds: parseInt(result?.AksharEcommerceTotalFunds?.rows[0]?.ecommerce_akshar_funds || 0),
+                       Social_Sector_Akshar_Funds: parseInt(result?.AksharSocialTotalFunds?.rows[0]?.social_akshar_funds || 0),
+                    }
                 },
                 Total_funding_across_sector : {
                     Energy_startup_funds: 0,

@@ -13,22 +13,22 @@ ChartJS.register(
   Legend
 );
 const FundingAksharPieChart = (props) => {
-    //console.log(props.props.props.Funding_Distrubuted_data.Akshar);
+    console.log(props.props.props.Funding_Distrubuted_data.Akshar?.Funds);
   const data = {
     labels: ['Energy & Environment', 'Software & Data', 'Manufacturing & Industry', 'Agriculture & Food', 'Hardware & IoT', 'Edtech', 'Services', 'Ecommerce & Retail', 'Social & Leisure'],
     datasets: [
       {
         labels: ' of Votes',
         data: [
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Energy_Akshar) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Software_Akshar) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Manufacturing_Akshar) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Agriculture_Akshar) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Hardware_Akshar) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Edtech_Akshar) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Services_Akshar) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Ecommerce_Akshar) || 0,
-            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Social_Akshar) || 0,
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Funds?.Energy_Sector_Akshar_Funds || 0),
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Funds?.Software_Sector_Akshar_Funds || 0),
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Funds?.Manufacturing_Sector_Akshar_Funds || 0),
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Funds?.Agriculture_Sector_Akshar_Funds || 0),
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Funds?.Hardware_Sector_Akshar_Funds || 0),
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Funds?.Edtech_Sector_Akshar_Funds || 0),
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Funds?.Services_Sector_Akshar_Funds || 0),
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Funds?.Ecommerce_Sector_Akshar_Funds || 0),
+            parseInt(props?.props?.props?.Funding_Distrubuted_data?.Akshar?.Funds?.Social_Sector_Akshar_Funds || 0),
           
         ],
         backgroundColor: [

@@ -5,13 +5,24 @@ import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
-const DonutChart = () => {
+const DonutChart = (props) => {
+  console.log(props)
   const data = {
-    labels: ['Healthcare', 'Sustainability', 'Industry 4.0', 'Fintech', 'Mobility'],
+    labels: ['Energy & Environment', 'Software & Data', 'Manufacturing & Industry', 'Agriculture & Food', 'Hardware & IoT', 'Edtech', 'Services', 'Ecommerce & Retail', 'Social & Leisure'],
     datasets: [
       {
         label: 'My Donut Chart',
-        data: [300, 50, 100],
+        data: [
+          parseInt(props?.props?.Funding_Distrubuted_data?.Akshar?.Energy_Akshar || 0),
+          parseInt(props?.props?.Funding_Distrubuted_data?.Akshar?.Software_Akshar || 0),
+          parseInt(props?.props?.Funding_Distrubuted_data?.Akshar?.Manufacturing_Akshar || 0),
+          parseInt(props?.props?.Funding_Distrubuted_data?.Akshar?.Agriculture_Akshar || 0),
+          parseInt(props?.props?.Funding_Distrubuted_data?.Akshar?.Hardware_Akshar || 0),
+          parseInt(props?.props?.Funding_Distrubuted_data?.Akshar?.Edtech_Akshar || 0),
+          parseInt(props?.props?.Funding_Distrubuted_data?.Akshar?.Services_Akshar || 0),
+          parseInt(props?.props?.Funding_Distrubuted_data?.Akshar?.Ecommerce_Akshar || 0),
+          parseInt(props?.props?.Funding_Distrubuted_data?.Akshar?.Social_Akshar || 0),
+        ],
         backgroundColor: [
           'rgba(141, 182, 196)',
           'rgb(96, 164, 189)',
@@ -41,7 +52,7 @@ const DonutChart = () => {
               label += ': ';
             }
             if (context.parsed !== null) {
-              label += `${context.parsed}%`;
+              label += `${context.parsed}`;
             }
             return label;
           },

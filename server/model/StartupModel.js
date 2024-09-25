@@ -478,8 +478,21 @@ const StartupDataModel = async() => {
 
             //
             //Pratham team total fund distributed
+            // const TotalPrathamTeamFundsDistributed = new Promise((resolveQuery25, rejectQuery25) => {
+            //     client.query("SELECT ts.basic->>'program' AS program, ts.official_email_address, ts.basic->>'startup_name' AS startup_name, SUM(uf.amount) AS amount_total FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' AND uf.funding_type = 'Funding Distributed' GROUP BY ts.official_email_address;", (err, result) => {
+            //         if(err)
+            //         {
+            //             rejectQuery25(err)
+            //         }
+            //         else
+            //         {
+            //             resolveQuery25(result);
+            //         }
+            //     })
+            // })
+
             const TotalPrathamTeamFundsDistributed = new Promise((resolveQuery25, rejectQuery25) => {
-                client.query("SELECT ts.basic->>'program' AS program, ts.official_email_address, ts.basic->>'startup_name' AS startup_name,SUM(uf.amount) AS amount_total FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' AND uf.funding_type = 'Funding Distributed' GROUP BY ts.official_email_address;", (err, result) => {
+                client.query("SELECT SUM(uf.amount) AS amount_total FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' AND uf.funding_type = 'Funding Distributed';", (err, result) => {
                     if(err)
                     {
                         rejectQuery25(err)
@@ -491,17 +504,270 @@ const StartupDataModel = async() => {
                 })
             })
 
-            // const TotalAksharTeamFundsDistributed = new Promise((resolveQuery26, rejectQuery26) => {
-            //     client.query("SELECT ts.basic->>'program' AS program, ts.official_email_address, ts.basic->>'startup_name' AS startup_name, uf.amount, SUM(uf.amount) AS amount_total FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Akshar' AND uf.funding_type = 'Funding Distributed' GROUP BY ts.official_email_address;", (err, result) => {
-            //         if (err) {
-            //             rejectQuery26(err);
-            //         } else {
-            //             resolveQuery26(result);
-            //         }
-            //     });
-            // });
+            //SELECT SUM(uf.amount) FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' AND uf.funding_type = 'Funding Distributed';
+            const TotalAksharTeamFundsDistributed = new Promise((resolveQuery26, rejectQuery26) => {
+                client.query("SELECT SUM(uf.amount) AS amount_total FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Akshar' AND uf.funding_type = 'Funding Distributed';", (err, result) => {
+                    if (err) {
+                        rejectQuery26(err);
+                    } else {
+                        resolveQuery26(result);
+                    }
+                });
+            });
             
 
+
+            //Akshar teams fund calculations
+            const AksharManufacturingTotalFunds = new Promise((resolveQuery27, rejectQuery27) => {
+                client.query("SELECT SUM(uf.amount) AS manufacturing_akshar_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Akshar' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Manufacturing & Industry';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery27(err)
+                    }
+                    else
+                    {
+                        resolveQuery27(result);
+                    }
+                })
+            })
+
+            const AksharEnergyTotalFunds = new Promise((resolveQuery27, rejectQuery27) => {
+                client.query("SELECT SUM(uf.amount) AS energy_akshar_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Akshar' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Energy & Environment';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery27(err)
+                    }
+                    else
+                    {
+                        resolveQuery27(result);
+                    }
+                })
+            })
+
+            const AksharHardwareTotalFunds = new Promise((resolveQuery27, rejectQuery27) => {
+                client.query("SELECT SUM(uf.amount) AS hardware_akshar_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Akshar' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Hardware & IOT';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery27(err)
+                    }
+                    else
+                    {
+                        resolveQuery27(result);
+                    }
+                })
+            })
+
+            const AksharSoftwareTotalFunds = new Promise((resolveQuery27, rejectQuery27) => {
+                client.query("SELECT SUM(uf.amount) AS software_akshar_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Akshar' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Software & Data';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery27(err)
+                    }
+                    else
+                    {
+                        resolveQuery27(result);
+                    }
+                })
+            })
+
+            const AksharEdtechTotalFunds = new Promise((resolveQuery27, rejectQuery27) => {
+                client.query("SELECT SUM(uf.amount) AS edtech_akshar_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Akshar' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Edtech';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery27(err)
+                    }
+                    else
+                    {
+                        resolveQuery27(result);
+                    }
+                })
+            })
+
+            const AksharServicesTotalFunds = new Promise((resolveQuery27, rejectQuery27) => {
+                client.query("SELECT SUM(uf.amount) AS services_akshar_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Akshar' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='services';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery27(err)
+                    }
+                    else
+                    {
+                        resolveQuery27(result);
+                    }
+                })
+            })
+
+            const AksharAgricultureTotalFunds = new Promise((resolveQuery27, rejectQuery27) => {
+                client.query("SELECT SUM(uf.amount) AS agriculture_akshar_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Akshar' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Agriculture & Food';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery27(err)
+                    }
+                    else
+                    {
+                        resolveQuery27(result);
+                    }
+                })
+            })
+
+            const AksharEcommerceTotalFunds = new Promise((resolveQuery27, rejectQuery27) => {
+                client.query("SELECT SUM(uf.amount) AS ecommerce_akshar_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Akshar' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Ecommerce & Retail';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery27(err)
+                    }
+                    else
+                    {
+                        resolveQuery27(result);
+                    }
+                })
+            })
+
+            const AksharSocialTotalFunds = new Promise((resolveQuery27, rejectQuery27) => {
+                client.query("SELECT SUM(uf.amount) AS social_akshar_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Akshar' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Social & Leisure';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery27(err)
+                    }
+                    else
+                    {
+                        resolveQuery27(result);
+                    }
+                })
+            })
+
+
+            //Pratham teams fund calculations
+            const PrathamManufacturingTotalFunds = new Promise((resolveQuery28, rejectQuery28) => {
+                client.query("SELECT SUM(uf.amount) AS manufacturing_pratham_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Manufacturing & Industry';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery28(err)
+                    }
+                    else
+                    {
+                        resolveQuery28(result);
+                    }
+                })
+            })
+
+            const PrathamEnergyTotalFunds = new Promise((resolveQuery30, rejectQuery30) => {
+                client.query("SELECT SUM(uf.amount) AS energy_pratham_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Energy & Environment';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery30(err)
+                    }
+                    else
+                    {
+                        resolveQuery30(result);
+                    }
+                })
+            })
+
+            const PrathamHardwareTotalFunds = new Promise((resolveQuery31, rejectQuery31) => {
+                client.query("SELECT SUM(uf.amount) AS hardware_pratham_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Hardware & IOT';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery31(err)
+                    }
+                    else
+                    {
+                        resolveQuery31(result);
+                    }
+                })
+            })
+
+            const PrathamSoftwareTotalFunds = new Promise((resolveQuery32, rejectQuery32) => {
+                client.query("SELECT SUM(uf.amount) AS software_pratham_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Software & Data';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery32(err)
+                    }
+                    else
+                    {
+                        resolveQuery32(result);
+                    }
+                })
+            })
+
+            const PrathamEdtechTotalFunds = new Promise((resolveQuery33, rejectQuery33) => {
+                client.query("SELECT SUM(uf.amount) AS edtech_pratham_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Edtech';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery33(err)
+                    }
+                    else
+                    {
+                        resolveQuery33(result);
+                    }
+                })
+            })
+
+            const PrathamServicesTotalFunds = new Promise((resolveQuery34, rejectQuery34) => {
+                client.query("SELECT SUM(uf.amount) AS services_pratham_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='services';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery34(err)
+                    }
+                    else
+                    {
+                        resolveQuery34(result);
+                    }
+                })
+            })
+
+            const PrathamAgricultureTotalFunds = new Promise((resolveQuery35, rejectQuery35) => {
+                client.query("SELECT SUM(uf.amount) AS agriculture_pratham_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Agriculture & Food';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery35(err)
+                    }
+                    else
+                    {
+                        resolveQuery35(result);
+                    }
+                })
+            })
+
+            const PrathamEcommerceTotalFunds = new Promise((resolveQuery36, rejectQuery36) => {
+                client.query("SELECT SUM(uf.amount) AS ecommerce_pratham_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Ecommerce & Retail';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery36(err)
+                    }
+                    else
+                    {
+                        resolveQuery36(result);
+                    }
+                })
+            })
+
+            const PrathamSocialTotalFunds = new Promise((resolveQuery37, rejectQuery37) => {
+                client.query("SELECT SUM(uf.amount) AS social_pratham_funds FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' AND uf.funding_type = 'Funding Distributed' AND ts.basic::json->>'startup_program'='Social & Leisure';", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery37(err)
+                    }
+                    else
+                    {
+                        resolveQuery37(result);
+                    }
+                })
+            })
+            ///Mentor data 
+
+
+            const TotalMentoringSessions  = new Promise((resolveQuery38, rejectQuery38) => {
+                client.query("SELECT COUNT(startup) AS session_total FROM mentor_schedule", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery38(err)
+                    }
+                    else
+                    {
+                        resolveQuery38(result)
+                    }
+                })
+            })
 
             //SELECT ts.basic->>'program' AS program, ts.official_email_address, ts.basic->>'startup_name' AS startup_name,SUM(uf.amount) AS amount_total FROM test_startup ts LEFT JOIN update_funding uf ON uf.sta
 //rtup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' GROUP BY ts.official_email_address;
@@ -524,7 +790,26 @@ const StartupDataModel = async() => {
                 UpdatedFunds,
                 UpdateFundsUtilized,
                 TotalPrathamTeamFundsDistributed,
-                //TotalAksharTeamFundsDistributed
+                TotalAksharTeamFundsDistributed,
+                AksharManufacturingTotalFunds,
+                AksharEnergyTotalFunds,
+                AksharHardwareTotalFunds,
+                AksharSoftwareTotalFunds,
+                AksharEdtechTotalFunds,
+                AksharServicesTotalFunds,
+                AksharAgricultureTotalFunds,
+                AksharEcommerceTotalFunds,
+                AksharSocialTotalFunds,
+                PrathamManufacturingTotalFunds,
+                PrathamEnergyTotalFunds,
+                PrathamHardwareTotalFunds,
+                PrathamSoftwareTotalFunds,
+                PrathamEdtechTotalFunds,
+                PrathamServicesTotalFunds,
+                PrathamAgricultureTotalFunds,
+                PrathamEcommerceTotalFunds,
+                PrathamSocialTotalFunds,
+                TotalMentoringSessions
                 ])
             .then(([TotalCountStartups, ActiveStartups, DroppedStartups, GraduatedStartups, Manufacturing, Services, Edtech, Agriculture, Hardware, Energy, Ecommerce, Social, SoftwareData, EnergyPratham, ManufacturingPratham, HardwarePratham, SoftwareDataPratham, EdtechPratham, ServicesPratham, AgriculturePratham, EcommercePratham, SocialPratham,
                 ManufacturingAkshar,
@@ -541,7 +826,26 @@ const StartupDataModel = async() => {
                 UpdatedFunds,
                 UpdateFundsUtilized,
                 TotalPrathamTeamFundsDistributed,
-                //TotalAksharTeamFundsDistributed
+                TotalAksharTeamFundsDistributed,
+                AksharManufacturingTotalFunds,
+                AksharEnergyTotalFunds,
+                AksharHardwareTotalFunds,
+                AksharSoftwareTotalFunds,
+                AksharEdtechTotalFunds,
+                AksharServicesTotalFunds,
+                AksharAgricultureTotalFunds,
+                AksharEcommerceTotalFunds,
+                AksharSocialTotalFunds,
+                PrathamManufacturingTotalFunds,
+                PrathamEnergyTotalFunds,
+                PrathamHardwareTotalFunds,
+                PrathamSoftwareTotalFunds,
+                PrathamEdtechTotalFunds,
+                PrathamServicesTotalFunds,
+                PrathamAgricultureTotalFunds,
+                PrathamEcommerceTotalFunds,
+                PrathamSocialTotalFunds,
+                TotalMentoringSessions
             ]) => {
                 resolve({
                     TotalCountStartups,
@@ -580,7 +884,26 @@ const StartupDataModel = async() => {
                     UpdatedFunds,
                     UpdateFundsUtilized,
                     TotalPrathamTeamFundsDistributed,
-                    //TotalAksharTeamFundsDistributed
+                    TotalAksharTeamFundsDistributed,
+                    AksharManufacturingTotalFunds,
+                    AksharEnergyTotalFunds,
+                    AksharHardwareTotalFunds,
+                    AksharSoftwareTotalFunds,
+                    AksharEdtechTotalFunds,
+                    AksharServicesTotalFunds,
+                    AksharAgricultureTotalFunds,
+                    AksharEcommerceTotalFunds,
+                    AksharSocialTotalFunds,
+                    PrathamManufacturingTotalFunds,
+                    PrathamEnergyTotalFunds,
+                    PrathamHardwareTotalFunds,
+                    PrathamSoftwareTotalFunds,
+                    PrathamEdtechTotalFunds,
+                    PrathamServicesTotalFunds,
+                    PrathamAgricultureTotalFunds,
+                    PrathamEcommerceTotalFunds,
+                    PrathamSocialTotalFunds,
+                    TotalMentoringSessions
                 });
             })
             .catch((err) => {
