@@ -8,7 +8,8 @@ function Notification({isVisible, onClose, children})
     return(
         <div className='fixed inset-0 bg-black bg-opacity-15 backdrop-blur-xs mt-[56px;] flex ps-[750px;] border-md' id="wrapper" onClick={handleClose}>
             <div className="w-[440px]">
-                <div className="p-4" onClick={handleClose} style={{backgroundColor: '#afd5de'}}>
+                <div className="p-4 bg-white" onClick={handleClose}>
+                    <div className="text-2xl pb-2 font-semibold">Notifications</div>
                       {children}
                 </div>
             </div>

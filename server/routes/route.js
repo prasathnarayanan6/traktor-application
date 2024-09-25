@@ -29,7 +29,9 @@ const {ViewNotification} = require('../controller/Admin/Notification/Notificatio
 const {CreateEvents, FetchEvents, RequestSpeaker} = require('../controller/Admin/Events/Events.js');
 const {FetchMentorData, MentorCount, DeleteMentorData} = require('../controller/Admin/Mentors/MentorData.js')
 const AddJob = require('../controller/Team/AddJob.js');
-const {AddFunding} = require('../controller/Finance/AddFunding.js');
+const {AddFunding, updateFundingNotif} = require('../controller/Finance/AddFunding.js');
+const {ScheduleMentorMeeting} = require('../controller/Admin/Mentorship/Mentorship.js');
+router.post('/schedule-meeting', ScheduleMentorMeeting);
 router.post('/finance/funding-update', AddFunding);
 router.get('/fetch-startup', FetchStartupData);
 router.get('/fetchevents', FetchEvents);
@@ -66,7 +68,7 @@ router.post('/customer/raise-request', RaiseRequest);
 router.post('/customer/apply-mentor', AddMentorHour);
 router.get('/customer/fetch-mentor', FetchDataMentor);
 router.post('/customer/add-job', AddJob);
-router.get('/notification', ViewNotification);
+router.get('/notification', updateFundingNotif);
 router.delete('/delete-mentor/:id', DeleteMentorData)
 router.delete('/delete-connection', DeleteConnection);
 module.exports = router;

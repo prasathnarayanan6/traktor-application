@@ -12,23 +12,16 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-const PieChart = (props) => {
-  console.log(props)
+const FundingDistributedProgram = (props) => {
+    console.log(props?.props);
   const data = {
-    labels: ['Energy & Environment', 'Software & Data', 'Manufacturing & Industry', 'Agriculture & Food', 'Hardware & IoT', 'Edtech', 'Services', 'Ecommerce & Retail', 'Social & Leisure'],
+    labels: [ 'Akshar', 'Pratham'],
     datasets: [
       {
         labels: ' of Votes',
         data: [
-            parseInt(props?.props?.Funding_Distrubuted_data?.Pratham?.Energy_pratham) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Pratham?.Software_Pratham) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Pratham?.Manufacturing_Pratham) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Pratham?.Agriculture_Pratham) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Pratham?.Hardware_Pratham) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Pratham?.Edtech_Pratham) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Pratham?.Services_Pratham) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Pratham?.Ecommerce_Pratham) || 0,
-            parseInt(props?.props?.Funding_Distrubuted_data?.Pratham?.Social_Pratham) || 0
+            parseInt(props?.props?.Funding_Distrubuted_data?.Akshar?.Total_funding_Akshar) || 0,
+            parseInt(props?.props?.Funding_Distrubuted_data?.Pratham?.Total_funding_pratham) || 0,
         ],
         backgroundColor: [
           'rgba(141, 182, 196)',
@@ -67,4 +60,4 @@ const PieChart = (props) => {
   return <div style={{width : '90%', maxWidth: '400px;',  height: 'auto', margin: '0 auto', padding: '10px'}}><Pie data={data} options={options} /></div>;
 };
 
-export default PieChart;
+export default FundingDistributedProgram;

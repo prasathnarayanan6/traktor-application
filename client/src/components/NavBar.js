@@ -114,6 +114,23 @@ function NavBar({toggleSideBar}) {
     }
    
   }
+  const[notification, SetNotification] = useState([])
+  const UpdatedFundingData = async() => {
+    try
+    {
+        const result = await axios.get('http://localhost:3003/api/v1/notification');
+        SetNotification(result.data.rows)
+    }
+    catch(err)
+    {
+      console.log(err);
+    }
+  }
+  useEffect(()=> {
+    setInterval(()=> {
+        UpdatedFundingData()
+    }, 5000)
+  }, [])
   return (
     <div className="navbar">
           <nav className="dark:bg-gray-900 shadow-sm border-10" style={{ backgroundColor: '#0b5f66' }}>
@@ -139,10 +156,10 @@ function NavBar({toggleSideBar}) {
                      </button>
                   </li>
                   <li>
-                     <a href="/home"   className="relative -left-10 block py-2 px-2 text-white bg-blue-700 rounded md:bg-transparent md:text-gray-300 md:p-1 dark:text-white md:dark:text-blue-500 text-xl hover:text-white rounded-3xl hover:rounded-2xl transition-all duration-200 ease-linear cursor-pointer group;" onMouseEnter={handleBellHover} onMouseLeave={handleBellHover}>
+                     <button className="relative -left-10 block py-2 px-2 text-white bg-blue-700 rounded md:bg-transparent md:text-gray-300 md:p-1 dark:text-white md:dark:text-blue-500 text-xl hover:text-white rounded-3xl hover:rounded-2xl transition-all duration-200 ease-linear cursor-pointer group;" onMouseEnter={handleBellHover} onMouseLeave={handleBellHover}>
                         <FaRegBell className="mt-[4px;] text-2xl"/> <span class="sr-only">Notifications</span>
                         <div className={`absolute inline-flex items-center justify-center w-[9px;] h-[9px;] text-xs font-bold text-white bg-red-400 border-0 border-white rounded-full top-1 end-[5px;] dark:border-gray-900`}><span className="text-xs"></span></div>
-                     </a>
+                     </button>
                   </li>
                   <li>
                       <div className="block py-2 px-2 text-white bg-blue-700 rounded md:bg-transparent md:text-gray-300 md:p-1 dark:text-white md:dark:text-blue-500 text-xl hover:text-white rounded-3xl hover:rounded-2xl transition-all duration-300 ease-linear cursor-pointer group; relative -left-10 bg-white" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} ><img className="w-8 h-8 rounded-full" src={profile} alt="user photo" />
@@ -160,11 +177,23 @@ function NavBar({toggleSideBar}) {
             </div>
           </nav>
           <Notification isVisible={messageNotify} onClose={handleClose}>
-                      <div className="grid grid-cols-3 gap-1 shadow-md p-0 border bg-white rounded-2xl">  
-                            <div className="text-center p-2 items-start justify-start flex"><img src={profile} className="w-12 h-12 rounded-full"/></div>
-                            <div className="text-sm pt-5 font-semibold ps-1 ">Requested for Aws</div>
-                            <div className="p-4 items-center justify-end flex"><FaEllipsis /></div>
-                      </div>
+            {Array.isArray(notification) && notification.length > 0 ? (
+                notification.map((dataObj, key) => (
+                  <div className="max-h-[50px]">
+                      <div className="grid grid-cols-1 gap-10 p-0 bg-white" key={key}>  
+                            <div className="p-2 text-sm">
+                                <span className="text-md">{dataObj.description}</span><br></br>
+                                <span className='text-xs text-gray-400'>{dataObj.funding_date}</span>
+                            </div>
+                            {/* <div className="p-2 items-center justify-end flex text-xs"><button className="border shadow-sm px-3 py-1 active:scale-95 active:shadow-md transition-transform">Mark as Read</button></div> */}
+                            {/* <div className="text-sm pt-5 font-semibold ps-1 ">Requested for Aws</div>
+                            <div className="p-4 items-center justify-end flex"><FaEllipsis /></div> */}
+                      </div>   
+                  </div>
+                ))
+            ): (
+                <div></div>
+            )}
           </Notification>
           <ProfileModal isVisible={showModal} onClose={()=>setShowModal(false)}>
                       <center><img src={img} className="h-[60px;]" alt="Flowbite Logo" /></center>

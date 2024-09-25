@@ -1,6 +1,24 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import { ApiFetchMentor, ApiDeletMentorData } from "../../../API/API";
 
 const Step2 = ({formData, handleChange}) => {
+  const [data, setData] = useState([]);
+
+  const FetchData = async() => {
+    try {
+        const API = await ApiFetchMentor();
+        setData(API.STATUS.rows);
+        //console.log(API.STATUS.rows);
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
+}
+useEffect(() =>{
+  FetchData();
+  setData()
+},[])
   return (
     <div className="grid grid-cols-2 gap-4 items-center ">
       <div class="relative mt-4">
@@ -89,7 +107,16 @@ const Step2 = ({formData, handleChange}) => {
           <option value="" disabled selected>
             Mentor Associated
           </option>
-          <option value="ada">sjhf</option>
+          {Array.isArray(data) && data.length > 0 ? (
+              data.map((dataObj, index) => (
+                <option key={index} value={dataObj.email_address}>{dataObj.mentor_name}</option>
+              ))
+          ): (
+            <option>No Mentor to display</option>
+          )}
+          {/* {data.map((dataObj, key) => {
+              <option value={key}>{dataObj.}</option>
+          })} */}
         </select>
       </div>
       <div className="relative mt-4">

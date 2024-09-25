@@ -242,7 +242,7 @@ const StartupDataModel = async() => {
                 })
             })
             const ServicesPratham = new Promise((resolveQuery10, rejectQuery10) => {
-                client.query("SELECT COUNT(basic::json->'program') AS services_program_count FROM test_startup WHERE (basic->>'program')='Pratham' AND (basic->>'startup_program')='Services'", (err, result) => {
+                client.query("SELECT COUNT(basic::json->'program') AS services_program_count FROM test_startup WHERE (basic->>'program')='Pratham' AND (basic->>'startup_program')='services'", (err, result) => {
                     if(err)
                     {   
                         rejectQuery10(err);
@@ -359,7 +359,7 @@ const StartupDataModel = async() => {
                 })
             })
             const ServicesAkshar = new Promise((resolveQuery17, rejectQuery17) => {
-                client.query("SELECT COUNT(basic::json->'program') AS services_program_count_akshar FROM test_startup WHERE (basic->>'program')='Akshar' AND (basic->>'startup_program')='Services'", (err, result) => {
+                client.query("SELECT COUNT(basic::json->'program') AS services_program_count_akshar FROM test_startup WHERE (basic->>'program')='Akshar' AND (basic->>'startup_program')='services'", (err, result) => {
                     if(err)
                     {   
                         rejectQuery17(err);
@@ -451,7 +451,7 @@ const StartupDataModel = async() => {
 
 
             const UpdatedFunds = new Promise((resolveQuery23, rejectQuery23) => {
-                client.query("SELECT SUM(amount) AS funds_used FROM update_funding", (err, result) => {
+                client.query("SELECT SUM(amount) AS funds_distributed FROM update_funding WHERE funding_type='Funding Distributed'", (err, result) => {
                     if(err)
                     {
                         rejectQuery23(err)
@@ -462,6 +462,51 @@ const StartupDataModel = async() => {
                     }
                 })
             })
+
+            const UpdateFundsUtilized = new Promise((resolveQuery24, rejectQuery24) => {
+                client.query("SELECT SUM(amount) AS funds_utilized FROM update_funding WHERE funding_type='Funding Utilized'", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery24(err)
+                    }
+                    else
+                    {
+                        resolveQuery24(result);
+                    }
+                })
+            })
+
+            //
+            //Pratham team total fund distributed
+            const TotalPrathamTeamFundsDistributed = new Promise((resolveQuery25, rejectQuery25) => {
+                client.query("SELECT ts.basic->>'program' AS program, ts.official_email_address, ts.basic->>'startup_name' AS startup_name,SUM(uf.amount) AS amount_total FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' AND uf.funding_type = 'Funding Distributed' GROUP BY ts.official_email_address;", (err, result) => {
+                    if(err)
+                    {
+                        rejectQuery25(err)
+                    }
+                    else
+                    {
+                        resolveQuery25(result);
+                    }
+                })
+            })
+
+            // const TotalAksharTeamFundsDistributed = new Promise((resolveQuery26, rejectQuery26) => {
+            //     client.query("SELECT ts.basic->>'program' AS program, ts.official_email_address, ts.basic->>'startup_name' AS startup_name, uf.amount, SUM(uf.amount) AS amount_total FROM test_startup ts JOIN update_funding uf ON uf.startup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Akshar' AND uf.funding_type = 'Funding Distributed' GROUP BY ts.official_email_address;", (err, result) => {
+            //         if (err) {
+            //             rejectQuery26(err);
+            //         } else {
+            //             resolveQuery26(result);
+            //         }
+            //     });
+            // });
+            
+
+
+            //SELECT ts.basic->>'program' AS program, ts.official_email_address, ts.basic->>'startup_name' AS startup_name,SUM(uf.amount) AS amount_total FROM test_startup ts LEFT JOIN update_funding uf ON uf.sta
+//rtup_name = ts.official_email_address WHERE ts.basic->>'program' = 'Pratham' GROUP BY ts.official_email_address;
+
+
             //startup count
             ///Askshar Data ENds
             Promise.all([TotalCountStartups, ActiveStartups, DroppedStartups, GraduatedStartups, Manufacturing, Services, Edtech, Agriculture, Hardware, Energy, Ecommerce, Social, SoftwareData, EnergyPratham, ManufacturingPratham, HardwarePratham, SoftwareDataPratham, EdtechPratham, ServicesPratham, AgriculturePratham, EcommercePratham, SocialPratham, 
@@ -476,7 +521,10 @@ const StartupDataModel = async() => {
                 SoftwareDataAkshar,
                 PrathamTeamsCount,
                 AksharTeamsCount,
-                UpdatedFunds
+                UpdatedFunds,
+                UpdateFundsUtilized,
+                TotalPrathamTeamFundsDistributed,
+                //TotalAksharTeamFundsDistributed
                 ])
             .then(([TotalCountStartups, ActiveStartups, DroppedStartups, GraduatedStartups, Manufacturing, Services, Edtech, Agriculture, Hardware, Energy, Ecommerce, Social, SoftwareData, EnergyPratham, ManufacturingPratham, HardwarePratham, SoftwareDataPratham, EdtechPratham, ServicesPratham, AgriculturePratham, EcommercePratham, SocialPratham,
                 ManufacturingAkshar,
@@ -490,7 +538,10 @@ const StartupDataModel = async() => {
                 SoftwareDataAkshar,
                 PrathamTeamsCount,
                 AksharTeamsCount,
-                UpdatedFunds
+                UpdatedFunds,
+                UpdateFundsUtilized,
+                TotalPrathamTeamFundsDistributed,
+                //TotalAksharTeamFundsDistributed
             ]) => {
                 resolve({
                     TotalCountStartups,
@@ -526,7 +577,10 @@ const StartupDataModel = async() => {
                     SoftwareDataAkshar,
                     PrathamTeamsCount,
                     AksharTeamsCount,
-                    UpdatedFunds
+                    UpdatedFunds,
+                    UpdateFundsUtilized,
+                    TotalPrathamTeamFundsDistributed,
+                    //TotalAksharTeamFundsDistributed
                 });
             })
             .catch((err) => {
@@ -537,7 +591,7 @@ const StartupDataModel = async() => {
 
 const FetchStartupsModel = async() => {
     return new Promise((resolve, reject) => {
-        client.query("SELECT basic::json->'startup_name' AS startup_name, official::json->'official_email_address' AS email_address FROM test_startup;", (err, result) => {
+        client.query("SELECT basic::json->'startup_name' AS startup_name, basic::json->'startup_program' as startup_sector, basic::json->'program' as program, founder::json->'founder_name' as founder_name, official::json->'official_email_address' AS email_address FROM test_startup;", (err, result) => {
             if(err)
             {   
                 reject(err);

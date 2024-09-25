@@ -29,16 +29,16 @@ function HomeFinance(props){
                                             <div className="p-3 pt-3 text-3xl font-semibold pb-4 justify-end items-end flex text-gray-500"><span><FaIndianRupeeSign /></span>{props?.props?.Funding_Distrubuted_data?.Pratham?.Total_funding_pratham || "NA"}</div>
                                     </div>
                                     <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#afd5de'}}>
-                                        <div className="p-3 text-md font-semibold text-gray-600">Akshar (in Total)</div>
-                                        <div className="p-3 pt-3 text-3xl font-semibold pb-4 justify-end items-end flex text-gray-500"><span><FaIndianRupeeSign /></span>{props?.props?.Funding_Distrubuted_data?.Akshar?.Total_funding_Akshar || "0"}</div>
+                                        <div className="p-4 text-md font-semibold text-gray-600">Akshar (in Total)</div>
+                                        <div className="p-3 pt-3 text-3xl font-semibold pb-4 justify-end items-end flex text-gray-500"><span><FaIndianRupeeSign /></span>{props?.props?.Funding_Distrubuted_data?.Akshar?.Total_funding_Akshar}</div>
                                     </div>
                                     <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#afcdde'}}>
-                                            <div className="p-3 text-md font-semibold text-gray-600">Total funding used</div>
-                                            <div className="p-3 pt-3 text-3xl font-semibold pb-4 justify-end items-end flex text-gray-500"><span><FaIndianRupeeSign /></span>{props?.props?.Funding_Distrubuted_data?.Total_funding_used?.Total_funding_used || "NA"}</div>
+                                            <div className="p-4 text-md font-semibold text-gray-600">Total funds distributed</div>
+                                            <div className="p-3 pt-3 text-3xl font-semibold pb-4 justify-end items-end flex text-gray-500"><span><FaIndianRupeeSign /></span>{props?.props?.Funding_Distrubuted_data?.Total_funding_used?.Total_funding_distributed || "NA"}</div>
                                     </div>
                                     <div className="shadow-md rounded-lg w-[100%;]" style={{backgroundColor: '#7da1ad'}}>
-                                            <div className="p-3 text-md font-semibold text-gray-600">Total fund remaining</div>
-                                            <div className="p-3 pt-3 text-3xl font-semibold pb-4 justify-end items-end flex text-gray-600"><span><FaIndianRupeeSign /></span>{props?.props?.Funding_Distrubuted_data?.Total_funding_used?.Total_funding_remaining || "NA"}</div>
+                                            <div className="p-4 text-md font-semibold text-gray-600">Total funds utilized</div>
+                                            <div className="p-3 pt-3 text-3xl font-semibold pb-4 justify-end items-end flex text-gray-600"><span><FaIndianRupeeSign /></span>{props?.props?.Funding_Distrubuted_data?.Total_funding_used?.Total_funds_utilized || "NA"}</div>
                                     </div>
                                 </div>
                                 <div className="grid md:grid-cols-2 gap-6 mt-10 mb-2">

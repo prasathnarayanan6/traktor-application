@@ -59,5 +59,22 @@ const MentorDeleteData = (email_address) => {
             }
         })
     })
-}   
-module.exports = {AddMentorModel, FetchMentorDataModel, MentorCountData, MentorDeleteData};
+} 
+
+
+const MentorScheduleModel = (select_startup, select_mentor, schedule_date, schedule_time, description) => {
+    return new Promise((resolve, reject) => {
+        client.query('INSERT INTO mentor_schedule (startup, mentor_mail, date, time, description) VALUES ($1, $2, $3, $4, $5)', [select_startup, select_mentor, schedule_date, schedule_time, description],
+            (err, result) => {
+                if(err)
+                {
+                    reject(err)
+                }
+                else {
+                    resolve(result);
+                }
+            }
+        )
+    })
+}
+module.exports = {AddMentorModel, FetchMentorDataModel, MentorCountData, MentorDeleteData, MentorScheduleModel};

@@ -13,6 +13,7 @@ import {SkeletonLoader, SkeletonChartLoader, SkeletonChartLoader2} from "../../c
 import axios from "axios";
 import Mentor from "./Mentors/Mentor";
 import FundingAksharPieChart from "../../components/FundingAkshar";
+import FundingDistributedProgram from "../../components/FundingDistributed";
 function Home() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [color, setColor] = useState(['#afdade', '#afd5de', '#afcdde', '#99b6bf', '#afd5de']);
@@ -135,15 +136,15 @@ function Home() {
                                                             <SkeletonChartLoader2 />
                                                         ) : (
                                                             <div className="shadow-md rounded-lg w-[100%;] border md:h-[435px;]">
-                                                                     <div className="p-2 md:text-lg text-gray-600 font-semibold">Startups across Industries</div>
-                                                                    <div className="justify-center items-center"><PieChart props={analysedData?.data} /></div>
+                                                                     <div className="p-2 md:text-lg text-gray-600 font-semibold">Funding Distribution by program</div>
+                                                                    <div className="justify-center items-center"><FundingDistributedProgram props={analysedData?.data} /></div>
                                                             </div>
                                                         )}
                                                         {!isLoaded ? (
                                                             <SkeletonChartLoader2 />
                                                         ) : (
                                                             <div className="shadow-md rounded-lg w-[100%;] border md:h-[435px;]">
-                                                                <div className="p-3 pt-2 md:text-lg text-gray-600 font-semibold">Funding Distributed across Sectors</div>
+                                                                <div className="p-3 pt-2 md:text-lg text-gray-600 font-semibold">Startups across Pratham</div>
                                                                 <div className="justify-center items-center"><PieChart props={analysedData?.data} /></div>
                                                             </div>
                                                         )}

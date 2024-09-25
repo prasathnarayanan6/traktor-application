@@ -35,7 +35,15 @@ const Updatefunding = () => {
         }
         catch(err)
         {
-            console.log(err)
+            console.log(err.response.status===400);
+            if(err.response.status == 400)
+            {
+                toast.error('Fields required')
+            }
+            else if(err.response.status == 401)
+            {
+              toast.error("Team has'nt got funds");
+            }
         }
   }
   const [ApiData, setApiData] = useState([]);

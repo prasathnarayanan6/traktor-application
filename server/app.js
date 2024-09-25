@@ -42,6 +42,7 @@ const RequestSpeaker = require('./routes/route');
 const FetchStartupDatainNumbers = require('./routes/route');
 const FetchStartupData = require('./routes/route');
 const AddFunding = require('./routes/route');
+const ScheduleMentorMeeting = require('./routes/route');
 const app = express();
 app.use(cors());
 app.use(cookieParser());
@@ -52,6 +53,7 @@ app.listen('3003', (err)=> {
     if(err) process.exit(1);
     console.log("working");
 })
+app.use('api/v1/', ScheduleMentorMeeting);
 app.use('/api/v1/', AddFunding);
 app.use('/api/v1/', LoginController);
 app.use('api/v1/', ForgotRequest)

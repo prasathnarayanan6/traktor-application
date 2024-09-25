@@ -55,9 +55,9 @@ function SideBar({children}) {
       <SideBarLink href="/connections">
         <SideBarIcon icon={<FaPeopleArrows size="24" />} tooltipText="Connections" />
       </SideBarLink>
-      <SideBarLink href="/reports">
+      {/* <SideBarLink href="/reports">
           <SideBarIcon icon={<FaFilePdf size="24" />} tooltipText="Reports" />
-      </SideBarLink>
+      </SideBarLink> */}
       {/* <SideBarLink href="/uploads">
           <SideBarIcon icon={<FaFileUpload size="20" />} tooltipText="Uploads" />
       </SideBarLink>
