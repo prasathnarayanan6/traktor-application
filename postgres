@@ -5,7 +5,7 @@
 -- Dumped from database version 16.2
 -- Dumped by pg_dump version 16.2
 
--- Started on 2024-09-18 14:46:26
+-- Started on 2024-09-26 11:08:05
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -29,7 +29,7 @@ CREATE SCHEMA pgagent;
 ALTER SCHEMA pgagent OWNER TO postgres;
 
 --
--- TOC entry 5079 (class 0 OID 0)
+-- TOC entry 5089 (class 0 OID 0)
 -- Dependencies: 8
 -- Name: SCHEMA pgagent; Type: COMMENT; Schema: -; Owner: postgres
 --
@@ -46,7 +46,7 @@ CREATE EXTENSION IF NOT EXISTS adminpack WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 5080 (class 0 OID 0)
+-- TOC entry 5090 (class 0 OID 0)
 -- Dependencies: 2
 -- Name: EXTENSION adminpack; Type: COMMENT; Schema: -; Owner: 
 --
@@ -63,7 +63,7 @@ CREATE EXTENSION IF NOT EXISTS pgagent WITH SCHEMA pgagent;
 
 
 --
--- TOC entry 5081 (class 0 OID 0)
+-- TOC entry 5091 (class 0 OID 0)
 -- Dependencies: 3
 -- Name: EXTENSION pgagent; Type: COMMENT; Schema: -; Owner: 
 --
@@ -72,7 +72,7 @@ COMMENT ON EXTENSION pgagent IS 'A PostgreSQL job scheduler';
 
 
 --
--- TOC entry 943 (class 1247 OID 33049)
+-- TOC entry 945 (class 1247 OID 33049)
 -- Name: status_enum; Type: TYPE; Schema: public; Owner: postgres
 --
 
@@ -86,7 +86,7 @@ CREATE TYPE public.status_enum AS ENUM (
 ALTER TYPE public.status_enum OWNER TO postgres;
 
 --
--- TOC entry 949 (class 1247 OID 41249)
+-- TOC entry 951 (class 1247 OID 41249)
 -- Name: tag_connection_enum; Type: TYPE; Schema: public; Owner: postgres
 --
 
@@ -226,9 +226,8 @@ ALTER TABLE public.founder_details OWNER TO postgres;
 --
 
 CREATE TABLE public.mentor_schedule (
-    team_mail character varying(25),
-    startup character varying(20),
-    mentor_mail character varying(25),
+    startup character varying(50),
+    mentor_mail character varying(50),
     date character varying(30),
     "time" character varying(30),
     description character varying(50),
@@ -368,11 +367,57 @@ CREATE TABLE public.test_startup (
     official jsonb,
     founder jsonb,
     description jsonb,
-    official_email_address text NOT NULL
+    official_email_address text NOT NULL,
+    startup_status character varying(20)
 );
 
 
 ALTER TABLE public.test_startup OWNER TO postgres;
+
+--
+-- TOC entry 254 (class 1259 OID 41301)
+-- Name: update_funding; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.update_funding (
+    id integer NOT NULL,
+    startup_name character varying(255),
+    funding_type character varying(50),
+    amount numeric(15,2),
+    purpose character varying(255),
+    funding_date character varying(20),
+    reference_number character varying(50),
+    document text,
+    description text
+);
+
+
+ALTER TABLE public.update_funding OWNER TO postgres;
+
+--
+-- TOC entry 253 (class 1259 OID 41300)
+-- Name: update_funding_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.update_funding_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.update_funding_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5092 (class 0 OID 0)
+-- Dependencies: 253
+-- Name: update_funding_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.update_funding_id_seq OWNED BY public.update_funding.id;
+
 
 --
 -- TOC entry 237 (class 1259 OID 16565)
@@ -396,18 +441,26 @@ CREATE TABLE public.user_data (
 ALTER TABLE public.user_data OWNER TO postgres;
 
 --
--- TOC entry 4805 (class 0 OID 16399)
+-- TOC entry 4856 (class 2604 OID 41304)
+-- Name: update_funding id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.update_funding ALTER COLUMN id SET DEFAULT nextval('public.update_funding_id_seq'::regclass);
+
+
+--
+-- TOC entry 4810 (class 0 OID 16399)
 -- Dependencies: 222
 -- Data for Name: pga_jobagent; Type: TABLE DATA; Schema: pgagent; Owner: postgres
 --
 
 COPY pgagent.pga_jobagent (jagpid, jaglogintime, jagstation) FROM stdin;
-7616	2024-09-18 10:19:06.293581+05:30	EliteBook
+9736	2024-09-22 10:31:13.083301+05:30	EliteBook
 \.
 
 
 --
--- TOC entry 4806 (class 0 OID 16408)
+-- TOC entry 4811 (class 0 OID 16408)
 -- Dependencies: 224
 -- Data for Name: pga_jobclass; Type: TABLE DATA; Schema: pgagent; Owner: postgres
 --
@@ -417,7 +470,7 @@ COPY pgagent.pga_jobclass (jclid, jclname) FROM stdin;
 
 
 --
--- TOC entry 4807 (class 0 OID 16418)
+-- TOC entry 4812 (class 0 OID 16418)
 -- Dependencies: 226
 -- Data for Name: pga_job; Type: TABLE DATA; Schema: pgagent; Owner: postgres
 --
@@ -427,7 +480,7 @@ COPY pgagent.pga_job (jobid, jobjclid, jobname, jobdesc, jobhostagent, jobenable
 
 
 --
--- TOC entry 4809 (class 0 OID 16466)
+-- TOC entry 4814 (class 0 OID 16466)
 -- Dependencies: 230
 -- Data for Name: pga_schedule; Type: TABLE DATA; Schema: pgagent; Owner: postgres
 --
@@ -437,7 +490,7 @@ COPY pgagent.pga_schedule (jscid, jscjobid, jscname, jscdesc, jscenabled, jscsta
 
 
 --
--- TOC entry 4810 (class 0 OID 16494)
+-- TOC entry 4815 (class 0 OID 16494)
 -- Dependencies: 232
 -- Data for Name: pga_exception; Type: TABLE DATA; Schema: pgagent; Owner: postgres
 --
@@ -447,7 +500,7 @@ COPY pgagent.pga_exception (jexid, jexscid, jexdate, jextime) FROM stdin;
 
 
 --
--- TOC entry 4811 (class 0 OID 16508)
+-- TOC entry 4816 (class 0 OID 16508)
 -- Dependencies: 234
 -- Data for Name: pga_joblog; Type: TABLE DATA; Schema: pgagent; Owner: postgres
 --
@@ -457,7 +510,7 @@ COPY pgagent.pga_joblog (jlgid, jlgjobid, jlgstatus, jlgstart, jlgduration) FROM
 
 
 --
--- TOC entry 4808 (class 0 OID 16442)
+-- TOC entry 4813 (class 0 OID 16442)
 -- Dependencies: 228
 -- Data for Name: pga_jobstep; Type: TABLE DATA; Schema: pgagent; Owner: postgres
 --
@@ -467,7 +520,7 @@ COPY pgagent.pga_jobstep (jstid, jstjobid, jstname, jstdesc, jstenabled, jstkind
 
 
 --
--- TOC entry 4812 (class 0 OID 16524)
+-- TOC entry 4817 (class 0 OID 16524)
 -- Dependencies: 236
 -- Data for Name: pga_jobsteplog; Type: TABLE DATA; Schema: pgagent; Owner: postgres
 --
@@ -477,7 +530,7 @@ COPY pgagent.pga_jobsteplog (jslid, jsljlgid, jsljstid, jslstatus, jslresult, js
 
 
 --
--- TOC entry 5064 (class 0 OID 16652)
+-- TOC entry 5072 (class 0 OID 16652)
 -- Dependencies: 243
 -- Data for Name: add_job; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -488,19 +541,18 @@ test@gmail.com	a	s	s	s	s	s
 
 
 --
--- TOC entry 5061 (class 0 OID 16615)
+-- TOC entry 5069 (class 0 OID 16615)
 -- Dependencies: 240
 -- Data for Name: add_mentor; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.add_mentor (mentor_id, mentor_name, mentor_logo, mento_description, years_of_exp, area_of_expertise, designation, institution, qualification, year_of_passing_out, startup_assoc, contact_num, email_address, linkedin_id, password, hashkey, user_role) FROM stdin;
-1	Kannan Santhanam	1	Kannan, with over 34 years of experience in corporate finance, capital markets, and IT, has expertise in change management, data analytics, and investment services. He is also a Certified Money Coach.	34		Money Coach	IIT-D, IIM-C	B.Tech	1981		9962513944	s_kannan99@yahoo.co.in		Nirmaan_IMS	1	1
 1	C.P.Madhusudhan	1		15		Head of Sales	IIT-M, IM-B	B.Tech, PGDM	\N		9840920889	madhu@lucidindia.com		test22	1	1
 \.
 
 
 --
--- TOC entry 5067 (class 0 OID 16670)
+-- TOC entry 5075 (class 0 OID 16670)
 -- Dependencies: 246
 -- Data for Name: aws_applied; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -513,7 +565,7 @@ sat@gnail.mom	Plenome	sathi@gmail.com	HealthCare	2024-07-22 11:52:43.539	2024-07
 
 
 --
--- TOC entry 5063 (class 0 OID 16630)
+-- TOC entry 5071 (class 0 OID 16630)
 -- Dependencies: 242
 -- Data for Name: establish_connections; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -528,7 +580,7 @@ Jayaprakash M	OIE	Technical Assistance	6379120338	IC40580@imail.iitm.ac.in	Train
 
 
 --
--- TOC entry 5071 (class 0 OID 41270)
+-- TOC entry 5079 (class 0 OID 41270)
 -- Dependencies: 250
 -- Data for Name: events; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -536,11 +588,12 @@ Jayaprakash M	OIE	Technical Assistance	6379120338	IC40580@imail.iitm.ac.in	Train
 COPY public.events (event_type, event_title, event_privacy, event_description, event_date, event_time, created_by, select_speaker) FROM stdin;
 Masterclass	Test	Public	Test MasterClass	2024-09-16	15:23	manager.ie@imail.iitm.ac.in	C.P.Madhusudhan
 Webinar	Test2	Private	Test2	2024-09-11	15:26	manager.ie@imail.iitm.ac.in	C.P.Madhusudhan
+Workshop	Demo Day	Public	Test	2024-09-27	09:30	manager.ie@imail.iitm.ac.in	C.P.Madhusudhan
 \.
 
 
 --
--- TOC entry 5065 (class 0 OID 16660)
+-- TOC entry 5073 (class 0 OID 16660)
 -- Dependencies: 244
 -- Data for Name: founder_details; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -550,18 +603,18 @@ COPY public.founder_details (name, email, number, gender, studentid, linkedin, r
 
 
 --
--- TOC entry 5069 (class 0 OID 24852)
+-- TOC entry 5077 (class 0 OID 24852)
 -- Dependencies: 248
 -- Data for Name: mentor_schedule; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.mentor_schedule (team_mail, startup, mentor_mail, date, "time", description, created_at) FROM stdin;
-test@gmail.com	nirmaan	sath@gmail.com	2024-07-09	14:59	I want Mentor Hour to be shown\n	2024-07-16 14:59:11.212786
+COPY public.mentor_schedule (startup, mentor_mail, date, "time", description, created_at) FROM stdin;
+me17d002@smail.iitm.ac.in	madhu@lucidindia.com	2024-09-30	16:30		2024-09-25 12:31:26.272011
 \.
 
 
 --
--- TOC entry 5059 (class 0 OID 16583)
+-- TOC entry 5067 (class 0 OID 16583)
 -- Dependencies: 238
 -- Data for Name: mentors; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -572,7 +625,7 @@ COPY public.mentors (mentor_id, mentor_logo, mentor_description, mentor_experien
 
 
 --
--- TOC entry 5062 (class 0 OID 16626)
+-- TOC entry 5070 (class 0 OID 16626)
 -- Dependencies: 241
 -- Data for Name: messages_data; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -583,7 +636,7 @@ qwesaez12aA	prasath@gmail.com	Hi Prof! how are you	prajagopal@iitm.ac.in	2024-05
 
 
 --
--- TOC entry 5068 (class 0 OID 16677)
+-- TOC entry 5076 (class 0 OID 16677)
 -- Dependencies: 247
 -- Data for Name: raised_request; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -604,7 +657,7 @@ test@gmail.com	Request regarding Internship Certificate	Working	2024-07-16 16:17
 
 
 --
--- TOC entry 5072 (class 0 OID 41273)
+-- TOC entry 5080 (class 0 OID 41273)
 -- Dependencies: 251
 -- Data for Name: request_speaker; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -625,7 +678,7 @@ B.Vaidyanathan	ad	manager.ie@imail.iitm.ac.in
 
 
 --
--- TOC entry 5060 (class 0 OID 16593)
+-- TOC entry 5068 (class 0 OID 16593)
 -- Dependencies: 239
 -- Data for Name: resume_data; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -644,7 +697,7 @@ Soundariya B	soundarsoundariya@gmail.com	St.Joseph's Institute of technology	ECE
 
 
 --
--- TOC entry 5070 (class 0 OID 41240)
+-- TOC entry 5078 (class 0 OID 41240)
 -- Dependencies: 249
 -- Data for Name: tag_connection; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -656,7 +709,7 @@ cm.ie@imail.iitm.ac.in	pm.ie@imail.iitm.ac.in	axc	2024-08-23 12:24:55.983827+05:
 
 
 --
--- TOC entry 5066 (class 0 OID 16665)
+-- TOC entry 5074 (class 0 OID 16665)
 -- Dependencies: 245
 -- Data for Name: team_member_details; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -673,18 +726,52 @@ zscsc	jp@gmail.com	12345678	Test
 
 
 --
--- TOC entry 5073 (class 0 OID 41278)
+-- TOC entry 5081 (class 0 OID 41278)
 -- Dependencies: 252
 -- Data for Name: test_startup; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.test_startup (basic, official, founder, description, official_email_address) FROM stdin;
-{"cohort": "2024-09-19", "program": "Nirmaan", "startup_name": "Test", "startup_tech": "Deep Technology (Anything with  deep technical expertise)", "startup_type": "Hardware", "startup_program": "Advertising", "startup_industry": "Health, Wellness & Allied Industries"}	{"password": "Nirmaan", "linkedin_id": "https://linktree.com/bug", "website_link": "http:122.32.12.33/mentor", "mentor_associated": "ada", "registration_number": "CIN1234566789", "official_email_address": "sath@gmail.com", "official_contact_number": "123456790"}	{"linkedInid": "data", "founder_name": "test", "founder_email": "test@gmail.com", "founder_gender": "Male", "founder_number": "Test", "founder_student_id": "test@gmail.com"}	{"logo_image": "", "startup_description": "ada"}	sath@gmail.com
+COPY public.test_startup (basic, official, founder, description, official_email_address, startup_status) FROM stdin;
+{"cohort": "", "program": "Akshar", "startup_name": "Nexuscare", "startup_tech": "Others", "startup_type": "Service", "startup_program": "Software & Data", "startup_industry": "Healthcare"}	{"password": "Nexuscare", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "nithinmaloth.44f@gmail.com", "official_contact_number": "7680054781"}	{"linkedInid": "", "founder_name": "Nithin Maloth", "founder_email": "nithinmaloth.44f@gmail.com", "founder_gender": "Male", "founder_number": "7680054781", "founder_student_id": ""}	{"logo_image": "", "startup_description": ""}	nithinmaloth.44f@gmail.com	Active
+{"cohort": "", "program": "Pratham", "startup_name": "MeDow", "startup_tech": "Others", "startup_type": "Hybrid", "startup_program": "Ecommerce & Retail", "startup_industry": "Sustainability"}	{"password": "MeDow", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "itismesaksham@gmail.com", "official_contact_number": "7017274036"}	{"linkedInid": "", "founder_name": "Saksham", "founder_email": "itismesaksham@gmail.com", "founder_gender": "Male", "founder_number": "7017274036", "founder_student_id": "cy23s400"}	{"logo_image": "", "startup_description": "An eco-friendly alternative to synthetic fibers like nylon, polyester, and acrylic used excessively in fast fashion clothing is the use of banana silk, combined with fast fashion designs and clothing techniques, to create garments that are not only biodegradable and have a lower environmental footprint throughout their lifecycle but also satisfy customers with their desired favourite fast fashion clothes."}	itismesaksham@gmail.com	Active
+{"cohort": "", "program": "Pratham", "startup_name": "i-Genie", "startup_tech": "Others", "startup_type": "Service", "startup_program": "services", "startup_industry": "Industry 4.0"}	{"password": "Igenie", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "me23s401@smail.iitm.ac.in", "official_contact_number": "7014129168"}	{"linkedInid": "", "founder_name": "Srijan Tiwari", "founder_email": "me23s401@smail.iitm.ac.in", "founder_gender": "Male", "founder_number": "7014129168", "founder_student_id": ""}	{"logo_image": "", "startup_description": "i-Genie is a platform created to develop a market place for the global non-destructive testing and evaluation industries, as well as an educational platform for the NDT sector that includes academic courses as well as training certifications."}	me23s401@smail.iitm.ac.in	Active
+{"cohort": "", "program": "Akshar", "startup_name": "Sukoon", "startup_tech": "Others", "startup_type": "", "startup_program": "Manufacturing & Industry", "startup_industry": "Industry 4.0"}	{"password": "", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "ch19b076@smail.iitm.ac.in", "official_contact_number": "9049617869"}	{"linkedInid": "", "founder_name": "Phalgun Vyas", "founder_email": "ch19b076@smail.iitm.ac.in", "founder_gender": "Male", "founder_number": "9049617869", "founder_student_id": ""}	{"logo_image": "", "startup_description": "At Sukoon we are solving the problem of excessive heat stress, which impacts health & productivity of individuals working in heat intensive environments. We are creating the next generation Wearables which provide an unparalleled sensation of comfort through smart customised temperature controlled apparel."}	ch19b076@smail.iitm.ac.in	Active
+{"cohort": "", "program": "Akshar", "startup_name": "Seat of Joy", "startup_tech": "Others", "startup_type": "Service", "startup_program": "Hardware & IOT", "startup_industry": "Industry 4.0"}	{"password": "Seat123", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "ed19b063@smail.iitm.ac.in", "official_contact_number": ""}	{"linkedInid": "", "founder_name": "Sai Gowtham Tamminaina", "founder_email": "ed19b063@smail.iitm.ac.in", "founder_gender": "Male", "founder_number": "", "founder_student_id": ""}	{"logo_image": "", "startup_description": ""}	ed19b063@smail.iitm.ac.in	Active
+{"cohort": "", "program": "Akshar", "startup_name": "Inbound Aerospace", "startup_tech": "Others", "startup_type": "Service", "startup_program": "Manufacturing & Industry", "startup_industry": "Industry 4.0"}	{"password": "Inbound123", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "ae14d402@smail.iitm.ac.in", "official_contact_number": "8111927056"}	{"linkedInid": "", "founder_name": "Aravind I B", "founder_email": "ae14d402@smail.iitm.ac.in", "founder_gender": "Male", "founder_number": "8111927056", "founder_student_id": ""}	{"logo_image": "", "startup_description": ""}	ae14d402@smail.iitm.ac.in	Active
+{"cohort": "", "program": "Akshar", "startup_name": "CaptioPath", "startup_tech": "Others", "startup_type": "Service", "startup_program": "Software & Data", "startup_industry": "Healthcare"}	{"password": "CaptioPath123", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "cs19d002@smail.iitm.ac.in", "official_contact_number": "9880139699"}	{"linkedInid": "", "founder_name": "Krishna P", "founder_email": "cs19d002@smail.iitm.ac.in", "founder_gender": "Male", "founder_number": "9880139699", "founder_student_id": ""}	{"logo_image": "", "startup_description": ""}	cs19d002@smail.iitm.ac.in	Active
+{"cohort": "", "program": "Akshar", "startup_name": "See O2", "startup_tech": "Others", "startup_type": "", "startup_program": "Energy & Environment", "startup_industry": "Sustainability"}	{"password": "Seeo2", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "ae19b010@smail.iitm.ac.in", "official_contact_number": ""}	{"linkedInid": "", "founder_name": "Sai S Kalyan", "founder_email": "ae19b010@smail.iitm.ac.in", "founder_gender": "Male", "founder_number": "", "founder_student_id": ""}	{"logo_image": "", "startup_description": "Awareness of Greenhouse gas emmission, carbon emmission through a tracker, recommensation app."}	ae19b010@smail.iitm.ac.in	Active
+{"cohort": "", "program": "Pratham", "startup_name": "Melango", "startup_tech": "Others", "startup_type": "Software", "startup_program": "Edtech", "startup_industry": "Education & Research"}	{"password": "qwerty223344", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "nihalojha99@gmail.com", "official_contact_number": "960011481"}	{"linkedInid": "", "founder_name": "Nihal Ojha", "founder_email": "nihalojha99@gmail.com", "founder_gender": "Male", "founder_number": "960011481", "founder_student_id": "CE16B107"}	{"logo_image": "", "startup_description": ""}	nihalojha99@gmail.com	Active
+{"cohort": "", "program": "Pratham", "startup_name": "Terracline", "startup_tech": "Internet of Things", "startup_type": "Hardware", "startup_program": "Energy & Environment", "startup_industry": "Others"}	{"password": "", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "hmanoharan22@gmail.com", "official_contact_number": "9945107599"}	{"linkedInid": "", "founder_name": "Hariprasad Manoharan", "founder_email": "hmanoharan22@gmail.com", "founder_gender": "Male", "founder_number": "9945107599", "founder_student_id": ""}	{"logo_image": "", "startup_description": ""}	hmanoharan22@gmail.com	Active
+{"cohort": "", "program": "Pratham", "startup_name": "TARANG", "startup_tech": "Others", "startup_type": "Software", "startup_program": "Energy & Environment", "startup_industry": "Others"}	{"password": "qwerty223344", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "oe21d011@smail.iitm.ac.in", "official_contact_number": "8951590972"}	{"linkedInid": "", "founder_name": "Avinash", "founder_email": "oe21d011@smail.iitm.ac.in", "founder_gender": "Male", "founder_number": "9851590972", "founder_student_id": ""}	{"logo_image": "", "startup_description": ""}	oe21d011@smail.iitm.ac.in	Active
+{"cohort": "", "program": "Pratham", "startup_name": "MachIntell Corporation", "startup_tech": "Internet of Things", "startup_type": "Hybrid", "startup_program": "Manufacturing & Industry", "startup_industry": "Manufacturing & Processing"}	{"password": "", "linkedin_id": "", "website_link": "https://machintell.co.in", "mentor_associated": "", "registration_number": "", "official_email_address": "me17d002@smail.iitm.ac.in", "official_contact_number": "7002533125"}	{"linkedInid": "", "founder_name": "Shashi Bhushan Gunjan", "founder_email": "me17d002@smail.iitm.ac.in", "founder_gender": "Male", "founder_number": "7002533125", "founder_student_id": ""}	{"logo_image": "", "startup_description": ""}	me17d002@smail.iitm.ac.in	Active
+{"cohort": "", "program": "Pratham", "startup_name": "Opto-mag-Diagnostics", "startup_tech": "Deep Technology (Anything with  deep technical expertise)", "startup_type": "Hardware", "startup_program": "Hardware & IOT", "startup_industry": "Healthcare"}	{"password": "optomagdiagnostics", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "ph22d041@smail.iitm.ac.in", "official_contact_number": "9972551157"}	{"linkedInid": "", "founder_name": "Praveena Ganapati Hedge", "founder_email": "ph22d041@smail.ac.in", "founder_gender": "Male", "founder_number": "9972551157", "founder_student_id": ""}	{"logo_image": "", "startup_description": ""}	ph22d041@smail.iitm.ac.in	Active
+{"cohort": "", "program": "Pratham", "startup_name": "HelpingUDrive", "startup_tech": "Internet of Things", "startup_type": "Hardware", "startup_program": "Hardware & IOT", "startup_industry": "Mobility"}	{"password": "HUD", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "me21b094@smail.iitm.ac.in", "official_contact_number": "7977509081"}	{"linkedInid": "", "founder_name": "Kunal Bibolia", "founder_email": "me21b094@smail.iitm.ac.in", "founder_gender": "Male", "founder_number": "7977509081", "founder_student_id": ""}	{"logo_image": "", "startup_description": ""}	me21b094@smail.iitm.ac.in	Active
+{"cohort": "", "program": "Pratham", "startup_name": "NexB2B Solutions", "startup_tech": "Internet of Things", "startup_type": "Hybrid", "startup_program": "Hardware & IOT", "startup_industry": "Others"}	{"password": "qwerty223344", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "ed19b046@smail.iitm.ac.in", "official_contact_number": "7721836932"}	{"linkedInid": "", "founder_name": "Atish Gaykar", "founder_email": "ed19b046@smail.iitm.ac.in", "founder_gender": "Male", "founder_number": "7721836932", "founder_student_id": "ed19b046"}	{"logo_image": "", "startup_description": ""}	ed19b046@smail.iitm.ac.in	Active
+{"cohort": "", "program": "Akshar", "startup_name": "Plenome", "startup_tech": "App Development", "startup_type": "Software", "startup_program": "Software & Data", "startup_industry": "E-Commerce Platform"}	{"password": "qwerty22334", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "1234567CIN", "official_email_address": "plenome@plenome.in", "official_contact_number": "1234567890"}	{"linkedInid": "", "founder_name": "Plenome", "founder_email": "test", "founder_gender": "Male", "founder_number": "Number", "founder_student_id": ""}	{"logo_image": "", "startup_description": ""}	plenome@plenome.in	Active
+{"cohort": "", "program": "Pratham", "startup_name": "MatLoad Solutions", "startup_tech": "Others", "startup_type": "Hardware", "startup_program": "Manufacturing & Industry", "startup_industry": "Industry 4.0"}	{"password": "Matload", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "mm20d016@smail.iitm.ac.in", "official_contact_number": "829787082"}	{"linkedInid": "", "founder_name": "Allamula Ashok", "founder_email": "mm20d016@smail.iitm.ac.in", "founder_gender": "Male", "founder_number": "829787082", "founder_student_id": "mm20d016"}	{"logo_image": "", "startup_description": "Imagine you want to build a house with golden appearance;  bricks coated with a very thin layer of gold (like paint) can give that appearance but effective way of coating is not known."}	mm20d016@smail.iitm.ac.in	Active
+{"cohort": "", "program": "Pratham", "startup_name": "Tribla", "startup_tech": "Others", "startup_type": "Service", "startup_program": "Ecommerce & Retail", "startup_industry": "Industry 4.0"}	{"password": "Tribla", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "ce23e16@smail.iitm.ac.in", "official_contact_number": "7087685466"}	{"linkedInid": "", "founder_name": "Mubasher Ahmad", "founder_email": "ce23e016@smail.iitm.ac.in", "founder_gender": "Male", "founder_number": "7087685466", "founder_student_id": ""}	{"logo_image": "", "startup_description": ""}	ce23e16@smail.iitm.ac.in	Active
+{"cohort": "", "program": "Pratham", "startup_name": "Mainto ", "startup_tech": "App Development", "startup_type": "Service", "startup_program": "services", "startup_industry": "Industry 4.0"}	{"password": "Mainto", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "kartikthombare.kvt@gmail.com", "official_contact_number": "7972294961"}	{"linkedInid": "", "founder_name": "Kartik Vinod Thombare", "founder_email": "kartikthombare.kvt@gmail.com", "founder_gender": "Male", "founder_number": "7972294961", "founder_student_id": ""}	{"logo_image": "", "startup_description": ""}	kartikthombare.kvt@gmail.com	Active
+{"cohort": "", "program": "Pratham", "startup_name": "DemCare", "startup_tech": "Others", "startup_type": "Service", "startup_program": "Hardware & IOT", "startup_industry": "Healthcare"}	{"password": "DemCare", "linkedin_id": "", "website_link": "", "mentor_associated": "", "registration_number": "", "official_email_address": "ep20b033@smail.iitm.ac.in", "official_contact_number": "9384843008"}	{"linkedInid": "", "founder_name": "Sanjay Krishnan S", "founder_email": "ep20b033@smail.iitm.ac.in", "founder_gender": "Male", "founder_number": "9384843008", "founder_student_id": ""}	{"logo_image": "", "startup_description": ""}	ep20b033@smail.iitm.ac.in	Active
 \.
 
 
 --
--- TOC entry 5058 (class 0 OID 16565)
+-- TOC entry 5083 (class 0 OID 41301)
+-- Dependencies: 254
+-- Data for Name: update_funding; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.update_funding (id, startup_name, funding_type, amount, purpose, funding_date, reference_number, document, description) FROM stdin;
+19	me17d002@smail.iitm.ac.in	Funding Distributed	200000.00	Pratham Fund 	2024-09-25	00000		Pratham Fund 2L
+20	mm20d016@smail.iitm.ac.in	Funding Distributed	200000.00	Pratham Fund	2024-09-25	00000		Pratham Fund 2L
+21	ae19b010@smail.iitm.ac.in	Funding Distributed	500000.00	Akshar Fund	2024-09-25	00000		Akshar Fund 5L
+22	cs19d002@smail.iitm.ac.in	Funding Distributed	500000.00	Akshar Fund Allocation	2024-09-25	00000		Akshar fund 5L Distributed
+23	me17d002@smail.iitm.ac.in	Funding Utilized	2000.00	Standee	2024-09-25	00000		Standee
+\.
+
+
+--
+-- TOC entry 5066 (class 0 OID 16565)
 -- Dependencies: 237
 -- Data for Name: user_data; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -692,11 +779,21 @@ COPY public.test_startup (basic, official, founder, description, official_email_
 COPY public.user_data (user_id, user_mail, user_password, user_hash, user_department, user_role, created_at, user_name, user_contact, personal_email) FROM stdin;
 24080503	test@gmail.com	data@gmail.com	m76ii1t$3sh-+yUaai+=	student	5	2024-05-08 11:16:45.016111+05:30	test	9677293620	test@yahoo.com
 250420241	manager.ie@imail.iitm.ac.in	qwerty223344	bwesubaoxjnxidydgwj+:+	MANAGEMENT	2	2024-04-25 17:26:37.221773+05:30	Nandhini K S	7092311114	nandhini.ramu@gmail.com
+24080504	finance_new@imail.iitm.ac.in	securepassword	generatedhash123	FINANCE	3	2024-09-21 12:52:12.592895+05:30	Finance Team	9876543210	finance@imail.com
 \.
 
 
 --
--- TOC entry 4900 (class 2606 OID 16656)
+-- TOC entry 5093 (class 0 OID 0)
+-- Dependencies: 253
+-- Name: update_funding_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.update_funding_id_seq', 23, true);
+
+
+--
+-- TOC entry 4906 (class 2606 OID 16656)
 -- Name: add_job add_job_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -705,7 +802,7 @@ ALTER TABLE ONLY public.add_job
 
 
 --
--- TOC entry 4896 (class 2606 OID 41269)
+-- TOC entry 4902 (class 2606 OID 41269)
 -- Name: add_mentor add_mentor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -714,7 +811,7 @@ ALTER TABLE ONLY public.add_mentor
 
 
 --
--- TOC entry 4906 (class 2606 OID 33059)
+-- TOC entry 4912 (class 2606 OID 33059)
 -- Name: aws_applied aws_applied_aws_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -723,7 +820,7 @@ ALTER TABLE ONLY public.aws_applied
 
 
 --
--- TOC entry 4908 (class 2606 OID 33057)
+-- TOC entry 4914 (class 2606 OID 33057)
 -- Name: aws_applied aws_applied_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -732,7 +829,7 @@ ALTER TABLE ONLY public.aws_applied
 
 
 --
--- TOC entry 4898 (class 2606 OID 16644)
+-- TOC entry 4904 (class 2606 OID 16644)
 -- Name: establish_connections establish_connections_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -741,7 +838,7 @@ ALTER TABLE ONLY public.establish_connections
 
 
 --
--- TOC entry 4902 (class 2606 OID 16664)
+-- TOC entry 4908 (class 2606 OID 16664)
 -- Name: founder_details founder_details_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -750,7 +847,7 @@ ALTER TABLE ONLY public.founder_details
 
 
 --
--- TOC entry 4912 (class 2606 OID 24857)
+-- TOC entry 4918 (class 2606 OID 41322)
 -- Name: mentor_schedule mentor_schedule_mentor_mail_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -759,7 +856,7 @@ ALTER TABLE ONLY public.mentor_schedule
 
 
 --
--- TOC entry 4890 (class 2606 OID 16592)
+-- TOC entry 4896 (class 2606 OID 16592)
 -- Name: mentors mentors_mentor_contact_number_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -768,7 +865,7 @@ ALTER TABLE ONLY public.mentors
 
 
 --
--- TOC entry 4892 (class 2606 OID 16589)
+-- TOC entry 4898 (class 2606 OID 16589)
 -- Name: mentors mentors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -777,7 +874,7 @@ ALTER TABLE ONLY public.mentors
 
 
 --
--- TOC entry 4914 (class 2606 OID 41293)
+-- TOC entry 4920 (class 2606 OID 41293)
 -- Name: test_startup pk_official_email; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -786,7 +883,7 @@ ALTER TABLE ONLY public.test_startup
 
 
 --
--- TOC entry 4910 (class 2606 OID 24851)
+-- TOC entry 4916 (class 2606 OID 24851)
 -- Name: raised_request raised_request_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -795,7 +892,7 @@ ALTER TABLE ONLY public.raised_request
 
 
 --
--- TOC entry 4894 (class 2606 OID 16597)
+-- TOC entry 4900 (class 2606 OID 16597)
 -- Name: resume_data resume_data_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -804,7 +901,7 @@ ALTER TABLE ONLY public.resume_data
 
 
 --
--- TOC entry 4904 (class 2606 OID 16669)
+-- TOC entry 4910 (class 2606 OID 16669)
 -- Name: team_member_details team_member_details_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -813,7 +910,16 @@ ALTER TABLE ONLY public.team_member_details
 
 
 --
--- TOC entry 4886 (class 2606 OID 16569)
+-- TOC entry 4922 (class 2606 OID 41308)
+-- Name: update_funding update_funding_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.update_funding
+    ADD CONSTRAINT update_funding_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4892 (class 2606 OID 16569)
 -- Name: user_data user_data_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -822,7 +928,7 @@ ALTER TABLE ONLY public.user_data
 
 
 --
--- TOC entry 4888 (class 2606 OID 16571)
+-- TOC entry 4894 (class 2606 OID 16571)
 -- Name: user_data user_data_user_mail_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -830,7 +936,7 @@ ALTER TABLE ONLY public.user_data
     ADD CONSTRAINT user_data_user_mail_key UNIQUE (user_mail);
 
 
--- Completed on 2024-09-18 14:46:29
+-- Completed on 2024-09-26 11:08:09
 
 --
 -- PostgreSQL database dump complete
